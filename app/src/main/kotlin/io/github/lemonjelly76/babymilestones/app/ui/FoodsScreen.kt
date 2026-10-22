@@ -18,9 +18,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilterChip
@@ -30,6 +31,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -45,7 +47,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
 import io.github.lemonjelly76.babymilestones.core.api.TastingRequest
@@ -58,6 +62,9 @@ import io.github.lemonjelly76.babymilestones.core.food.FoodNames
 import io.github.lemonjelly76.babymilestones.core.food.FoodProgress
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
+import io.github.lemonjelly76.babymilestones.core.food.PlanProgress
+import io.github.lemonjelly76.babymilestones.core.food.PlanSource
+import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
 import java.time.LocalDate
 
 private enum class FoodFilter(val label: String) {
@@ -80,7 +87,7 @@ private data class FoodTarget(val key: String, val name: String, val group: Food
 fun FoodsScreen(state: AppState, babyId: String, viewModel: AppViewModel, onBack: () -> Unit, onOpenGuide: (String) -> Unit) {
     val view = state.view(babyId) ?: return
     val content = view.content
-    var filter by rememberSaveable { mutableStateOf(if (view.foods.tried == 0) FoodFilter.NEXT else FoodFilter.TRIED) }
+    var filter by rememberSaveable { mutableStateOf(FoodFilter.NEXT) }
     var open by remember { mutableStateOf<FoodTarget?>(null) }
     var addOwn by remember { mutableStateOf(false) }
 
@@ -111,7 +118,10 @@ fun FoodsScreen(state: AppState, babyId: String, viewModel: AppViewModel, onBack
             }
 
             when (filter) {
-                FoodFilter.NEXT -> TryNext(view, content, onOpen = { open = it }, onLog = ::quickLog, onOpenGuide = onOpenGuide)
+                FoodFilter.NEXT -> {
+                    FoodPlanSection(view, content, viewModel, state.canEdit, onOpen = { open = it }, onLog = ::quickLog)
+                    TryNext(view, content, onOpen = { open = it }, onLog = ::quickLog, onOpenGuide = onOpenGuide)
+                }
                 FoodFilter.TRIED -> {
                     if (view.foods.foods.isEmpty()) EmptyState("Nothing logged yet. Tap + on any food to log it.")
                     view.foods.foods.forEach { p ->
@@ -141,7 +151,7 @@ fun FoodsScreen(state: AppState, babyId: String, viewModel: AppViewModel, onBack
         }
     }
 
-    open?.let { FoodSheet(view, content, it, viewModel, onDismiss = { open = null }) }
+    open?.let { FoodSheet(view, content, it, viewModel, state.canEdit, onDismiss = { open = null }) }
     if (addOwn) OwnFoodDialog(onDismiss = { addOwn = false }, onChoose = { name, group ->
         addOwn = false
         open = content.findFood(name)?.let(FoodTarget::of) ?: FoodTarget.own(name, group)
@@ -178,6 +188,82 @@ private fun ReactionsCard(view: BabyView, onOpenGuide: (String) -> Unit) {
     }
 }
 
+/** The day-by-day plan as a checklist: an item ticks itself off when the food is logged, so ticking it logs the food. */
+@Composable
+private fun FoodPlanSection(
+    view: BabyView, content: ContentBundle, viewModel: AppViewModel, canEdit: Boolean,
+    onOpen: (FoodTarget) -> Unit, onLog: (FoodTarget) -> Unit,
+) {
+    val context = LocalContext.current
+    val plan = view.plan
+    var replacing by remember { mutableStateOf(false) }
+    var clearing by remember { mutableStateOf(false) }
+    val claudePrompt = "Use Baby Milestones to make a 2-week food plan for ${view.baby.name}, and save it to the app."
+    fun target(item: PlannedFood) = item.foodId?.let(content::food)?.let(FoodTarget::of) ?: FoodTarget.own(item.name, item.group)
+
+    if (plan.isEmpty()) {
+        if (!canEdit || view.foods.suggestions.isEmpty()) return
+        InfoCard {
+            Text("Make a food plan", fontWeight = FontWeight.SemiBold)
+            Text("A day-by-day list of foods to try, following the same NHS-based rules. Each food ticks itself off when you log it.",
+                style = MaterialTheme.typography.bodySmall)
+            Row(horizontalArrangement = Gap, modifier = Modifier.padding(top = 8.dp)) {
+                Button(onClick = { viewModel.generatePlan(view.baby.id) }) { Text("Make a 2-week plan") }
+                OutlinedButton(onClick = { openClaude(context, claudePrompt) }) { Text("Ask Claude") }
+            }
+        }
+        return
+    }
+
+    val done = plan.count { it.done }
+    val source = if (plan.any { it.item.source == PlanSource.CLAUDE }) "Made with Claude" else "Made by the app"
+    SectionTitle("Food plan")
+    Text("$done of ${plan.size} done · $source", style = MaterialTheme.typography.bodySmall)
+    LinearProgressIndicator(progress = { done.toFloat() / plan.size }, modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp))
+    val (earlier, coming) = plan.partition { it.item.plannedOn.isBefore(view.today) }
+    val missed = earlier.filterNot { it.done }
+    if (missed.isNotEmpty()) {
+        Text("Earlier, not logged yet", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(top = 8.dp))
+        missed.forEach { PlanRow(it, canEdit, onOpen = { onOpen(target(it.item)) }, onLog = { onLog(target(it.item)) }) }
+    }
+    coming.groupBy { it.item.plannedOn }.forEach { (date, items) ->
+        Text(dayLabel(date, view.today), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(top = 8.dp))
+        items.forEach { PlanRow(it, canEdit, onOpen = { onOpen(target(it.item)) }, onLog = { onLog(target(it.item)) }) }
+    }
+    if (canEdit) Row(horizontalArrangement = Gap, modifier = Modifier.padding(vertical = 8.dp)) {
+        OutlinedButton(onClick = { replacing = true }) { Text("New plan") }
+        OutlinedButton(onClick = { openClaude(context, claudePrompt) }) { Text("Ask Claude") }
+        TextButton(onClick = { clearing = true }) { Text("Clear") }
+    }
+    HorizontalDivider(Modifier.padding(vertical = 8.dp))
+    if (replacing) ConfirmDialog("Make a new plan?", "This replaces the current plan with two weeks from today.", "Make it",
+        { viewModel.generatePlan(view.baby.id) }, { replacing = false })
+    if (clearing) ConfirmDialog("Clear the plan?", "Foods you've logged stay in the tracker.", "Clear",
+        { viewModel.clearPlan(view.baby.id) }, { clearing = false })
+}
+
+@Composable
+private fun PlanRow(progress: PlanProgress, canEdit: Boolean, onOpen: () -> Unit, onLog: () -> Unit) {
+    val item = progress.item
+    Row(Modifier.fillMaxWidth().clickable(onClick = onOpen), verticalAlignment = Alignment.CenterVertically) {
+        Checkbox(progress.done, { if (!progress.done) onLog() }, enabled = canEdit && !progress.done)
+        Column(Modifier.weight(1f).padding(vertical = 4.dp)) {
+            Text(item.name, style = MaterialTheme.typography.bodyLarge,
+                textDecoration = if (progress.done) TextDecoration.LineThrough else null)
+            Text(progress.doneOn?.let { "Logged ${it.format(DAY_SHORT)}" } ?: item.reason ?: item.kind.label,
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+    }
+}
+
+private fun dayLabel(date: LocalDate, today: LocalDate): String = when (date) {
+    today -> "Today"
+    today.plusDays(1) -> "Tomorrow"
+    else -> date.format(java.time.format.DateTimeFormatter.ofPattern("EEEE d MMM", java.util.Locale.UK))
+}
+
 @Composable
 private fun TryNext(
     view: BabyView, content: ContentBundle, onOpen: (FoodTarget) -> Unit, onLog: (FoodTarget) -> Unit, onOpenGuide: (String) -> Unit,
@@ -189,6 +275,7 @@ private fun TryNext(
         }
         return
     }
+    SectionTitle("Ideas right now")
     Text("Worked out from what ${view.baby.name} has tried, following NHS weaning advice.",
         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     suggestions.forEach { s ->
@@ -268,7 +355,9 @@ private fun FoodRow(name: String, detail: String?, tried: Boolean, onOpen: () ->
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-private fun FoodSheet(view: BabyView, content: ContentBundle, target: FoodTarget, viewModel: AppViewModel, onDismiss: () -> Unit) {
+private fun FoodSheet(
+    view: BabyView, content: ContentBundle, target: FoodTarget, viewModel: AppViewModel, canEdit: Boolean, onDismiss: () -> Unit,
+) {
     val food = target.food
     val babyId = view.baby.id
     val months = view.ageMonths
@@ -300,53 +389,63 @@ private fun FoodSheet(view: BabyView, content: ContentBundle, target: FoodTarget
                 food.note?.let { Text(it, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp)) }
             }
 
-            SectionTitle("Log a taste")
-            DateField("When", date, { date = it })
-            Row(horizontalArrangement = Gap, modifier = Modifier.padding(vertical = 8.dp)) {
-                Liking.entries.forEach { l -> FilterChip(liking == l, { liking = if (liking == l) null else l }, label = { Text(l.label) }) }
+            if (canEdit) {
+                SectionTitle("Log a taste")
+                DateField("When", date, { date = it })
+                Row(horizontalArrangement = Gap, modifier = Modifier.padding(vertical = 8.dp)) {
+                    Liking.entries.forEach { l -> FilterChip(liking == l, { liking = if (liking == l) null else l }, label = { Text(l.label) }) }
+                }
+                OutlinedTextField(reaction, { reaction = it }, label = { Text("Possible reaction (optional)") },
+                    supportingText = { Text("What you noticed, in your words. Call 999 for breathing problems or a swollen throat or tongue.") },
+                    modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(note, { note = it }, label = { Text("Note (optional)") }, modifier = Modifier.fillMaxWidth())
+                Button(
+                    onClick = {
+                        viewModel.logFood(babyId, TastingRequest(
+                            foodId = food?.id,
+                            name = if (food == null) target.name else null,
+                            group = if (food == null) target.group else null,
+                            tastedOn = date,
+                            liking = liking,
+                            reaction = reaction.trim().ifEmpty { null },
+                            note = note.trim().ifEmpty { null },
+                        ), "Logged ${target.name}")
+                        onDismiss()
+                    },
+                    enabled = food == null || food.suitableAt(months),
+                    modifier = Modifier.padding(top = 8.dp),
+                ) { Text("Log it") }
             }
-            OutlinedTextField(reaction, { reaction = it }, label = { Text("Possible reaction (optional)") },
-                supportingText = { Text("What you noticed, in your words. Call 999 for breathing problems or a swollen throat or tongue.") },
-                modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(note, { note = it }, label = { Text("Note (optional)") }, modifier = Modifier.fillMaxWidth())
-            Button(
-                onClick = {
-                    viewModel.logFood(babyId, TastingRequest(
-                        foodId = food?.id,
-                        name = if (food == null) target.name else null,
-                        group = if (food == null) target.group else null,
-                        tastedOn = date,
-                        liking = liking,
-                        reaction = reaction.trim().ifEmpty { null },
-                        note = note.trim().ifEmpty { null },
-                    ), "Logged ${target.name}")
-                    onDismiss()
-                },
-                enabled = food == null || food.suitableAt(months),
-                modifier = Modifier.padding(top = 8.dp),
-            ) { Text("Log it") }
 
             if (history.isNotEmpty()) {
                 SectionTitle("Offered ${history.size} ${if (history.size == 1) "time" else "times"}")
+                Text("Tap an entry to change it.", style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
                 history.forEach { t ->
-                    Row(Modifier.clickable { editing = t }, verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        Modifier.fillMaxWidth().clickable(enabled = canEdit) { editing = t }.padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
                         Column(Modifier.weight(1f)) {
                             Text(t.tastedOn.pretty() + (t.liking?.let { " · ${it.label.lowercase()}" } ?: ""))
                             t.reaction?.let { Text("Possible reaction: $it", style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.error) }
                             t.note?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
                         }
-                        IconButton(onClick = { deleting = t.id }) { Icon(Icons.Outlined.Delete, "Remove") }
+                        if (canEdit) Icon(Icons.Outlined.Edit, "Change", tint = MaterialTheme.colorScheme.primary)
                     }
+                    HorizontalDivider()
                 }
             }
             food?.let { Sources(content, it.sources) }
         }
+        // Inside the sheet, so the dialog always opens on top of it.
+        editing?.let { t ->
+            EditTastingDialog(t, onDismiss = { editing = null },
+                onSave = { request -> viewModel.updateFood(babyId, t.id, request); editing = null },
+                onDelete = { editing = null; deleting = t.id })
+        }
     }
-    editing?.let { t -> EditTastingDialog(t, onDismiss = { editing = null }, onSave = { request ->
-        viewModel.updateFood(babyId, t.id, request)
-        editing = null
-    }) }
     deleting?.let { id ->
         ConfirmDialog("Remove this entry?", "It will no longer count towards ${target.name}.", "Remove",
             { viewModel.removeFood(babyId, id) }, { deleting = null })
@@ -383,17 +482,22 @@ private fun OwnFoodDialog(onDismiss: () -> Unit, onChoose: (String, FoodGroup) -
 }
 
 /** Changes how a past taste went, or the reaction and note; "Not recorded" clears how it went. */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun EditTastingDialog(tasting: FoodTasting, onDismiss: () -> Unit, onSave: (TastingUpdateRequest) -> Unit) {
+private fun EditTastingDialog(
+    tasting: FoodTasting, onDismiss: () -> Unit, onSave: (TastingUpdateRequest) -> Unit, onDelete: () -> Unit,
+) {
+    var date by remember { mutableStateOf<LocalDate?>(tasting.tastedOn) }
     var liking by remember { mutableStateOf(tasting.liking) }
     var reaction by remember { mutableStateOf(tasting.reaction.orEmpty()) }
     var note by remember { mutableStateOf(tasting.note.orEmpty()) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("${tasting.name}, ${tasting.tastedOn.pretty()}") },
+        title = { Text(tasting.name) },
         text = {
-            Column {
-                Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Gap) {
+            Column(verticalArrangement = Gap) {
+                DateField("When", date, { date = it })
+                FlowRow(horizontalArrangement = Gap) {
                     FilterChip(liking == null, { liking = null }, label = { Text("Not recorded") })
                     Liking.entries.forEach { l -> FilterChip(liking == l, { liking = l }, label = { Text(l.label) }) }
                 }
@@ -404,10 +508,15 @@ private fun EditTastingDialog(tasting: FoodTasting, onDismiss: () -> Unit, onSav
         confirmButton = {
             TextButton(onClick = {
                 onSave(TastingUpdateRequest(
-                    liking = liking, clearLiking = liking == null, reaction = reaction.trim(), note = note.trim(),
+                    tastedOn = date, liking = liking, clearLiking = liking == null, reaction = reaction.trim(), note = note.trim(),
                 ))
             }) { Text("Save") }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = {
+            Row {
+                TextButton(onClick = onDelete) { Text("Remove", color = MaterialTheme.colorScheme.error) }
+                TextButton(onClick = onDismiss) { Text("Cancel") }
+            }
+        },
     )
 }

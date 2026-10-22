@@ -32,6 +32,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -152,7 +153,7 @@ private fun MainScreens(state: AppState, viewModel: AppViewModel, snackbar: Snac
             },
             snackbarHost = { SnackbarHost(snackbar) },
         ) { padding ->
-            Box(Modifier.padding(padding).fillMaxSize()) {
+            PullToRefreshBox(state.refreshing, onRefresh = { viewModel.refresh() }, modifier = Modifier.padding(padding).fillMaxSize()) {
                 if (view == null) {
                     EmptyState("Loading ${baby.name}'s milestones…")
                 } else when (tab) {

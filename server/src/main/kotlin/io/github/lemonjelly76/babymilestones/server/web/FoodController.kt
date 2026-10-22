@@ -4,7 +4,9 @@ import io.github.lemonjelly76.babymilestones.core.api.ChecklistRequest
 import io.github.lemonjelly76.babymilestones.core.api.ChecklistResponse
 import io.github.lemonjelly76.babymilestones.core.api.TastingRequest
 import io.github.lemonjelly76.babymilestones.core.api.TastingUpdateRequest
+import io.github.lemonjelly76.babymilestones.core.api.GeneratePlanRequest
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
+import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
 import io.github.lemonjelly76.babymilestones.server.service.FoodService
 import io.github.lemonjelly76.babymilestones.server.service.GuideService
 import io.github.lemonjelly76.babymilestones.server.service.TastingChanges
@@ -52,4 +54,16 @@ class FoodController(
     @DeleteMapping("/babies/{babyId}/notes/{noteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteAssistantNote(@PathVariable babyId: String, @PathVariable noteId: String) = guides.deleteNote(writer(), babyId, noteId)
+
+    @PostMapping("/babies/{babyId}/food-plan/generate")
+    fun generatePlan(@PathVariable babyId: String, @RequestBody request: GeneratePlanRequest): List<PlannedFood> =
+        foods.generatePlan(writer(), babyId, request.days)
+
+    @DeleteMapping("/babies/{babyId}/food-plan")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun clearPlan(@PathVariable babyId: String) = foods.clearPlan(writer(), babyId)
+
+    @DeleteMapping("/babies/{babyId}/food-plan/{itemId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun removePlanItem(@PathVariable babyId: String, @PathVariable itemId: String) = foods.removePlanItem(writer(), babyId, itemId)
 }

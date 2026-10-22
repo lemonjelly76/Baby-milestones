@@ -179,7 +179,7 @@ class FoodTracker(private val content: ContentBundle) {
             allergens.firstOrNull { it.state == AllergenState.NOT_YET }?.let { next ->
                 starterFood(next.allergen, safe)?.let {
                     add(it, SuggestionKind.NEW_ALLERGEN,
-                        "${next.allergen.label} isn't introduced yet. Offer one new allergen at a time, in a small amount, so you can spot any reaction.")
+                        "${next.allergen.label} isn't introduced yet. Offer it on a day without other allergens, in a small amount, so you can spot any reaction.")
                 }
             }
         }

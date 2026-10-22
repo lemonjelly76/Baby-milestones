@@ -3,6 +3,9 @@ package io.github.lemonjelly76.babymilestones.server.store
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
+import io.github.lemonjelly76.babymilestones.core.food.PlanKind
+import io.github.lemonjelly76.babymilestones.core.food.PlanSource
+import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
 import org.springframework.jdbc.core.simple.JdbcClient
 import org.springframework.stereotype.Repository
 import java.sql.ResultSet
@@ -53,4 +56,36 @@ class FoodStore(private val jdbc: JdbcClient) {
         photoRef = rs.getString("photo_ref"),
         loggedBy = rs.getString("logged_by"),
     )
+
+    // --- the food plan ---
+
+    fun plan(babyId: String): List<PlannedFood> =
+        jdbc.sql("select * from food_plan_item where baby_id = :babyId order by planned_on, created_at").param("babyId", babyId)
+            .query { rs, _ ->
+                PlannedFood(
+                    rs.getString("id"), rs.getString("baby_id"), rs.getString("food_id"), rs.getString("name"),
+                    fromDb<FoodGroup>(rs.getString("food_group")), rs.date("planned_on")!!, fromDb<PlanKind>(rs.getString("kind")),
+                    rs.getString("reason"), fromDb<PlanSource>(rs.getString("source")), rs.date("created_on")!!,
+                )
+            }.list()
+
+    fun savePlanItem(item: PlannedFood, createdBy: String?) {
+        jdbc.sql(
+            """
+            insert into food_plan_item (id, baby_id, food_id, name, food_group, planned_on, kind, reason, source, created_on, created_by)
+            values (:id, :babyId, :foodId, :name, :group, :plannedOn, :kind, :reason, :source, :createdOn, :createdBy)
+            """,
+        ).param("id", item.id).param("babyId", item.babyId).param("foodId", item.foodId).param("name", item.name)
+            .param("group", dbName(item.group)).param("plannedOn", item.plannedOn).param("kind", dbName(item.kind))
+            .param("reason", item.reason).param("source", dbName(item.source)).param("createdOn", item.createdOn)
+            .param("createdBy", createdBy).update()
+    }
+
+    fun deletePlan(babyId: String) {
+        jdbc.sql("delete from food_plan_item where baby_id = :babyId").param("babyId", babyId).update()
+    }
+
+    fun deletePlanItem(babyId: String, id: String): Boolean =
+        jdbc.sql("delete from food_plan_item where id = :id and baby_id = :babyId").param("id", id).param("babyId", babyId)
+            .update() > 0
 }

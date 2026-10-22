@@ -5,7 +5,9 @@ import io.github.lemonjelly76.babymilestones.core.concerns.Concern
 import io.github.lemonjelly76.babymilestones.core.concerns.ConcernEngine
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.content.PeriodGuide
+import io.github.lemonjelly76.babymilestones.core.food.FoodPlanner
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
+import io.github.lemonjelly76.babymilestones.core.food.PlanProgress
 import io.github.lemonjelly76.babymilestones.core.food.FoodTracker
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthEngine
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthReport
@@ -57,6 +59,8 @@ class BabyView(val data: BabyData, val content: ContentBundle, val today: LocalD
     /** Everyday guides and food follow chronological age. */
     val ageMonths: Int get() = snapshot.ages.chronological.months
     val foods: FoodReport by lazy { FoodTracker(content).report(data.tastings, today, ageMonths) }
+    val plan: List<PlanProgress> by lazy { FoodPlanner.progress(data.foodPlan, data.tastings) }
+    val plannedToday: List<PlanProgress> get() = plan.filter { it.item.plannedOn == today && !it.done }
     val guides: GuidesForAge by lazy { Guides.forAge(content.guides, ageMonths) }
     val ticked: Set<String> get() = data.checklist.map { it.itemId }.toSet()
     val showFoods: Boolean get() = FoodTracker.showsTracker(ageMonths, data.tastings.isNotEmpty())

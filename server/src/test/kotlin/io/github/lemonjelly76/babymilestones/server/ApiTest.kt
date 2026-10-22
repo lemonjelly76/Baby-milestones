@@ -249,4 +249,24 @@ class ApiTest : IntegrationTest() {
         assertEquals(403, post("/api/invites", "{}", grandma).status)
         assertEquals(403, request("DELETE", "/api/family", token = grandma).status)
     }
+
+    @Test
+    fun `the app makes a food plan, and tasting a planned food ticks it off`() {
+        val token = newFamily()
+        val babyId = newBaby(token)
+        val plan = post("/api/babies/$babyId/food-plan/generate", """{"days":7}""", token)
+        assertEquals(200, plan.status, plan.body)
+        val items = plan.json.jsonArray
+        assertTrue(items.size >= 7)
+        val first = items.first().jsonObject
+        assertEquals("app", first["source"]!!.jsonPrimitive.content)
+
+        post("/api/babies/$babyId/tastings", """{"food_id":"${first["food_id"]!!.jsonPrimitive.content}"}""", token)
+        val data = get("/api/babies/$babyId/data", token).json.jsonObject
+        assertEquals(items.size, data["food_plan"]!!.jsonArray.size)
+
+        assertEquals(204, request("DELETE", "/api/babies/$babyId/food-plan/${first["id"]!!.jsonPrimitive.content}", token = token).status)
+        assertEquals(204, request("DELETE", "/api/babies/$babyId/food-plan", token = token).status)
+        assertEquals(0, get("/api/babies/$babyId/data", token).json.jsonObject["food_plan"]!!.jsonArray.size)
+    }
 }

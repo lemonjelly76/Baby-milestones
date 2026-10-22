@@ -14,6 +14,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.Event
+import androidx.compose.material.icons.outlined.ExpandLess
+import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -32,6 +34,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -195,9 +198,7 @@ fun PhotoImage(photoRef: String, load: suspend (String) -> ByteArray?, size: Dp 
     var bitmap by remember(photoRef) { mutableStateOf<android.graphics.Bitmap?>(PhotoCache[photoRef]) }
     LaunchedEffect(photoRef) {
         if (bitmap == null) {
-            load(photoRef)?.let { bytes ->
-                BitmapFactory.decodeByteArray(bytes, 0, bytes.size)?.also { PhotoCache[photoRef] = it; bitmap = it }
-            }
+            load(photoRef)?.let { bytes -> decodeScaled(bytes, PHOTO_MAX_PX)?.also { PhotoCache[photoRef] = it; bitmap = it } }
         }
     }
     bitmap?.let {
@@ -206,12 +207,42 @@ fun PhotoImage(photoRef: String, load: suspend (String) -> ByteArray?, size: Dp 
     }
 }
 
+/** Large enough for the screen and the memory book; a camera photo decoded at full size can use 50 MB. */
+const val PHOTO_MAX_PX = 1280
+
+/** Decodes an image no bigger than [maxPx] on its longer side, sampling down by powers of two. */
+fun decodeScaled(bytes: ByteArray, maxPx: Int): android.graphics.Bitmap? {
+    val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+    BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
+    var sample = 1
+    while (maxOf(bounds.outWidth, bounds.outHeight) / (sample * 2) >= maxPx) sample *= 2
+    return BitmapFactory.decodeByteArray(bytes, 0, bytes.size, BitmapFactory.Options().apply { inSampleSize = sample })
+}
+
+/** Recently shown photos, limited by memory rather than count. */
 private object PhotoCache {
-    private val cache = android.util.LruCache<String, android.graphics.Bitmap>(24)
+    private val cache = object : android.util.LruCache<String, android.graphics.Bitmap>(32 * 1024 * 1024) {
+        override fun sizeOf(key: String, value: android.graphics.Bitmap) = value.byteCount
+    }
     operator fun get(key: String): android.graphics.Bitmap? = cache.get(key)
     operator fun set(key: String, value: android.graphics.Bitmap) {
         cache.put(key, value)
     }
+}
+
+/** A titled group that starts folded, for long lists the parent rarely needs. */
+@Composable
+fun Expandable(title: String, content: @Composable () -> Unit) {
+    var open by rememberSaveable(title.substringBefore(" (")) { mutableStateOf(false) }
+    Row(
+        Modifier.fillMaxWidth().clickable { open = !open }.padding(vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(title, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.weight(1f))
+        Icon(if (open) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore, if (open) "Hide" else "Show",
+            tint = MaterialTheme.colorScheme.primary)
+    }
+    if (open) Column { content() }
 }
 
 @Composable

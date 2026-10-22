@@ -4,7 +4,11 @@ import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
 import io.github.lemonjelly76.babymilestones.core.food.FoodNames
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
+import io.github.lemonjelly76.babymilestones.core.food.FoodPlanner
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
+import io.github.lemonjelly76.babymilestones.core.food.PlanSource
+import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
+import io.github.lemonjelly76.babymilestones.server.service.PlanInput
 import io.github.lemonjelly76.babymilestones.core.food.Liking
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
 import io.github.lemonjelly76.babymilestones.server.service.BabyService
@@ -131,6 +135,44 @@ class FoodTools(
         ) { caller, args ->
             foods.remove(writer(caller), args.string("baby_id"), args.string("tasting_id"))
             buildJsonObject { put("removed", args.string("tasting_id")); put("content_version", content.version) }
+        },
+        BabyTool(
+            "get_food_plan", "Food plan",
+            "The baby's plan of foods to try, day by day, with each item's status (done once the food is tasted on or after " +
+                "the day the plan was made), plus 'suggested': the two weeks the app's own rules would plan from today. Use " +
+                "the suggestion as a starting point; it follows NHS weaning advice and the tracker's allergen rules.",
+            schema { string("baby_id", "Id from list_babies", required = true) }, write = false,
+        ) { caller, args ->
+            val ctx = ctx(caller, args)
+            json(FoodPlanView.serializer(), FoodPlanView(
+                FoodPlanner.progress(ctx.foodPlan, ctx.tastings),
+                FoodPlanner(content).plan(ctx.tastings, ctx.today, ctx.snapshot.ages.chronological.months),
+            ))
+        },
+
+        BabyTool(
+            "save_food_plan", "Save a food plan",
+            "Replaces the baby's food plan with these foods, which the app shows as a checklist that ticks itself off as " +
+                "each food is logged. Give a catalogue food id or name for each, and a date. Follow the app's rules: at most " +
+                "one new allergen every 3 days, keep introduced allergens going weekly, nothing the baby is too young for, " +
+                "and nothing with an allergen the parents noted a possible reaction to. Show the parent the plan first.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                objects("items", "The planned foods, in date order", required = true) {
+                    string("food", "Catalogue food id or a food name", required = true)
+                    date("planned_on", "The day to offer it", required = true)
+                    string("reason", "Why, in a few words")
+                }
+            }, write = true,
+            confirm = { args, today ->
+                val items = args.objects("items")
+                "Food plan: ${items.size} foods from ${day(items.minOfOrNull { it.date("planned_on") }, today)}"
+            },
+        ) { caller, args ->
+            val saved = foods.savePlan(writer(caller), args.string("baby_id"), args.objects("items").map {
+                PlanInput(it.string("food"), it.date("planned_on"), reason = it.optString("reason"))
+            }, PlanSource.CLAUDE)
+            json(ListSerializer(PlannedFood.serializer()), saved)
         },
     )
 }

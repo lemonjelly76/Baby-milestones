@@ -31,20 +31,21 @@ departs from it, is in [`docs/design-document.md`](docs/design-document.md).
 - **Guides:** cited guides for the child's age, from readiness for solids and baby-led weaning to potty training,
   childcare and starting school (with England's reception dates), each with a checklist.
 - **Foods tracker:** 109 foods with how to serve them at each age; log each taste in two taps with how it went and any
-  possible reaction; see allergens introduced or due again, foods worth offering again, and what to try next.
+  possible reaction; see allergens introduced or due again, foods worth offering again, and what to try next; make a
+  day-by-day food plan (in the app, or with Claude) that ticks itself off as you log each food.
 - **Claude:** use Claude mobile or claude.ai with the MCP connector; what Claude saves (check-ins, answers, meal ideas)
   appears in the app. An in-app assistant (charged per message through the Claude API) is off unless switched on in
   Settings; urgent symptoms and distress are caught on the phone before anything is sent.
 - **Words and play:** a list of the words your child says, and four play ideas a week from what they're working on.
 - **Family:** several carers per family (invite code or link, with edit or view-only access), several babies, offline reading, weekly digest and
   other reminders, export and delete everything.
-- **MCP:** 33 tools, resources and 4 prompts at `/mcp` for Claude Desktop, claude.ai and the Claude app.
+- **MCP:** 35 tools, resources and 5 prompts at `/mcp` for Claude Desktop, claude.ai and the Claude app.
 
 ## How it's built
 
 | Path | What |
 | --- | --- |
-| `core/` | Pure Kotlin shared by app and server: age engine, status rules, concerns, schedule, pending updates, what's next, search, safety check, timeline, summary. Heavily unit-tested |
+| `core/` | Pure Kotlin shared by app and server: the API models, age engine, status rules, concerns, schedule, pending updates, what's next, search, safety check, timeline, summary. Heavily unit-tested |
 | `core/src/main/resources/content/` | The content bundle: milestones, periods, guides, foods, growth tables, teeth, references, concern and safety copy, UK schedule |
 | `server/` | Spring Boot 4.1 (Kotlin), PostgreSQL + Flyway, REST API for the app, Spring AI MCP server, Claude API assistant |
 | `app/` | Android, Kotlin, Jetpack Compose, Material 3, Ktor client, WorkManager reminders |

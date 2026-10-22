@@ -170,6 +170,19 @@ class McpConfiguration {
                 "foods-to-avoid list and nothing the baby is too young for, prepared as get_food says for their age. Keep it " +
                 "short and practical, then offer to save it with save_note (kind plan)."
         },
+        prompt(
+            "food_plan", "A day-by-day plan of foods to try, saved as a checklist in the app",
+            listOf(
+                McpSchema.PromptArgument("baby_id", "Id from list_babies", true),
+                McpSchema.PromptArgument("days", "How many days to plan; default 14", false),
+            ),
+        ) { args ->
+            "Make a plan of foods for baby ${args["baby_id"]} to try over the next ${args["days"] ?: 14} days. Start with " +
+                "get_food_plan (its 'suggested' plan follows the app's rules) and get_foods. Adapt it to what I tell you about " +
+                "our meals and what we have in, keeping the rules: one new allergen at a time at least 3 days apart, " +
+                "introduced allergens kept going weekly, foods not liked yet offered again, an iron-rich food each day. Show " +
+                "me the plan as a short list by day, and when I'm happy save it with save_food_plan so it appears in the app."
+        },
     )
 
     private fun template(

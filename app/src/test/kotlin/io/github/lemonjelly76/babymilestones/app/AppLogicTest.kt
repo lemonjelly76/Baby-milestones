@@ -9,7 +9,10 @@ import io.github.lemonjelly76.babymilestones.core.api.BabyData
 import io.github.lemonjelly76.babymilestones.core.api.LogRequest
 import io.github.lemonjelly76.babymilestones.core.api.TastingRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentLoader
+import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
+import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
+import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
 import io.github.lemonjelly76.babymilestones.core.growth.Measure
 import io.github.lemonjelly76.babymilestones.core.guidance.WeeklyPlay
@@ -127,5 +130,21 @@ class AppLogicTest {
         val api = ApiClient({ "https://example.test" }, { "token" }, HttpClient(engine) { expectSuccess = false })
         api.invite("view")
         assertEquals("""{"access":"view"}""", String(engine.requestHistory.single().body.toByteArray()))
+    }
+
+    @Test
+    fun `a planned food shows as done once it's logged, and today's plan lists what's left`() {
+        val plan = listOf(
+            PlannedFood("p1", "b_1", "food.broccoli", "Broccoli", FoodGroup.VEGETABLES, LocalDate.parse("2026-10-22"),
+                createdOn = LocalDate.parse("2026-10-21")),
+            PlannedFood("p2", "b_1", "food.egg", "Egg", FoodGroup.PROTEIN, LocalDate.parse("2026-10-22"),
+                createdOn = LocalDate.parse("2026-10-21")),
+        )
+        val tasting = FoodTasting("t1", "b_1", "food.broccoli", "Broccoli", FoodGroup.VEGETABLES, LocalDate.parse("2026-10-22"))
+        val data = BabyData(Baby("b_1", "Ava", LocalDate.parse("2026-04-21")), "england", emptyList(), emptyList(), emptyList(),
+            emptyList(), emptyList(), content.version, tastings = listOf(tasting), foodPlan = plan)
+        val v = BabyView(data, content, LocalDate.parse("2026-10-22"))
+        assertEquals(listOf(true, false), v.plan.map { it.done })
+        assertEquals(listOf("Egg"), v.plannedToday.map { it.item.name })
     }
 }

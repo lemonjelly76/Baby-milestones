@@ -4,6 +4,7 @@ import io.github.lemonjelly76.babymilestones.core.content.SignpostCopy
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
+import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistTick
 import io.github.lemonjelly76.babymilestones.core.json.Date
@@ -132,7 +133,11 @@ data class BabyData(
     val growth: List<GrowthMeasurement> = emptyList(),
     val words: List<FirstWord> = emptyList(),
     val teeth: List<ToothRecord> = emptyList(),
+    val foodPlan: List<PlannedFood> = emptyList(),
 )
+
+@Serializable
+data class GeneratePlanRequest(val days: Int = 14)
 
 @Serializable
 data class GrowthRequest(

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
+import io.github.lemonjelly76.babymilestones.core.api.TastingRequest
 import io.github.lemonjelly76.babymilestones.core.api.LogRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
@@ -86,6 +88,18 @@ fun TodayScreen(
             if (seenYet.size > 3) TextButton(onClick = onBackfill) { Text("${seenYet.size - 3} more from earlier ages: catch up") }
         }
 
+        if (view.showFoods) FoodsCard(view, viewModel, onFoods)
+
+        if (view.playIdeas.isNotEmpty()) {
+            SectionTitle("Play ideas this week")
+            InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer) {
+                view.playIdeas.forEach { idea ->
+                    Text("• ${idea.text}", modifier = Modifier.padding(vertical = 2.dp))
+                    idea.milestoneTitle?.let { Text("   For: $it", style = MaterialTheme.typography.bodySmall) }
+                }
+            }
+        }
+
         val watch = view.watchFor.take(5)
         if (watch.isNotEmpty()) {
             SectionTitle("Watch for")
@@ -100,18 +114,6 @@ fun TodayScreen(
                     ?: "Usually between ${a.windowStart.pretty()} and ${a.windowEnd.pretty()} · ${a.rule.with}")
             }
         }
-
-        if (view.playIdeas.isNotEmpty()) {
-            SectionTitle("Play ideas this week")
-            InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer) {
-                view.playIdeas.forEach { idea ->
-                    Text("• ${idea.text}", modifier = Modifier.padding(vertical = 2.dp))
-                    idea.milestoneTitle?.let { Text("   For: $it", style = MaterialTheme.typography.bodySmall) }
-                }
-            }
-        }
-
-        if (view.showFoods) FoodsCard(view, onFoods)
 
         view.schoolDates?.takeIf { it.applicationOpen(view.today) }?.let { dates ->
             InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer, onClick = { onOpenGuide("guide.starting_school") }) {
@@ -160,7 +162,7 @@ private fun SeenYetCard(t: TrackedMilestone, viewModel: AppViewModel, babyId: St
 }
 
 @Composable
-private fun FoodsCard(view: BabyView, onFoods: () -> Unit) {
+private fun FoodsCard(view: BabyView, viewModel: AppViewModel, onFoods: () -> Unit) {
     val foods = view.foods
     SectionTitle("Food")
     InfoCard(onClick = onFoods) {
@@ -173,7 +175,20 @@ private fun FoodsCard(view: BabyView, onFoods: () -> Unit) {
             Text("${it.allergen.label}: not offered for ${it.daysSinceLast} days. Keep it in the usual diet.",
                 style = MaterialTheme.typography.bodySmall)
         }
-        foods.suggestions.take(3).takeIf { it.isNotEmpty() }?.let { next ->
+        val today = view.plannedToday
+        if (today.isNotEmpty()) {
+            Text("Planned for today", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 4.dp))
+            today.forEach { p ->
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(false, {
+                        viewModel.logFood(view.baby.id, TastingRequest(
+                            foodId = p.item.foodId, name = if (p.item.foodId == null) p.item.name else null,
+                        ), "Logged ${p.item.name}")
+                    })
+                    Text(p.item.name)
+                }
+            }
+        } else if (view.plan.isEmpty()) foods.suggestions.take(3).takeIf { it.isNotEmpty() }?.let { next ->
             Text("Try next: " + next.joinToString { it.name }, style = MaterialTheme.typography.bodyMedium)
         }
         Text("Log a food ›", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,

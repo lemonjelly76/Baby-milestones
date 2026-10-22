@@ -38,7 +38,9 @@ import io.github.lemonjelly76.babymilestones.core.api.UpdateFamilyRequest
 import io.github.lemonjelly76.babymilestones.core.api.VaccinationRequest
 import io.github.lemonjelly76.babymilestones.core.api.WordRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
+import io.github.lemonjelly76.babymilestones.core.api.GeneratePlanRequest
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
+import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
 import io.github.lemonjelly76.babymilestones.core.records.Contact
@@ -215,6 +217,15 @@ class ApiClient(
             setBody(BabyJson.encodeToString(ChecklistRequest.serializer(), ChecklistRequest(done)))
         }
     }
+
+    suspend fun generatePlan(babyId: String, days: Int) = call(
+        HttpMethod.Post, "/api/babies/$babyId/food-plan/generate", ListSerializer(PlannedFood.serializer()),
+        GeneratePlanRequest.serializer(), GeneratePlanRequest(days),
+    )
+
+    suspend fun clearPlan(babyId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/food-plan")
+
+    suspend fun removePlanItem(babyId: String, itemId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/food-plan/$itemId")
 
     suspend fun deleteNote(babyId: String, noteId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/notes/$noteId")
 

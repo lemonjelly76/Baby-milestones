@@ -52,6 +52,7 @@ import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentStatus
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseStatus
 import io.github.lemonjelly76.babymilestones.core.schedule.ScheduledAppointment
+import io.github.lemonjelly76.babymilestones.core.schedule.ScheduledDose
 import io.github.lemonjelly76.babymilestones.core.timeline.TimelineKind
 import java.time.LocalDate
 import kotlinx.coroutines.launch
@@ -181,32 +182,33 @@ fun HealthScreen(
         TeethCard(view, onTeeth)
 
         SectionTitle("Reviews and checks")
-        view.schedule.appointments.forEach { a ->
-            InfoCard(onClick = { editing = a }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(Modifier.weight(1f)) {
-                        Text(a.rule.title, fontWeight = FontWeight.SemiBold)
-                        Text("${a.rule.with} · ${a.windowStart.format(DAY_SHORT)} – ${a.windowEnd.pretty()}", style = MaterialTheme.typography.bodySmall)
-                    }
-                    Text(when (a.status) {
-                        AppointmentStatus.DONE -> "Done ${a.record?.doneOn?.format(DAY_SHORT) ?: ""}"
-                        AppointmentStatus.BOOKED -> "Booked ${a.record?.bookedOn?.format(DAY_SHORT) ?: ""}"
-                        AppointmentStatus.OPEN -> "Due now"
-                        AppointmentStatus.PAST_WINDOW -> "Mark it"
-                        AppointmentStatus.UPCOMING -> "Later"
-                    }, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                }
-                a.record?.note?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
+        val appointments = view.schedule.appointments
+        val current = appointments.filter { it.status == AppointmentStatus.OPEN || it.status == AppointmentStatus.BOOKED }
+        val upcoming = appointments.filter { it.status == AppointmentStatus.UPCOMING }
+        val earlier = appointments.filter { it.status == AppointmentStatus.DONE || it.status == AppointmentStatus.PAST_WINDOW }
+        (current + upcoming.take(2)).forEach { AppointmentCard(it, onClick = { editing = it }) }
+        if (upcoming.size > 2) Expandable("Later (${upcoming.size - 2})") {
+            upcoming.drop(2).forEach { AppointmentCard(it, onClick = { editing = it }) }
+        }
+        if (earlier.isNotEmpty()) {
+            val toMark = earlier.count { it.status == AppointmentStatus.PAST_WINDOW }
+            Expandable("Earlier (${earlier.size})" + if (toMark > 0) " · $toMark to mark as done" else "") {
+                earlier.forEach { AppointmentCard(it, onClick = { editing = it }) }
             }
         }
 
         SectionTitle("Vaccinations")
         Text(rules.note, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(bottom = 8.dp))
-        view.schedule.doses.forEach { d ->
+        val doses = view.schedule.doses
+        val due = doses.filter { it.status == DoseStatus.DUE || it.status == DoseStatus.OVERDUE }
+        val laterDoses = doses.filter { it.status == DoseStatus.UPCOMING }
+        val given = doses.filter { it.status == DoseStatus.GIVEN }
+        @Composable
+        fun DoseRow(d: ScheduledDose) {
             Row(Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(d.status == DoseStatus.GIVEN, {
                     if (d.status == DoseStatus.GIVEN) viewModel.removeVaccination(babyId, d.rule.code) else vaccine = d.rule.code
-                })
+                }, enabled = state.canEdit)
                 Column(Modifier.weight(1f)) {
                     Text("${d.rule.vaccine} · ${d.rule.dose}")
                     Text(
@@ -217,6 +219,12 @@ fun HealthScreen(
                 }
             }
         }
+        val nextDate = laterDoses.minOfOrNull { it.dueOn }
+        (due + laterDoses.filter { it.dueOn == nextDate }).forEach { DoseRow(it) }
+        laterDoses.filter { it.dueOn != nextDate }.takeIf { it.isNotEmpty() }?.let { rest ->
+            Expandable("Later (${rest.size})") { rest.forEach { DoseRow(it) } }
+        }
+        if (given.isNotEmpty()) Expandable("Given (${given.size})") { given.forEach { DoseRow(it) } }
 
         SectionTitle("Questions for your health visitor")
         view.data.reviewNotes.forEach { n ->
@@ -249,6 +257,26 @@ fun HealthScreen(
             confirmButton = { TextButton(enabled = given != null, onClick = { viewModel.recordVaccination(babyId, code, given!!); vaccine = null }) { Text("Save") } },
             dismissButton = { TextButton(onClick = { vaccine = null }) { Text("Cancel") } },
         )
+    }
+}
+
+@Composable
+private fun AppointmentCard(a: ScheduledAppointment, onClick: () -> Unit) {
+    InfoCard(onClick = onClick) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f)) {
+                Text(a.rule.title, fontWeight = FontWeight.SemiBold)
+                Text("${a.rule.with} · ${a.windowStart.format(DAY_SHORT)} – ${a.windowEnd.pretty()}", style = MaterialTheme.typography.bodySmall)
+            }
+            Text(when (a.status) {
+                AppointmentStatus.DONE -> "Done ${a.record?.doneOn?.format(DAY_SHORT) ?: ""}"
+                AppointmentStatus.BOOKED -> "Booked ${a.record?.bookedOn?.format(DAY_SHORT) ?: ""}"
+                AppointmentStatus.OPEN -> "Due now"
+                AppointmentStatus.PAST_WINDOW -> "Mark it"
+                AppointmentStatus.UPCOMING -> "Later"
+            }, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+        }
+        a.record?.note?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
     }
 }
 

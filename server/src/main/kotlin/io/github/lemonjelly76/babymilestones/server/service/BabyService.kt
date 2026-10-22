@@ -7,6 +7,7 @@ import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.FoodTracker
+import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthEngine
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthReport
@@ -50,7 +51,9 @@ class BabyContext(
     loadGrowth: () -> List<GrowthMeasurement> = { emptyList() },
     loadWords: () -> List<FirstWord> = { emptyList() },
     loadTeeth: () -> List<ToothRecord> = { emptyList() },
+    loadPlan: () -> List<PlannedFood> = { emptyList() },
 ) {
+    val foodPlan: List<PlannedFood> by lazy(loadPlan)
     val growthMeasurements: List<GrowthMeasurement> by lazy(loadGrowth)
     val words: List<FirstWord> by lazy(loadWords)
     val teeth: List<ToothRecord> by lazy(loadTeeth)
@@ -128,6 +131,7 @@ class BabyService(
             loadGrowth = { records.growth(babyId) },
             loadWords = { records.words(babyId) },
             loadTeeth = { records.teeth(babyId) },
+            loadPlan = { foodStore.plan(babyId) },
         )
     }
 
@@ -138,7 +142,7 @@ class BabyService(
             baby, families.family(familyId)?.region ?: "england", babies.logs(babyId), babies.moments(babyId),
             babies.appointments(babyId), babies.doses(babyId), babies.reviewNotes(babyId), content.version,
             foodStore.tastings(babyId), guideStore.ticks(babyId), guideStore.assistantNotes(babyId),
-            records.growth(babyId), records.words(babyId), records.teeth(babyId),
+            records.growth(babyId), records.words(babyId), records.teeth(babyId), foodStore.plan(babyId),
         )
     }
 

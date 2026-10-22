@@ -153,7 +153,7 @@ object Export {
                 text(loggedDate(entry.before, entry.approximate, entry.date), body, 15f)
                 entry.note?.let { text(it, body, 15f) }
                 entry.photoRef?.let { ref ->
-                    load(ref)?.let { bytes -> android.graphics.BitmapFactory.decodeByteArray(bytes, 0, bytes.size) }?.let { bitmap ->
+                    load(ref)?.let { bytes -> decodeScaled(bytes, PHOTO_MAX_PX) }?.let { bitmap ->
                         val scale = minOf(maxWidth / bitmap.width, 220f / bitmap.height)
                         val w = bitmap.width * scale
                         val h = bitmap.height * scale

@@ -5,6 +5,8 @@ import io.github.lemonjelly76.babymilestones.core.content.SignpostCopy
 import io.github.lemonjelly76.babymilestones.core.food.Allergen
 import io.github.lemonjelly76.babymilestones.core.food.Food
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
+import io.github.lemonjelly76.babymilestones.core.food.PlanProgress
+import io.github.lemonjelly76.babymilestones.core.food.PlanSuggestion
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistProgress
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistTick
 import io.github.lemonjelly76.babymilestones.core.guides.Guide
@@ -69,6 +71,9 @@ data class ToothView(val id: String, val name: String, val usuallyAroundMonths: 
 
 @Serializable
 data class FirstsView(val words: List<FirstWord>, val teeth: List<ToothView>, val sources: List<SourceRef>)
+
+@Serializable
+data class FoodPlanView(val plan: List<PlanProgress>, val suggested: List<PlanSuggestion>)
 
 object FoodAndGuideViews {
     fun food(content: ContentBundle, f: Food, ageMonths: Int?) = FoodView(

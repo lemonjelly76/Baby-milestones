@@ -58,6 +58,7 @@ data class AppState(
     val babyData: Map<String, BabyData> = emptyMap(),
     val selectedBabyId: String? = null,
     val offline: Boolean = false,
+    val refreshing: Boolean = false,
     val busy: Boolean = false,
     val message: String? = null,
     val chats: Map<String, ChatState> = emptyMap(),
@@ -111,16 +112,21 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     /** Pulls everything from the server; on failure keeps the cached copy and shows the offline banner. */
     fun refresh() = viewModelScope.launch {
+        _state.update { it.copy(refreshing = true) }
         try {
             val content = repository.refreshContent(_state.value.content ?: repository.content())
             val me = repository.refreshMe()
             val data = me.babies.associate { it.id to repository.refreshBaby(it.id) }
-            _state.update { it.copy(loading = false, offline = false, me = me, content = content, babyData = data, today = LocalDate.now()) }
+            _state.update {
+                it.copy(loading = false, offline = false, refreshing = false, me = me, content = content, babyData = data, today = LocalDate.now())
+            }
             Reminders.schedule(getApplication())
         } catch (e: ApiException) {
             if (e.status == 401) signOut("This phone has been signed out. Please sign in again.") else fail(e)
         } catch (e: IOException) {
             _state.update { it.copy(loading = false, offline = true) }
+        } finally {
+            _state.update { it.copy(refreshing = false) }
         }
     }
 
@@ -315,6 +321,14 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun removeFood(babyId: String, tastingId: String) = action("Removed", refreshBaby = babyId) {
         repository.api.removeFood(babyId, tastingId)
     }
+
+    fun generatePlan(babyId: String, days: Int = 14) = action("Plan made: tick foods off as you log them", refreshBaby = babyId) {
+        repository.api.generatePlan(babyId, days)
+    }
+
+    fun clearPlan(babyId: String) = action("Plan cleared", refreshBaby = babyId) { repository.api.clearPlan(babyId) }
+
+    fun removePlanItem(babyId: String, itemId: String) = action(refreshBaby = babyId) { repository.api.removePlanItem(babyId, itemId) }
 
     fun setChecklistItem(babyId: String, itemId: String, done: Boolean) = action(refreshBaby = babyId) {
         repository.api.setChecklistItem(babyId, itemId, done)

@@ -1,9 +1,15 @@
 package io.github.lemonjelly76.babymilestones.server.service
 
+import io.github.lemonjelly76.babymilestones.core.age.AgeSpan
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
+import io.github.lemonjelly76.babymilestones.core.food.FoodPlanner
+import io.github.lemonjelly76.babymilestones.core.food.PlanKind
+import io.github.lemonjelly76.babymilestones.core.food.PlanSource
+import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
+import io.github.lemonjelly76.babymilestones.server.store.BabyStore
 import io.github.lemonjelly76.babymilestones.server.store.FoodStore
 import io.github.lemonjelly76.babymilestones.server.store.Ids
 import io.github.lemonjelly76.babymilestones.server.store.NotFoundException
@@ -35,10 +41,14 @@ data class TastingChanges(
     val clearPhoto: Boolean = false,
 )
 
-/** The foods tracker's records: each time a baby was offered a food. */
+/** A food to put on the plan: a catalogue id or a name (matched to the catalogue where it can be). */
+data class PlanInput(val food: String, val plannedOn: LocalDate, val kind: PlanKind = PlanKind.OTHER, val reason: String? = null)
+
+/** The foods tracker's records: each time a baby was offered a food, and the plan of foods to try. */
 @Service
 class FoodService(
     private val foodStore: FoodStore,
+    private val babies: BabyStore,
     private val access: BabyAccess,
     private val content: ContentBundle,
     private val clock: Clock,
@@ -94,10 +104,55 @@ class FoodService(
         if (!foodStore.deleteTasting(babyId, tastingId)) throw NotFoundException("No food entry $tastingId")
     }
 
+    // --- the food plan ---
+
+    /** Replaces the plan with one made by the app's rules ([FoodPlanner]) from today. */
+    @Transactional
+    fun generatePlan(writer: Writer, babyId: String, days: Int): List<PlannedFood> {
+        access.checkBaby(writer, babyId)
+        val baby = babies.baby(writer.familyId, babyId)!!
+        val today = today()
+        val suggestions = FoodPlanner(content).plan(
+            foodStore.tastings(babyId), today, AgeSpan.between(baby.dateOfBirth, today).months, days.coerceIn(1, MAX_PLAN_DAYS),
+        )
+        return savePlan(writer, babyId, suggestions.map { PlanInput(it.foodId, it.plannedOn, it.kind, it.reason) }, PlanSource.APP)
+    }
+
+    /** Replaces the plan; Claude's plans come through here from the save_food_plan tool. */
+    @Transactional
+    fun savePlan(writer: Writer, babyId: String, items: List<PlanInput>, source: PlanSource): List<PlannedFood> {
+        access.checkBaby(writer, babyId)
+        require(items.size <= MAX_PLAN_ITEMS) { "Keep a plan to $MAX_PLAN_ITEMS foods or fewer" }
+        val today = today()
+        foodStore.deletePlan(babyId)
+        return items.map { input ->
+            require(input.food.isNotBlank()) { "Each planned food needs a name" }
+            val food = content.findFood(input.food)
+            PlannedFood(
+                Ids.new("fp"), babyId, food?.id, food?.name ?: input.food.trim().take(MAX_NAME), food?.group ?: FoodGroup.OTHER,
+                input.plannedOn, input.kind, input.reason.clean(), source, today,
+            ).also { foodStore.savePlanItem(it, writer.carerId) }
+        }
+    }
+
+    @Transactional
+    fun clearPlan(writer: Writer, babyId: String) {
+        access.checkBaby(writer, babyId)
+        foodStore.deletePlan(babyId)
+    }
+
+    @Transactional
+    fun removePlanItem(writer: Writer, babyId: String, itemId: String) {
+        access.checkBaby(writer, babyId)
+        if (!foodStore.deletePlanItem(babyId, itemId)) throw NotFoundException("No planned food $itemId")
+    }
+
     private fun String?.clean() = this?.trim()?.ifEmpty { null }?.take(MAX_TEXT)
 
     companion object {
         const val MAX_NAME = 80
         const val MAX_TEXT = 1_000
+        const val MAX_PLAN_DAYS = 28
+        const val MAX_PLAN_ITEMS = 100
     }
 }

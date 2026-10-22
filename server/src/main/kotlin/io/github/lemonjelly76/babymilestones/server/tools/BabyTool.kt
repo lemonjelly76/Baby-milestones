@@ -55,6 +55,10 @@ class Args(val raw: JsonObject) {
             throw ToolInputException("'$name' must be a date like 2026-10-21")
         }
     }
+    fun objects(name: String): List<Args> =
+        (raw[name] as? JsonArray)?.map { Args(it as? JsonObject ?: throw ToolInputException("Each of '$name' must be an object")) }
+            ?: throw ToolInputException("Missing '$name'")
+
     fun strings(name: String): List<String> =
         (raw[name] as? JsonArray)?.mapNotNull { it.jsonPrimitive.contentOrNull } ?: emptyList()
 }
@@ -83,6 +87,14 @@ class SchemaBuilder {
 
     fun number(name: String, description: String, required: Boolean = false) =
         add(name, required, buildJsonObject { put("type", "number"); put("description", description) })
+
+    /** A list of objects, each described by [item]. */
+    fun objects(name: String, description: String, required: Boolean = false, item: SchemaBuilder.() -> Unit) =
+        add(name, required, buildJsonObject {
+            put("type", "array")
+            put("description", description)
+            put("items", SchemaBuilder().apply(item).build())
+        })
 
     fun boolean(name: String, description: String, required: Boolean = false) =
         add(name, required, buildJsonObject { put("type", "boolean"); put("description", description) })

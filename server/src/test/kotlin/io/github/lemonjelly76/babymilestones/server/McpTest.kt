@@ -60,7 +60,7 @@ class McpTest : IntegrationTest() {
             "update_milestone_log", "remove_milestone_log", "mark_not_sure", "add_moment", "update_appointment",
             "record_vaccination", "add_review_note", "get_foods", "get_food", "get_guides", "list_notes", "log_food",
             "remove_food_tasting", "update_checklist", "save_note", "get_growth", "log_growth", "get_firsts", "log_word",
-            "log_tooth", "get_contacts",
+            "log_tooth", "get_contacts", "get_food_plan", "save_food_plan",
         )), tools.toString())
 
         val pending = callTool(token, session, "get_pending_updates", """{"baby_id":"$babyId"}""")
@@ -95,7 +95,7 @@ class McpTest : IntegrationTest() {
         val session = connect(token)
         val prompts = message(rpc(token, session, "prompts/list")).getValue("result").jsonObject.getValue("prompts").jsonArray
             .map { it.jsonObject.getValue("name").jsonPrimitive.content }
-        assertEquals(setOf("weekly_checkin", "prepare_for_review", "explain_milestone", "meal_ideas"), prompts.toSet())
+        assertEquals(setOf("weekly_checkin", "prepare_for_review", "explain_milestone", "meal_ideas", "food_plan"), prompts.toSet())
 
         val summary = message(rpc(token, session, "resources/read", """{"uri":"baby://$babyId/summary"}"""))
         val text = summary.getValue("result").jsonObject.getValue("contents").jsonArray.first().jsonObject.getValue("text").jsonPrimitive.content
@@ -200,5 +200,23 @@ class McpTest : IntegrationTest() {
         assertEquals("false", read["isError"]?.jsonPrimitive?.content ?: "false")
         val write = callTool(viewer, session, "log_word", """{"baby_id":"$babyId","word":"ball"}""")
         assertEquals("true", write.getValue("isError").jsonPrimitive.content)
+    }
+
+    @Test
+    fun `claude saves a food plan the app shows as a checklist`() {
+        val token = newFamily()
+        val babyId = newBaby(token)
+        val session = connect(token)
+        val saved = callTool(token, session, "save_food_plan", """{"baby_id":"$babyId","items":[
+            {"food":"broccoli","planned_on":"2026-10-23","reason":"Less sweet vegetable"},
+            {"food":"Gran's lentil soup","planned_on":"2026-10-24"}]}""")
+        assertEquals("false", saved["isError"]?.jsonPrimitive?.content ?: "false", saved.toString())
+
+        val plan = BabyJson.parseToJsonElement(text(callTool(token, session, "get_food_plan", """{"baby_id":"$babyId"}"""))).jsonObject
+        val items = plan.getValue("plan").jsonArray.map { it.jsonObject.getValue("item").jsonObject }
+        assertEquals(listOf("food.broccoli", null), items.map { it["food_id"]?.jsonPrimitive?.content })
+        assertEquals("claude", items.first().getValue("source").jsonPrimitive.content)
+        assertTrue(plan.getValue("suggested").jsonArray.isNotEmpty())
+        assertEquals(2, get("/api/babies/$babyId/data", token).json.jsonObject["food_plan"]!!.jsonArray.size)
     }
 }
