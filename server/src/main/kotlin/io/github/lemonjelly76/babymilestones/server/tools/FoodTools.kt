@@ -138,14 +138,15 @@ class FoodTools(
         },
         BabyTool(
             "get_food_plan", "Food plan",
-            "The baby's plan of foods to try, day by day, with each item's status (done once the food is tasted on or after " +
-                "the day the plan was made), plus 'suggested': the two weeks the app's own rules would plan from today. Use " +
-                "the suggestion as a starting point; it follows NHS weaning advice and the tracker's allergen rules.",
+            "The baby's plan of foods to try, day by day: each food's status (done once tasted on or after the day the plan " +
+                "was made), how to serve it at that age, when it was had before, and a note for any new allergen's day (or a " +
+                "warning if that day also has something else new or another allergen). Plus 'suggested': the two weeks the " +
+                "app's own rules would plan from today, a good starting point. Pass these details on when you show a plan.",
             schema { string("baby_id", "Id from list_babies", required = true) }, write = false,
         ) { caller, args ->
             val ctx = ctx(caller, args)
             json(FoodPlanView.serializer(), FoodPlanView(
-                FoodPlanner.progress(ctx.foodPlan, ctx.tastings),
+                FoodPlanner.days(content, ctx.foodPlan, ctx.tastings, ctx.baby.dateOfBirth),
                 FoodPlanner(content).plan(ctx.tastings, ctx.today, ctx.snapshot.ages.chronological.months),
             ))
         },

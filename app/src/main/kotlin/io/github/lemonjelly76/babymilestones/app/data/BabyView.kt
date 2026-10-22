@@ -7,6 +7,7 @@ import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.content.PeriodGuide
 import io.github.lemonjelly76.babymilestones.core.food.FoodPlanner
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
+import io.github.lemonjelly76.babymilestones.core.food.PlanDay
 import io.github.lemonjelly76.babymilestones.core.food.PlanProgress
 import io.github.lemonjelly76.babymilestones.core.food.FoodTracker
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthEngine
@@ -60,6 +61,7 @@ class BabyView(val data: BabyData, val content: ContentBundle, val today: LocalD
     val ageMonths: Int get() = snapshot.ages.chronological.months
     val foods: FoodReport by lazy { FoodTracker(content).report(data.tastings, today, ageMonths) }
     val plan: List<PlanProgress> by lazy { FoodPlanner.progress(data.foodPlan, data.tastings) }
+    val planDays: List<PlanDay> by lazy { FoodPlanner.days(content, data.foodPlan, data.tastings, baby.dateOfBirth) }
     val plannedToday: List<PlanProgress> get() = plan.filter { it.item.plannedOn == today && !it.done }
     val guides: GuidesForAge by lazy { Guides.forAge(content.guides, ageMonths) }
     val ticked: Set<String> get() = data.checklist.map { it.itemId }.toSet()

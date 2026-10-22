@@ -74,4 +74,31 @@ class FoodPlannerTest {
         val soup = FoodTasting("t_x", "b_01", null, "gran's soup ", FoodGroup.OTHER, date("2026-10-24"))
         assertTrue(FoodPlanner.progress(listOf(own), listOf(soup)).single().done)
     }
+
+    private fun planned(foodId: String, on: String, kind: PlanKind) = content.food(foodId)!!.let {
+        PlannedFood("p_${n++}", "b_01", it.id, it.name, it.group, date(on), kind, createdOn = date("2026-10-22"))
+    }
+
+    @Test
+    fun `a new allergen's day explains itself, and each food says how to serve it and when it was had before`() {
+        val tastings = listOf(tasted("food.sweet_potato", "2026-10-14", Liking.NOT_SURE))
+        val plan = listOf(planned("food.peanut_butter", "2026-10-26", PlanKind.NEW_ALLERGEN),
+            planned("food.sweet_potato", "2026-10-26", PlanKind.OFFER_AGAIN))
+        val day = FoodPlanner.days(content, plan, tastings, date("2026-04-21")).single()
+
+        assertTrue("Peanut for the first time" in day.note!!, day.note)
+        assertTrue("had before" in day.note!!, day.note)
+        val (peanut, sweetPotato) = day.items
+        assertTrue("never on its own" in peanut.howToServe!!.lowercase(), peanut.howToServe)
+        assertEquals(null, peanut.hadBefore)
+        assertEquals("Had once before, on 14 Oct: not sure", sweetPotato.hadBefore)
+    }
+
+    @Test
+    fun `a day that mixes a new allergen with something else new gets a warning`() {
+        val plan = listOf(planned("food.peanut_butter", "2026-10-26", PlanKind.NEW_ALLERGEN),
+            planned("food.kale", "2026-10-26", PlanKind.NEW_FOOD))
+        val day = FoodPlanner.days(content, plan, emptyList(), date("2026-04-21")).single()
+        assertTrue("Kale is new too" in day.note!!, day.note)
+    }
 }

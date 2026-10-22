@@ -262,6 +262,9 @@ The user asked for a schedule of foods to try that works as a checklist, generat
   meals and saves it with `save_food_plan`. `get_food_plan` returns the plan with progress and the rules' suggestion.
 - **UI:** the plan sits at the top of the foods tracker's "Try next" tab as a checklist by day (ticking logs the food);
   Today lists the foods planned for today with a tick to log each.
+- **Day details (`FoodPlanner.days`):** each food shows how to serve it at that age and when it was had before; a new
+  allergen's day gets a note explaining why the rest of the day is safe to pair with it, or a warning when the day also
+  has something else new or another allergen (useful for plans Claude writes). `get_food_plan` returns the same.
 
 ### ADR-022 Structure for change — Accepted
 

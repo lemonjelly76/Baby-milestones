@@ -213,7 +213,9 @@ class McpTest : IntegrationTest() {
         assertEquals("false", saved["isError"]?.jsonPrimitive?.content ?: "false", saved.toString())
 
         val plan = BabyJson.parseToJsonElement(text(callTool(token, session, "get_food_plan", """{"baby_id":"$babyId"}"""))).jsonObject
-        val items = plan.getValue("plan").jsonArray.map { it.jsonObject.getValue("item").jsonObject }
+        val days = plan.getValue("days").jsonArray.map { it.jsonObject }
+        val items = days.flatMap { d -> d.getValue("items").jsonArray.map { it.jsonObject.getValue("progress").jsonObject.getValue("item").jsonObject } }
+        assertTrue("how_to_serve" in days.first().getValue("items").jsonArray.first().jsonObject)
         assertEquals(listOf("food.broccoli", null), items.map { it["food_id"]?.jsonPrimitive?.content })
         assertEquals("claude", items.first().getValue("source").jsonPrimitive.content)
         assertTrue(plan.getValue("suggested").jsonArray.isNotEmpty())

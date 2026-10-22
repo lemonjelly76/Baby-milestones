@@ -1,11 +1,14 @@
 package io.github.lemonjelly76.babymilestones.core.food
 
+import io.github.lemonjelly76.babymilestones.core.age.AgeSpan
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.json.Date
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import java.util.Locale
 
 @Serializable
 enum class PlanKind(val label: String) {
@@ -48,6 +51,14 @@ data class PlanProgress(val item: PlannedFood, val doneOn: Date? = null) {
     val done: Boolean get() = doneOn != null
 }
 
+/** One food on a day of the plan, with how to serve it at that age and when it was had before. */
+@Serializable
+data class PlanDayItem(val progress: PlanProgress, val howToServe: String? = null, val hadBefore: String? = null)
+
+/** A day of the plan; [note] explains a new allergen's day, or warns when the day makes a reaction hard to pin down. */
+@Serializable
+data class PlanDay(val date: Date, val items: List<PlanDayItem>, val note: String? = null)
+
 /**
  * A day-by-day plan of foods to try, following the same rules as the tracker's suggestions: one new thing a day; a new
  * allergen at most every [FoodTracker.NEW_ALLERGEN_GAP_DAYS] days, on a day with no other allergen, and then kept in the
@@ -61,8 +72,75 @@ class FoodPlanner(private val content: ContentBundle) {
     companion object {
         const val DEFAULT_DAYS = 14
 
+        private val DAY = DateTimeFormatter.ofPattern("d MMM", Locale.UK)
+
         fun progress(plan: List<PlannedFood>, tastings: List<FoodTasting>): List<PlanProgress> = plan.map { item ->
             PlanProgress(item, tastings.filter { it.key == item.key && !it.tastedOn.isBefore(item.createdOn) }.minOfOrNull { it.tastedOn })
+        }
+
+        /**
+         * The plan by day, as the app and Claude show it. Works for any plan, including one Claude wrote, so a day that
+         * adds a new allergen alongside something else new, or another allergen, is pointed out.
+         */
+        fun days(content: ContentBundle, plan: List<PlannedFood>, tastings: List<FoodTasting>, dateOfBirth: LocalDate): List<PlanDay> {
+            val progress = progress(plan, tastings).associateBy { it.item.id }
+            return plan.groupBy { it.plannedOn }.toSortedMap().map { (date, items) ->
+                val months = AgeSpan.between(dateOfBirth, date).months
+                val sorted = items.sortedBy { if (it.kind == PlanKind.NEW_ALLERGEN) -1 else it.kind.ordinal }
+                PlanDay(
+                    date,
+                    sorted.map { item ->
+                        PlanDayItem(
+                            progress.getValue(item.id),
+                            item.foodId?.let(content::food)?.servingAt(months)?.text,
+                            hadBefore(tastings.filter { it.key == item.key && it.tastedOn.isBefore(date) }),
+                        )
+                    },
+                    dayNote(content, sorted, plan, tastings, date),
+                )
+            }
+        }
+
+        private fun hadBefore(earlier: List<FoodTasting>): String? {
+            val last = earlier.maxByOrNull { it.tastedOn } ?: return null
+            val liking = last.liking?.let { ": ${it.label.lowercase()}" }.orEmpty()
+            return if (earlier.size == 1) "Had once before, on ${last.tastedOn.format(DAY)}$liking"
+            else "Had ${earlier.size} times before, last on ${last.tastedOn.format(DAY)}$liking"
+        }
+
+        private fun dayNote(
+            content: ContentBundle, items: List<PlannedFood>, plan: List<PlannedFood>, tastings: List<FoodTasting>, date: LocalDate,
+        ): String? {
+            fun allergens(item: PlannedFood) = item.foodId?.let(content::food)?.allergens.orEmpty()
+            val earlierKeys = tastings.filter { it.tastedOn.isBefore(date) }.map { it.key }.toSet() +
+                plan.filter { it.plannedOn.isBefore(date) }.map { it.key }
+            val introduced = (tastings.filter { it.tastedOn.isBefore(date) }.mapNotNull { it.foodId } +
+                plan.filter { it.plannedOn.isBefore(date) }.mapNotNull { it.foodId })
+                .mapNotNull(content::food).flatMap { it.allergens }.toSet()
+            val newAllergens = items.flatMap { item -> allergens(item).filter { it !in introduced }.map { it to item } }
+            if (newAllergens.isEmpty()) return null
+            val labels = newAllergens.map { it.first.label }.distinct()
+            if (labels.size > 1) {
+                return labels.joinToString(" and ") + " would ${if (labels.size == 2) "both" else "all"} be new today. Offer one new allergen at a time, a few days apart, so you can tell what caused any reaction."
+            }
+            val (allergen, carrier) = newAllergens.first()
+            val first = "${allergen.label} for the first time today."
+            val others = items.filter { it != carrier }
+            if (others.isEmpty()) return "$first Offer it in a small amount, so you can spot any reaction."
+            val problems = others.mapNotNull { item ->
+                when {
+                    item.key !in earlierKeys -> "${item.name} is new too"
+                    allergens(item).isNotEmpty() -> "${item.name} also contains ${allergens(item).joinToString { it.label.lowercase() }}"
+                    else -> null
+                }
+            }
+            return if (problems.isEmpty()) {
+                "$first Everything else today has been had before and has no allergens, so if there's a reaction you'll know " +
+                    "what caused it. Start with a small amount."
+            } else {
+                "$first ${problems.joinToString("; ")}: think about moving ${if (problems.size == 1) "it" else "them"} to " +
+                    "another day, so you'd know what caused any reaction."
+            }
         }
     }
 
@@ -106,7 +184,7 @@ class FoodPlanner(private val content: ContentBundle) {
             if (newAllergenAllowed && nextAllergen != null) {
                 val (allergen, food) = nextAllergen
                 add(food, date, PlanKind.NEW_ALLERGEN,
-                    "${allergen.label} for the first time: on its own, in a small amount, so you can spot any reaction.")
+                    "${allergen.label} for the first time, in a small amount.")
                 tried += food.id
             } else {
                 nextNewFood(suitable, tried)?.let { food ->

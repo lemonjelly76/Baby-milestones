@@ -62,7 +62,7 @@ import io.github.lemonjelly76.babymilestones.core.food.FoodNames
 import io.github.lemonjelly76.babymilestones.core.food.FoodProgress
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
-import io.github.lemonjelly76.babymilestones.core.food.PlanProgress
+import io.github.lemonjelly76.babymilestones.core.food.PlanDayItem
 import io.github.lemonjelly76.babymilestones.core.food.PlanSource
 import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
 import java.time.LocalDate
@@ -220,17 +220,20 @@ private fun FoodPlanSection(
     SectionTitle("Food plan")
     Text("$done of ${plan.size} done · $source", style = MaterialTheme.typography.bodySmall)
     LinearProgressIndicator(progress = { done.toFloat() / plan.size }, modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp))
-    val (earlier, coming) = plan.partition { it.item.plannedOn.isBefore(view.today) }
-    val missed = earlier.filterNot { it.done }
+    val (earlier, coming) = view.planDays.partition { it.date.isBefore(view.today) }
+    val missed = earlier.flatMap { it.items }.filterNot { it.progress.done }
     if (missed.isNotEmpty()) {
         Text("Earlier, not logged yet", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(top = 8.dp))
-        missed.forEach { PlanRow(it, canEdit, onOpen = { onOpen(target(it.item)) }, onLog = { onLog(target(it.item)) }) }
+        missed.forEach { PlanRow(it, canEdit, onOpen = { onOpen(target(it.progress.item)) }, onLog = { onLog(target(it.progress.item)) }) }
     }
-    coming.groupBy { it.item.plannedOn }.forEach { (date, items) ->
-        Text(dayLabel(date, view.today), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(top = 8.dp))
-        items.forEach { PlanRow(it, canEdit, onOpen = { onOpen(target(it.item)) }, onLog = { onLog(target(it.item)) }) }
+    coming.forEach { day ->
+        Text(dayLabel(day.date, view.today), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(top = 12.dp))
+        day.note?.let { note ->
+            InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer) { Text(note, style = MaterialTheme.typography.bodySmall) }
+        }
+        day.items.forEach { PlanRow(it, canEdit, onOpen = { onOpen(target(it.progress.item)) }, onLog = { onLog(target(it.progress.item)) }) }
     }
     if (canEdit) Row(horizontalArrangement = Gap, modifier = Modifier.padding(vertical = 8.dp)) {
         OutlinedButton(onClick = { replacing = true }) { Text("New plan") }
@@ -245,15 +248,23 @@ private fun FoodPlanSection(
 }
 
 @Composable
-private fun PlanRow(progress: PlanProgress, canEdit: Boolean, onOpen: () -> Unit, onLog: () -> Unit) {
+private fun PlanRow(entry: PlanDayItem, canEdit: Boolean, onOpen: () -> Unit, onLog: () -> Unit) {
+    val progress = entry.progress
     val item = progress.item
-    Row(Modifier.fillMaxWidth().clickable(onClick = onOpen), verticalAlignment = Alignment.CenterVertically) {
+    Row(Modifier.fillMaxWidth().clickable(onClick = onOpen), verticalAlignment = Alignment.Top) {
         Checkbox(progress.done, { if (!progress.done) onLog() }, enabled = canEdit && !progress.done)
-        Column(Modifier.weight(1f).padding(vertical = 4.dp)) {
+        Column(Modifier.weight(1f).padding(vertical = 10.dp)) {
             Text(item.name, style = MaterialTheme.typography.bodyLarge,
                 textDecoration = if (progress.done) TextDecoration.LineThrough else null)
-            Text(progress.doneOn?.let { "Logged ${it.format(DAY_SHORT)}" } ?: item.reason ?: item.kind.label,
-                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            val small = MaterialTheme.typography.bodySmall
+            val muted = MaterialTheme.colorScheme.onSurfaceVariant
+            if (progress.doneOn != null) {
+                Text("Logged ${progress.doneOn!!.format(DAY_SHORT)}", style = small, color = muted)
+            } else {
+                Text(item.reason ?: item.kind.label, style = small, color = muted)
+                entry.hadBefore?.let { Text(it, style = small, color = muted) }
+                entry.howToServe?.let { Text("How to serve: $it", style = small, modifier = Modifier.padding(top = 2.dp)) }
+            }
         }
     }
 }

@@ -181,7 +181,8 @@ class McpConfiguration {
                 "get_food_plan (its 'suggested' plan follows the app's rules) and get_foods. Adapt it to what I tell you about " +
                 "our meals and what we have in, keeping the rules: one new allergen at a time at least 3 days apart, " +
                 "introduced allergens kept going weekly, foods not liked yet offered again, an iron-rich food each day. Show " +
-                "me the plan as a short list by day, and when I'm happy save it with save_food_plan so it appears in the app."
+                "me the plan as a short list by day, with how to serve each food and the note for any new allergen's day, and " +
+                "when I'm happy save it with save_food_plan so it appears in the app."
         },
     )
 
