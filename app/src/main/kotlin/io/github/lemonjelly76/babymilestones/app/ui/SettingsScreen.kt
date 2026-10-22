@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.NotificationSettings
@@ -141,6 +143,20 @@ fun SettingsScreen(state: AppState, viewModel: AppViewModel, onBack: () -> Unit,
                 "and the BLISS trial. Content version ${state.content?.version}.",
                 style = MaterialTheme.typography.bodySmall)
             state.content?.let { Sources(it, it.references.map { r -> r.id }) }
+            state.content?.let { content ->
+                Expandable("Food photo credits (${content.foods.count { it.image != null }})") {
+                    val uri = LocalUriHandler.current
+                    content.foods.forEach { f ->
+                        f.image?.let { img ->
+                            Text("${f.name}: ${img.author}, ${img.licence}", style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(vertical = 2.dp).clickable { uri.openUri(img.source) })
+                        }
+                    }
+                    Text("From Wikimedia Commons under Creative Commons or public domain licences. Tap a credit for its source " +
+                        "and licence. Photos are cropped.", style = MaterialTheme.typography.bodySmall)
+                }
+            }
             Text("Server: ${state.serverUrl}", style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 16.dp))
         }
     }

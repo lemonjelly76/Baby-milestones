@@ -309,6 +309,16 @@ detail after, trusted onward links, visible sources and a review date.
   since around 15 apply at 6 months.
 - **Claude:** `get_guides` returns the key points, links and related guides, so Claude can pass them on.
 
+### ADR-025 Food photos — Accepted
+
+105 of the 109 foods have a photo from Wikimedia Commons, chosen by eye from each food's Wikipedia lead image or a
+targeted search, and kept only under CC0, public domain, CC BY or CC BY-SA (`ContentValidator` rejects anything else).
+Each is centre-cropped to 480×360 JPEG in the app's assets (about 4 MB in all) so the tracker works offline. The credit
+(author, licence, "via Wikimedia Commons", cropped) shows under the photo on each food's card and links to its source
+page; all credits are listed under Settings, and kept in `docs/food-photo-credits.json`. Photos were checked against
+the serving advice, so the egg photo shows whole eggs rather than a runny yolk. No photo yet: baby cereal, leek,
+parsnip, soya yoghurt (no clear, openly licensed picture found).
+
 ### ADR-013 Out of this build — Deferred
 
 Feed/nappy/sleep logging, a medicine and temperature log (needs a decision: it would be a record only, ADR-010), a meal log, recipes and a step-by-step allergen plan (ADR-014), iOS, Room and an offline write queue, OAuth, Scotland/Wales/NI

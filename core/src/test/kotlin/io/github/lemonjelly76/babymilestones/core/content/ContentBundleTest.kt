@@ -3,6 +3,7 @@ package io.github.lemonjelly76.babymilestones.core.content
 import io.github.lemonjelly76.babymilestones.core.Fixtures
 import io.github.lemonjelly76.babymilestones.core.food.Allergen
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
+import io.github.lemonjelly76.babymilestones.core.food.FoodImage
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistItem
 import io.github.lemonjelly76.babymilestones.core.guides.GuideFeature
 import io.github.lemonjelly76.babymilestones.core.guides.GuideLink
@@ -111,6 +112,16 @@ class ContentBundleTest {
         assertTrue(content.guides.sumOf { it.links.size } >= 25)
         assertTrue(content.guides.flatMap { it.links }.any { it.kind == LinkKind.VIDEO })
         assertTrue(content.guide("guide.safer_sleep") != null && content.guide("guide.urgent_help") != null)
+    }
+
+    @Test
+    fun `food photos are openly licensed and credited, and most foods have one`() {
+        val withPhotos = content.foods.mapNotNull { it.image }
+        assertTrue(withPhotos.size >= content.foods.size * 3 / 4, "${withPhotos.size} photos")
+        withPhotos.forEach { assertTrue(it.author.isNotBlank() && it.source.startsWith("https://")) }
+        val bad = content.copy(foods = listOf(content.foods.first().copy(
+            image = FoodImage("food/x.jpg", "Someone", "All rights reserved", "https://example.org"))))
+        assertTrue(ContentValidator.problems(bad).any { "isn't open" in it })
     }
 
     @Test

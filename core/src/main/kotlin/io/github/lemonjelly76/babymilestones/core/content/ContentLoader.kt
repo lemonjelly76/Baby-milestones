@@ -1,6 +1,7 @@
 package io.github.lemonjelly76.babymilestones.core.content
 
 import io.github.lemonjelly76.babymilestones.core.food.Food
+import io.github.lemonjelly76.babymilestones.core.food.FoodImage
 import io.github.lemonjelly76.babymilestones.core.food.FoodNames
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthReference
 import io.github.lemonjelly76.babymilestones.core.growth.Measure
@@ -118,6 +119,7 @@ private fun MutableList<String>.checkFoods(bundle: ContentBundle, checkSources: 
     bundle.foods.forEach { f ->
         if (!f.id.startsWith("food.")) add("${f.id} should start with food.")
         if (f.serving.isEmpty()) add("${f.id} has no serving advice")
+        f.image?.let { if (!FoodImage.OPEN.containsMatchIn(it.licence)) add("${f.id} photo licence ${it.licence} isn't open") }
         if (f.serving.zipWithNext().any { (a, b) -> a.fromMonths >= b.fromMonths }) add("${f.id} serving advice is out of age order")
         f.serving.firstOrNull()?.let { if (it.fromMonths > f.fromMonths) add("${f.id} has no serving advice from ${f.fromMonths} months") }
         checkSources(f.id, f.sources)

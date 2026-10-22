@@ -133,6 +133,7 @@ fun FoodsScreen(state: AppState, babyId: String, viewModel: AppViewModel, onBack
                             tried = true,
                             onOpen = { open = target(p) },
                             onLog = { quickLog(target(p)) },
+                            food = p.foodId?.let(content::food),
                         )
                     }
                 }
@@ -225,7 +226,7 @@ private fun FoodPlanSection(
     if (missed.isNotEmpty()) {
         Text("Earlier, not logged yet", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(top = 8.dp))
-        missed.forEach { PlanRow(it, canEdit, onOpen = { onOpen(target(it.progress.item)) }, onLog = { onLog(target(it.progress.item)) }) }
+        missed.forEach { PlanRow(it, it.progress.item.foodId?.let(content::food), canEdit, onOpen = { onOpen(target(it.progress.item)) }, onLog = { onLog(target(it.progress.item)) }) }
     }
     coming.forEach { day ->
         Text(dayLabel(day.date, view.today), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
@@ -233,7 +234,7 @@ private fun FoodPlanSection(
         day.note?.let { note ->
             InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer) { Text(note, style = MaterialTheme.typography.bodySmall) }
         }
-        day.items.forEach { PlanRow(it, canEdit, onOpen = { onOpen(target(it.progress.item)) }, onLog = { onLog(target(it.progress.item)) }) }
+        day.items.forEach { PlanRow(it, it.progress.item.foodId?.let(content::food), canEdit, onOpen = { onOpen(target(it.progress.item)) }, onLog = { onLog(target(it.progress.item)) }) }
     }
     if (canEdit) Row(horizontalArrangement = Gap, modifier = Modifier.padding(vertical = 8.dp)) {
         OutlinedButton(onClick = { replacing = true }) { Text("New plan") }
@@ -248,11 +249,12 @@ private fun FoodPlanSection(
 }
 
 @Composable
-private fun PlanRow(entry: PlanDayItem, canEdit: Boolean, onOpen: () -> Unit, onLog: () -> Unit) {
+private fun PlanRow(entry: PlanDayItem, food: Food?, canEdit: Boolean, onOpen: () -> Unit, onLog: () -> Unit) {
     val progress = entry.progress
     val item = progress.item
     Row(Modifier.fillMaxWidth().clickable(onClick = onOpen), verticalAlignment = Alignment.Top) {
         Checkbox(progress.done, { if (!progress.done) onLog() }, enabled = canEdit && !progress.done)
+        Column(Modifier.padding(top = 10.dp)) { FoodThumb(food, 44.dp) }
         Column(Modifier.weight(1f).padding(vertical = 10.dp)) {
             Text(item.name, style = MaterialTheme.typography.bodyLarge,
                 textDecoration = if (progress.done) TextDecoration.LineThrough else null)
@@ -292,7 +294,7 @@ private fun TryNext(
     suggestions.forEach { s ->
         val food = content.food(s.foodId) ?: return@forEach
         FoodRow(food.name, s.reason, tried = view.foods.progress(food.id) != null,
-            onOpen = { onOpen(FoodTarget.of(food)) }, onLog = { onLog(FoodTarget.of(food)) })
+            onOpen = { onOpen(FoodTarget.of(food)) }, onLog = { onLog(FoodTarget.of(food)) }, food = food)
     }
 }
 
@@ -313,7 +315,8 @@ private fun AllFoods(view: BabyView, content: ContentBundle, onOpen: (FoodTarget
                 if (f.chokingRisk) add("prepare carefully")
             }
             FoodRow(f.name, tags.joinToString(" · ").ifEmpty { null }, tried = view.foods.progress(f.id) != null,
-                onOpen = { onOpen(FoodTarget.of(f)) }, onLog = if (f.suitableAt(view.ageMonths)) ({ onLog(FoodTarget.of(f)) }) else null)
+                onOpen = { onOpen(FoodTarget.of(f)) }, onLog = if (f.suitableAt(view.ageMonths)) ({ onLog(FoodTarget.of(f)) }) else null,
+                food = f)
         }
     }
 }
@@ -349,8 +352,9 @@ private fun Allergens(view: BabyView, content: ContentBundle, onOpen: (FoodTarge
 }
 
 @Composable
-private fun FoodRow(name: String, detail: String?, tried: Boolean, onOpen: () -> Unit, onLog: (() -> Unit)?) {
+private fun FoodRow(name: String, detail: String?, tried: Boolean, onOpen: () -> Unit, onLog: (() -> Unit)?, food: Food? = null) {
     Row(Modifier.fillMaxWidth().clickable(onClick = onOpen).padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+        FoodThumb(food)
         Column(Modifier.weight(1f)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(name, style = MaterialTheme.typography.bodyLarge)
@@ -390,6 +394,7 @@ private fun FoodSheet(
                 if (food?.chokingRisk == true) Tag("Prepare to lower choking risk")
             }
 
+            FoodHeroPhoto(food)
             if (food != null) {
                 if (!food.suitableAt(months)) InfoCard(color = MaterialTheme.colorScheme.errorContainer) {
                     Text("Not until ${monthsLabel(food.fromMonths)}.", fontWeight = FontWeight.SemiBold)

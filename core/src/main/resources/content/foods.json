@@ -9,6 +9,13 @@
         "text": "Steam or boil until soft and offer florets with a bit of stalk to hold, or mash them. Let it cool right down first."
       }
     ],
+    "image": {
+      "file": "food/broccoli.jpg",
+      "author": "Horacio Cambeiro",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Cooked_broccoli_florets_in_a_textured_glass_bowl.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-what-to-feed-7-9"
@@ -24,6 +31,13 @@
         "text": "Steam or boil until soft and offer florets with a bit of stalk to hold, or mash them. Let it cool right down first."
       }
     ],
+    "image": {
+      "file": "food/cauliflower.jpg",
+      "author": "Coyau",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Chou-fleur_02.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -38,6 +52,13 @@
         "text": "Cook, chop finely and stir into other food such as pasta sauce, omelette or mash: whole leaves are hard to chew."
       }
     ],
+    "image": {
+      "file": "food/spinach.jpg",
+      "author": "Rasbak",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Spinacia_oleracea_Spinazie_bloeiend.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -52,6 +73,13 @@
         "text": "Cook, chop finely and stir into other food such as pasta sauce, omelette or mash: whole leaves are hard to chew."
       }
     ],
+    "image": {
+      "file": "food/kale.jpg",
+      "author": "Rasbak",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Boerenkool.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -66,6 +94,13 @@
         "text": "Cook, chop finely and stir into other food such as pasta sauce, omelette or mash: whole leaves are hard to chew."
       }
     ],
+    "image": {
+      "file": "food/cabbage.jpg",
+      "author": "Evelyn Simak",
+      "licence": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:A_head_of_Savoy_cabbage_-_geograph.org.uk_-_6071054.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -80,6 +115,13 @@
         "text": "Cook until soft and offer whole beans to hold, or chop them. Let it cool right down first."
       }
     ],
+    "image": {
+      "file": "food/green_beans.jpg",
+      "author": "Christopher Franz",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Four_Different_Varieties_of_Green_Beans_(Phaseolus_vulgaris).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -97,6 +139,12 @@
         "text": "Cook until soft, then offer finger-sized pieces to hold, or mash it. Let it cool right down first."
       }
     ],
+    "image": {
+      "file": "food/courgette.jpg",
+      "author": "Evan-Amos",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:CSA-Striped-Zucchini.jpg"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -111,6 +159,13 @@
         "text": "Cook until soft and offer whole spears to hold. Let it cool right down first."
       }
     ],
+    "image": {
+      "file": "food/asparagus.jpg",
+      "author": "Petar Milošević",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Asparagus_soup_(spargelsuppe).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -129,6 +184,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/peas.jpg",
+      "author": "Francis Bijl from Groningen, Netherlands",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Frozen_peas_(384924971).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "cameron-2015-bliss"
@@ -162,6 +224,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/brussels_sprouts.jpg",
+      "author": "Eric Hunt",
+      "licence": "CC BY 2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:Brussels_sprout_closeup.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.5"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-food-prep"
@@ -180,6 +249,13 @@
         "text": "Roast or cook until soft and offer strips without the tough skin, or mash it."
       }
     ],
+    "image": {
+      "file": "food/aubergine.jpg",
+      "author": "Joydeep",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Solanum_melongena_24_08_2012_(1).JPG",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -195,6 +271,12 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/cucumber.jpg",
+      "author": "Stephen Ausmus, USDA ARS",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:ARS_cucumber.jpg"
+    },
     "sources": [
       "nhs-food-prep",
       "cameron-2015-bliss"
@@ -218,6 +300,13 @@
         "text": "Cooked strips, or raw in narrow batons."
       }
     ],
+    "image": {
+      "file": "food/pepper.jpg",
+      "author": "Kham Tran - www.khamtran.com",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Green-Yellow-Red-Pepper-2009.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-food-prep"
@@ -236,6 +325,13 @@
         "text": "Cook until soft and slice into strips, or chop into sauces."
       }
     ],
+    "image": {
+      "file": "food/mushroom.jpg",
+      "author": "chris_73",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:ChampignonMushroom.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -250,6 +346,13 @@
         "text": "Offer soft, ripe wedges, or cook into sauces."
       }
     ],
+    "image": {
+      "file": "food/tomato.jpg",
+      "author": "Softeis",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tomato_je.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -268,6 +371,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/cherry_tomatoes.jpg",
+      "author": "Luc Viatour",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tomates_cerises_Luc_Viatour.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-food-prep"
     ]
@@ -290,6 +400,12 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/carrot.jpg",
+      "author": "Evan-Amos",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Vegetable-Carrot-Bundle-wStalks.jpg"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep",
@@ -321,6 +437,13 @@
         "text": "Cook until soft, then offer finger-sized sticks or mash it. Let it cool right down first."
       }
     ],
+    "image": {
+      "file": "food/swede.jpg",
+      "author": "Picasa user Seedambassadors",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Rutabaga,_variety_nadmorska.JPG",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -338,6 +461,12 @@
         "text": "Roast or steam until soft and offer finger-sized sticks, or mash it. Let it cool right down first."
       }
     ],
+    "image": {
+      "file": "food/butternut_squash.jpg",
+      "author": "George Chernilevsky",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Cucurbita_moschata_Butternut_2012_G2.jpg"
+    },
     "sources": [
       "nhs-what-to-feed-7-9"
     ]
@@ -352,6 +481,13 @@
         "text": "Cook until soft and offer finger-sized wedges, or grate it into other food."
       }
     ],
+    "image": {
+      "file": "food/beetroot.jpg",
+      "author": "BriannaWalther",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Detroitdarkredbeets.png",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-food-prep"
@@ -371,6 +507,12 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/sweetcorn.jpg",
+      "author": "wstoakLL (English Wikipedia)",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:VegCorn.jpg"
+    },
     "sources": [
       "nhs-what-to-feed",
       "cameron-2015-bliss"
@@ -386,6 +528,13 @@
         "text": "Cook until soft and chop finely into sauces and dishes."
       }
     ],
+    "image": {
+      "file": "food/onion.jpg",
+      "author": "Colin",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mixed_onions.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -405,6 +554,12 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/celery.jpg",
+      "author": "Lombroso",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Celery_1.jpg"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-food-prep"
@@ -420,6 +575,13 @@
         "text": "Cook, chop finely and stir into other food such as pasta sauce, omelette or mash: whole leaves are hard to chew."
       }
     ],
+    "image": {
+      "file": "food/pak_choi.jpg",
+      "author": "spurekar",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bok_Choy_(49553125456).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -438,6 +600,13 @@
         "text": "Cook thoroughly and cut into strips as thinly as possible, or shred it. Remove all bones. Don't add salt."
       }
     ],
+    "image": {
+      "file": "food/beef.jpg",
+      "author": "Michael C. Berch, aka MCB at en.wikipedia",
+      "licence": "CC BY-SA 2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:Standing-rib-roast.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/2.5"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep",
@@ -460,6 +629,13 @@
         "text": "Cook thoroughly and shape into soft meatballs or patties, or stir into sauces. Don't add salt."
       }
     ],
+    "image": {
+      "file": "food/beef_mince.jpg",
+      "author": "Rainer Zenz",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Hackfleisch-1.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-iron"
@@ -476,6 +652,13 @@
         "text": "Cook thoroughly and cut into strips as thinly as possible, or shred it. Remove all bones. Don't add salt."
       }
     ],
+    "image": {
+      "file": "food/lamb.jpg",
+      "author": "Sevela.p",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Lamb_meat_(1).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep",
@@ -493,6 +676,13 @@
         "text": "Cook thoroughly and cut into strips as thinly as possible, or shred it. Remove all bones. Don't add salt."
       }
     ],
+    "image": {
+      "file": "food/pork.jpg",
+      "author": "Rainer Zenz",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Schweinebauch-2.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep",
@@ -509,6 +699,13 @@
         "text": "Cook thoroughly and offer strips of thigh or shredded meat. Remove all bones. Don't add salt."
       }
     ],
+    "image": {
+      "file": "food/chicken.jpg",
+      "author": "Evan Swigart from Chicago, USA",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Max%27s_Roasted_Chicken_-_Evan_Swigart.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep"
@@ -524,6 +721,13 @@
         "text": "Cook thoroughly and offer thin strips or shredded meat, or mince in patties. Don't add salt."
       }
     ],
+    "image": {
+      "file": "food/turkey.jpg",
+      "author": "Patrick Fitzgerald from Atlanta, GA, USA",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Thanksgiving_Turkey.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep"
@@ -544,6 +748,13 @@
         "text": "Cook until very soft: as dhal on a preloaded spoon, or mixed into sauces."
       }
     ],
+    "image": {
+      "file": "food/lentils.jpg",
+      "author": "User:Justinc",
+      "licence": "CC BY-SA 2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:3_types_of_lentil.png",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/2.5"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-iron"
@@ -564,6 +775,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/chickpeas.jpg",
+      "author": "AlixSaz",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ordinary_chickpeas_in_a_ceramic_bowl.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-iron"
@@ -580,6 +798,13 @@
         "text": "Cook until soft and mash or squash them, or stir into dishes."
       }
     ],
+    "image": {
+      "file": "food/kidney_beans.jpg",
+      "author": "Sanjay Acharya",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Red_Speckled_Kidney_Beans.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-iron"
@@ -596,6 +821,13 @@
         "text": "Cook until soft and mash or squash them, or stir into dishes."
       }
     ],
+    "image": {
+      "file": "food/black_beans.jpg",
+      "author": "Father.Jack from Coventry, UK",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Black_beans_(1126927794).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-iron"
@@ -612,6 +844,13 @@
         "text": "Cook until soft and mash or squash them, or stir into dishes."
       }
     ],
+    "image": {
+      "file": "food/butter_beans.jpg",
+      "author": "Howard F. Schwartz, Bugwood.org",
+      "licence": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Phaseoulus_lunatus.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/3.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-iron"
@@ -628,6 +867,13 @@
         "text": "Choose reduced-salt and reduced-sugar, and squash the beans."
       }
     ],
+    "image": {
+      "file": "food/baked_beans.jpg",
+      "author": "Mk2010",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Baked_beans_in_tomato_sauce.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-foods-to-avoid",
@@ -653,6 +899,13 @@
         "text": "Hard-boil and cut into quarters, or offer strips of well-cooked omelette. Eggs with the British Lion stamp can be lightly cooked; cook other eggs until the white and yolk are solid."
       }
     ],
+    "image": {
+      "file": "food/egg.jpg",
+      "author": "George Chernilevsky",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Eggs_in_basket_2020_G1.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-foods-to-avoid",
@@ -676,6 +929,13 @@
         "text": "Smooth and with no added salt or sugar, spread thinly on toast fingers or stirred into porridge. Never on its own, and never whole peanuts before 5."
       }
     ],
+    "image": {
+      "file": "food/peanut_butter.jpg",
+      "author": "Famartin",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:2020-03-24_20_57_22_An_open_jar_of_Skippy_Creamy_Peanut_Butter_in_the_Dulles_section_of_Sterling,_Loudoun_County,_Virginia.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-foods-to-avoid",
@@ -697,6 +957,13 @@
         "text": "Cook thoroughly, flake it and check carefully for bones."
       }
     ],
+    "image": {
+      "file": "food/salmon.jpg",
+      "author": "DanaTentis",
+      "licence": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Grilled_plated_salmon_fillet_(cropped).jpg",
+      "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep",
@@ -716,6 +983,13 @@
         "text": "Cook thoroughly, flake it and check carefully for bones."
       }
     ],
+    "image": {
+      "file": "food/cod.jpg",
+      "author": "Fumikas Sagisavas",
+      "licence": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Frozen_cod_fillet_(20240124).jpg",
+      "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep",
@@ -735,6 +1009,13 @@
         "text": "Cook thoroughly, flake it and check carefully for bones."
       }
     ],
+    "image": {
+      "file": "food/haddock.jpg",
+      "author": "Steven G. Johnson",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Haddock,_Boston_Aquarium.JPG",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep",
@@ -754,6 +1035,13 @@
         "text": "Choose tinned in water rather than brine to keep salt down; mash well, soft bones and all."
       }
     ],
+    "image": {
+      "file": "food/sardines.jpg",
+      "author": "Yusuke Kawasaki from Tokyo, Japan",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Grilled_Sardines_5.50%E2%82%AC_Marisqueira_O_Varino_Nazar%C3%A9_(3785526688).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-foods-to-avoid",
@@ -773,6 +1061,12 @@
         "text": "Cook thoroughly, flake it and check carefully for bones."
       }
     ],
+    "image": {
+      "file": "food/mackerel.jpg",
+      "author": "Jastrow",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Maquereaux_etal.jpg"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep",
@@ -792,6 +1086,13 @@
         "text": "Tinned in spring water rather than brine, flaked into pasta or mashed potato."
       }
     ],
+    "image": {
+      "file": "food/tuna.jpg",
+      "author": "Daderot",
+      "licence": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tuna_steak_and_peas_-_Massachusetts.jpg",
+      "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-foods-to-avoid",
@@ -815,6 +1116,13 @@
         "text": "Cook thoroughly, never raw or lightly cooked, and chop finely."
       }
     ],
+    "image": {
+      "file": "food/prawns.jpg",
+      "author": "rovingI",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Spicy_fried_King_Prawns.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-foods-to-avoid",
@@ -835,6 +1143,13 @@
         "text": "Use firm tofu cut into finger-sized strips, or crumbled into dishes."
       }
     ],
+    "image": {
+      "file": "food/tofu.jpg",
+      "author": "DryPot",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Japanese_SilkyTofu_(Kinugoshi_Tofu).JPG",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-iron",
@@ -859,6 +1174,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/edamame.jpg",
+      "author": "Tammy Green",
+      "licence": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Edamame_by_Zesmerelda_in_Chicago.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-iron",
@@ -881,6 +1203,13 @@
         "text": "Stir a little into porridge, yoghurt or mashed vegetables, or spread thinly on toast."
       }
     ],
+    "image": {
+      "file": "food/tahini.jpg",
+      "author": "Gilabrand",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tahina.JPG",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-foods-to-avoid",
@@ -901,6 +1230,13 @@
         "text": "Spread thinly on toast fingers or offer as a dip for soft vegetable sticks. Shop-bought hummus can be salty, so homemade without salt is best."
       }
     ],
+    "image": {
+      "file": "food/hummus.jpg",
+      "author": "Beyrouthhh at English Wikipedia",
+      "licence": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Lebanese_style_hummus.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/3.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-foods-to-avoid",
@@ -926,6 +1262,13 @@
         "text": "Give ground, finely chopped or as a smooth nut butter spread thinly on food or stirred into porridge: never whole nuts before 5, and never nut butter on its own."
       }
     ],
+    "image": {
+      "file": "food/ground_almonds.jpg",
+      "author": "Yun Huang Yong",
+      "licence": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Almond_meal_by_hand.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-foods-to-avoid",
@@ -950,6 +1293,13 @@
         "text": "Give ground, finely chopped or as a smooth nut butter spread thinly on food or stirred into porridge: never whole nuts before 5, and never nut butter on its own."
       }
     ],
+    "image": {
+      "file": "food/cashew_butter.jpg",
+      "author": "Green Smoothies Rock!",
+      "licence": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Cashew_butter.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-foods-to-avoid",
@@ -974,6 +1324,13 @@
         "text": "Give ground, finely chopped or as a smooth nut butter spread thinly on food or stirred into porridge: never whole nuts before 5, and never nut butter on its own."
       }
     ],
+    "image": {
+      "file": "food/hazelnuts.jpg",
+      "author": "Ivar Leidus",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Hazelnuts_(Corylus_avellana)_-_whole_with_kernels.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-foods-to-avoid",
@@ -998,6 +1355,13 @@
         "text": "Give ground, finely chopped or as a smooth nut butter spread thinly on food or stirred into porridge: never whole nuts before 5, and never nut butter on its own."
       }
     ],
+    "image": {
+      "file": "food/walnuts.jpg",
+      "author": "Ivar Leidus",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Walnuts_-_whole_and_open_with_halved_kernel.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-foods-to-avoid",
@@ -1019,6 +1383,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/sausages.jpg",
+      "author": "Fumikas Sagisavas",
+      "licence": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mini_pork_sausages_(20250202).jpg",
+      "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-foods-to-avoid"
@@ -1034,6 +1405,12 @@
         "text": "Torn into small strips. Salty, so only now and then."
       }
     ],
+    "image": {
+      "file": "food/ham.jpg",
+      "author": "Renee Comet (Photographer)",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Ham_(4).jpg"
+    },
     "sources": [
       "nhs-foods-to-avoid"
     ]
@@ -1055,6 +1432,13 @@
         "text": "Toast or plain, cut into narrow strips. Spreads such as butter, nut butter or hummus make it easier to eat."
       }
     ],
+    "image": {
+      "file": "food/toast.jpg",
+      "author": "Rainer Z ...",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Toast-3.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep",
@@ -1079,6 +1463,13 @@
         "text": "Cook until soft. Large shapes such as penne or fusilli are easiest to hold."
       }
     ],
+    "image": {
+      "file": "food/pasta.jpg",
+      "author": "David Adam Kess",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:(Pasta)_by_David_Adam_Kess_(pic.2).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-allergies"
@@ -1099,6 +1490,12 @@
         "text": "Cook with breast milk, formula or (from 6 months) cows' milk, with no sugar. Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it. Oats are often processed with wheat, so check the label if you're avoiding gluten."
       }
     ],
+    "image": {
+      "file": "food/porridge.jpg",
+      "author": "Renee Comet (Photographer)",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Oatmeal_(1).jpg"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-drinks-cups"
@@ -1142,6 +1539,13 @@
         "text": "Soften with milk. Choose a low-sugar, fortified one."
       }
     ],
+    "image": {
+      "file": "food/wheat_biscuits.jpg",
+      "author": "Jonathunder",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Weetabix.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-iron",
@@ -1158,6 +1562,13 @@
         "text": "Cook until soft: sticky rice pressed into balls is easier to pick up."
       }
     ],
+    "image": {
+      "file": "food/rice.jpg",
+      "author": "Chouk Khmer",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Cooked_green_rice_and_white_rice.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9"
     ]
@@ -1176,6 +1587,12 @@
         "text": "Boil or bake until soft: wedges to hold, or mash."
       }
     ],
+    "image": {
+      "file": "food/potato.jpg",
+      "author": "Scott Bauer, USDA ARS",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Patates.jpg"
+    },
     "sources": [
       "nhs-what-to-feed-7-9"
     ]
@@ -1190,6 +1607,13 @@
         "text": "Roast or steam until soft: wedges to hold, or mash."
       }
     ],
+    "image": {
+      "file": "food/sweet_potato.jpg",
+      "author": "Llez",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ipomoea_batatas_006.JPG",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9"
     ]
@@ -1207,6 +1631,13 @@
         "text": "Mix with sauce or vegetables so it clumps together."
       }
     ],
+    "image": {
+      "file": "food/couscous.jpg",
+      "author": "Lmmima",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Moroccan_cuscus,_from_Casablanca,_September_2018.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-allergies"
@@ -1222,6 +1653,13 @@
         "text": "Cook until soft and mix into other food so it clumps together."
       }
     ],
+    "image": {
+      "file": "food/quinoa.jpg",
+      "author": "HaJunkiyada",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Quinoa,_Schnitzel_and_Israeli_Salad.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9"
     ]
@@ -1243,6 +1681,13 @@
         "text": "Cut into narrow strips."
       }
     ],
+    "image": {
+      "file": "food/chapati.jpg",
+      "author": "KittyKaht from Hong Kong, Hong Kong",
+      "licence": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:2_Chapati_warm_and_ready_to_be_eaten.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-food-allergies"
@@ -1264,6 +1709,13 @@
         "text": "Warm and cut into narrow strips."
       }
     ],
+    "image": {
+      "file": "food/pitta.jpg",
+      "author": "Azure Dragon of the East",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Pita_Bread.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-food-allergies"
@@ -1283,6 +1735,13 @@
         "text": "Cut into narrow strips."
       }
     ],
+    "image": {
+      "file": "food/naan.jpg",
+      "author": "snowpea&bokchoi",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Annapurna_Naan.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-food-allergies"
@@ -1301,6 +1760,13 @@
         "text": "Cook until soft and cut into short lengths."
       }
     ],
+    "image": {
+      "file": "food/noodles.jpg",
+      "author": "Mobius6",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Udon_noodle_Bowl_(Nongshim)_20210701_002.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-allergies"
@@ -1324,6 +1790,13 @@
         "text": "Cut into strips. Homemade with no added sugar."
       }
     ],
+    "image": {
+      "file": "food/pancakes.jpg",
+      "author": "Mae Mu",
+      "licence": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Foodiesfeed.com_pouring-honey-on-pancakes-with-walnuts.jpg",
+      "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-foods-to-avoid",
@@ -1343,6 +1816,13 @@
         "text": "Cook until very soft and stir into soups or stews."
       }
     ],
+    "image": {
+      "file": "food/barley.jpg",
+      "author": "Uzunnun",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:UzRice_pearl_barley_(perlovaya_krupa)_packaging.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-allergies"
@@ -1358,6 +1838,13 @@
         "text": "Cook, let it set, and cut into finger-sized sticks."
       }
     ],
+    "image": {
+      "file": "food/polenta.jpg",
+      "author": "J.P.Lon",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Cotechino-Servito-Polenta-Lenticchie.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed-7-9"
     ]
@@ -1375,6 +1862,13 @@
         "text": "Offer ripe, with some peel left on the bottom as a handle, or mash it."
       }
     ],
+    "image": {
+      "file": "food/banana.jpg",
+      "author": "TimothyPilgrim",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bananavarieties.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-what-to-feed-7-9"
@@ -1393,6 +1887,13 @@
         "text": "Offer ripe, in finger-sized slices, or mash it onto toast fingers."
       }
     ],
+    "image": {
+      "file": "food/avocado.jpg",
+      "author": "B.navez",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Persea_americana_fruit_2.JPG",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -1414,6 +1915,12 @@
         "text": "Ripe in slices, or cooked if it's firm."
       }
     ],
+    "image": {
+      "file": "food/pear.jpg",
+      "author": "Keith Weller",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Pears.jpg"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-what-to-feed-7-9"
@@ -1437,6 +1944,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/apple.jpg",
+      "author": "Abhijit Tembhekar from Mumbai, India",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Red_Apple.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-food-prep",
@@ -1457,6 +1971,12 @@
         "text": "Offer ripe and peeled, in finger-sized pieces to hold, or mash it. Remove any stones, pips and hard skin."
       }
     ],
+    "image": {
+      "file": "food/peach.jpg",
+      "author": "Jack Dykinga, USDA",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Autumn_Red_peaches.jpg"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -1474,6 +1994,13 @@
         "text": "Offer ripe and peeled, in finger-sized pieces to hold, or mash it. Remove any stones, pips and hard skin."
       }
     ],
+    "image": {
+      "file": "food/plum.jpg",
+      "author": "Ivar Leidus",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Plums_African_Rose_-_whole,_halved_and_slice.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -1491,6 +2018,13 @@
         "text": "Offer ripe, in finger-sized strips, or mash it."
       }
     ],
+    "image": {
+      "file": "food/mango.jpg",
+      "author": "Ivar Leidus",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mangos_-_single_and_halved.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -1508,6 +2042,13 @@
         "text": "Cut into slices rather than small chunks, with seeds and skin removed."
       }
     ],
+    "image": {
+      "file": "food/melon.jpg",
+      "author": "Atomicbre at English Wikipedia",
+      "licence": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Cantaloupe_and_canary_melon.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/3.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-prep"
@@ -1523,6 +2064,13 @@
         "text": "Cut into slices rather than small chunks, with seeds removed."
       }
     ],
+    "image": {
+      "file": "food/watermelon.jpg",
+      "author": "Funmoring46",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Slices_of_watermelon.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-food-prep"
     ]
@@ -1540,6 +2088,13 @@
         "text": "Peel and cut into finger-sized wedges, or mash."
       }
     ],
+    "image": {
+      "file": "food/kiwi.jpg",
+      "author": "Luc Viatour",
+      "licence": "CC BY-SA 2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:Kiwi_(Actinidia_chinensis)_1_Luc_Viatour.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/2.5"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -1557,6 +2112,13 @@
         "text": "Peel and cut segments into small pieces, removing pips."
       }
     ],
+    "image": {
+      "file": "food/orange.jpg",
+      "author": "Ivar Leidus",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Oranges_-_whole-halved-segment.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -1575,6 +2137,13 @@
         "text": "Peel and cut segments into small pieces, removing pips."
       }
     ],
+    "image": {
+      "file": "food/clementine.jpg",
+      "author": "carol",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Clementines_whole,_peeled,_half_and_sectioned.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -1593,6 +2162,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/strawberries.jpg",
+      "author": "Ivar Leidus",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Garden_strawberry_(Fragaria_%C3%97_ananassa)_single2.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-food-prep"
     ]
@@ -1611,6 +2187,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/raspberries.jpg",
+      "author": "Juhanson",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Raspberries_(Rubus_Idaeus).jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-food-prep"
     ]
@@ -1629,6 +2212,12 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/blueberries.jpg",
+      "author": "Oven Fresh (English Wikipedia)",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Blueberries.jpg"
+    },
     "sources": [
       "nhs-food-prep"
     ]
@@ -1647,6 +2236,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/blackberries.jpg",
+      "author": "Ragesoss",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ripe,_ripening,_and_green_blackberries.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-food-prep"
     ]
@@ -1665,6 +2261,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/grapes.jpg",
+      "author": "Vyacheslav Argenberg",
+      "licence": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Grapes,_Rostov-on-Don,_Russia.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/4.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-foods-to-avoid"
@@ -1684,6 +2287,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/cherries.jpg",
+      "author": "spurekar",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Cherry_season_(48216568227).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-food-prep"
     ]
@@ -1698,6 +2308,13 @@
         "text": "Offer ripe, in finger-sized strips without the core."
       }
     ],
+    "image": {
+      "file": "food/pineapple.jpg",
+      "author": "Salil Kumar Mukherjee",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Pineapple_(sliced).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -1712,6 +2329,13 @@
         "text": "Offer ripe, in finger-sized strips without seeds, or mash it."
       }
     ],
+    "image": {
+      "file": "food/papaya.jpg",
+      "author": "Ivar Leidus",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Papaya_-_longitudinal_section_close-up_view.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed"
     ]
@@ -1732,6 +2356,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/dried_apricots.jpg",
+      "author": "Andrey Butko",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ab_food_04.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-iron"
@@ -1755,6 +2386,13 @@
       }
     ],
     "choking_risk": true,
+    "image": {
+      "file": "food/raisins.jpg",
+      "author": "Paweł Kuźniar (Jojo_1, Jojo)",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Raisins_01.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-food-prep"
     ]
@@ -1777,6 +2415,13 @@
         "text": "Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it. Choose plain and unsweetened."
       }
     ],
+    "image": {
+      "file": "food/yoghurt.jpg",
+      "author": "Rainer Zenz",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Joghurt.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-foods-to-avoid",
@@ -1799,6 +2444,13 @@
         "text": "Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it. Choose plain and full-fat."
       }
     ],
+    "image": {
+      "file": "food/greek_yoghurt.jpg",
+      "author": "Takeaway",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Turkish_strained_yogurt.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
     "sources": [
       "nhs-what-to-feed-7-9",
       "nhs-food-allergies"
@@ -1820,6 +2472,13 @@
         "text": "Grate it, or cut into short, narrow strips. Choose pasteurised full-fat cheese."
       }
     ],
+    "image": {
+      "file": "food/cheddar.jpg",
+      "author": "J.P.Lon",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Somerset-Cheddar.jpg",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-foods-to-avoid",
@@ -1839,6 +2498,13 @@
         "text": "Grate it, or cut into short, narrow strips. Choose pasteurised full-fat cheese."
       }
     ],
+    "image": {
+      "file": "food/mozzarella.jpg",
+      "author": "Popo le Chien",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mozzarella_di_bufala3.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-foods-to-avoid",
@@ -1858,6 +2524,13 @@
         "text": "Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it."
       }
     ],
+    "image": {
+      "file": "food/cottage_cheese.jpg",
+      "author": "FASTILY (TALK)",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Cottagecheese200px.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-foods-to-avoid",
       "nhs-food-allergies"
@@ -1876,6 +2549,13 @@
         "text": "Spread thinly on toast fingers."
       }
     ],
+    "image": {
+      "file": "food/cream_cheese.jpg",
+      "author": "AnemoneProjectors",
+      "licence": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Cream_crackers_with_cheese_spread.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
     "sources": [
       "nhs-foods-to-avoid",
       "nhs-food-allergies"
@@ -1894,6 +2574,13 @@
         "text": "Cook and cut into short, narrow strips."
       }
     ],
+    "image": {
+      "file": "food/paneer.jpg",
+      "author": "Sonja Pauen - Stanhopea",
+      "licence": "CC BY 2.0 de",
+      "source": "https://commons.wikimedia.org/wiki/File:Panir_Paneer_Indian_cheese_fresh.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0/de/deed.en"
+    },
     "sources": [
       "nhs-food-prep",
       "nhs-foods-to-avoid",
@@ -1913,6 +2600,13 @@
         "text": "Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it. Choose pasteurised."
       }
     ],
+    "image": {
+      "file": "food/ricotta.jpg",
+      "author": "Paoletta S.",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ricotta_salata_e_zucchina.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-foods-to-avoid",
       "nhs-food-allergies"
@@ -1931,6 +2625,13 @@
         "text": "Spread thinly on toast or stir into vegetables."
       }
     ],
+    "image": {
+      "file": "food/butter.jpg",
+      "author": "Matěj Baťha",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:%C5%A0v%C3%A9dsk%C3%BD_kol%C3%A1%C4%8D_naruby_904_(cropped).JPG",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
     "sources": [
       "nhs-what-to-feed",
       "nhs-food-allergies"
@@ -1958,6 +2659,13 @@
         "text": "Whole or semi-skimmed can be the main drink from 1 year, from a cup. Not skimmed or 1% as a main drink under 5."
       }
     ],
+    "image": {
+      "file": "food/cows_milk.jpg",
+      "author": "NIAID",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Glass_of_Milk_(33657535532).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0"
+    },
     "sources": [
       "nhs-drinks-cups",
       "nhs-food-allergies"
@@ -1996,6 +2704,13 @@
         "text": "From 1 year, unsweetened and calcium-fortified, as part of a balanced diet. Never rice drinks before 5."
       }
     ],
+    "image": {
+      "file": "food/plant_drink.jpg",
+      "author": "Shisma",
+      "licence": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Oat_milk_glass_and_bottles.jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/4.0"
+    },
     "sources": [
       "nhs-drinks-cups",
       "nhs-foods-to-avoid"
@@ -2012,6 +2727,12 @@
         "text": "From 1 year only, and sparingly: it counts as added sugar."
       }
     ],
+    "image": {
+      "file": "food/honey.jpg",
+      "author": "Scott Bauer, USDA ARS",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Runny_hunny.jpg"
+    },
     "sources": [
       "nhs-foods-to-avoid"
     ]

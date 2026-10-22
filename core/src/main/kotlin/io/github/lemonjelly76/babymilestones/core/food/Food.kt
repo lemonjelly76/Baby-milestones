@@ -28,6 +28,20 @@ enum class Allergen(val label: String) {
     @SerialName("shellfish") SHELLFISH("Shellfish"),
 }
 
+/**
+ * An openly licensed photo of a food, shipped with the app. [file] is its path in the app's assets; the credit (author,
+ * licence, source page) is shown wherever the photo is.
+ */
+@Serializable
+data class FoodImage(val file: String, val author: String, val licence: String, val source: String, val licenceUrl: String? = null) {
+    val credit: String get() = "Photo: $author, $licence, via Wikimedia Commons"
+
+    companion object {
+        /** Licences that allow use in an app with a credit: CC0, public domain, CC BY and CC BY-SA. */
+        val OPEN = Regex("^(CC0|Public domain|PD|CC BY(-SA)? [0-9.]+)", RegexOption.IGNORE_CASE)
+    }
+}
+
 /** How to serve a food from an age; a food lists these in age order and the latest that applies is shown. */
 @Serializable
 data class ServingTip(val fromMonths: Int, val text: String)
@@ -47,6 +61,7 @@ data class Food(
     /** Needs particular preparation to lower the choking risk; the serving tip says how. */
     val chokingRisk: Boolean = false,
     val note: String? = null,
+    val image: FoodImage? = null,
     val sources: List<String>,
 ) {
     fun servingAt(months: Int): ServingTip = serving.lastOrNull { months >= it.fromMonths } ?: serving.first()
