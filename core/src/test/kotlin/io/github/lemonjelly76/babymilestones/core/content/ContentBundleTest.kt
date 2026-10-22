@@ -101,6 +101,13 @@ class ContentBundleTest {
     }
 
     @Test
+    fun `validator reports names that find two foods once plurals are ignored`() {
+        val peas = content.food("food.peas")!!
+        val broken = content.copy(foods = content.foods + peas.copy(id = "food.pea", name = "Pea", aliases = emptyList()))
+        assertTrue(ContentValidator.problems(broken).any { "'pea' names more than one food" in it })
+    }
+
+    @Test
     fun `content versions compare numerically`() {
         assertTrue(ContentVersions.newer("2026.10.10", "2026.10.9"))
         assertEquals(false, ContentVersions.newer("2026.10.1", "2026.10.1"))

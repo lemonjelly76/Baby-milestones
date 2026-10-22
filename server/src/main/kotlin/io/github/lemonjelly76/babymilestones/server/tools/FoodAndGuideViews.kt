@@ -8,11 +8,15 @@ import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistProgress
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistTick
 import io.github.lemonjelly76.babymilestones.core.guides.Guide
+import io.github.lemonjelly76.babymilestones.core.guides.GuideFeature
+import io.github.lemonjelly76.babymilestones.core.guides.SchoolDates
+import io.github.lemonjelly76.babymilestones.core.guides.SchoolStart
 import io.github.lemonjelly76.babymilestones.core.guides.GuideSection
 import io.github.lemonjelly76.babymilestones.core.guides.GuideTopic
 import io.github.lemonjelly76.babymilestones.core.guides.Guides
 import io.github.lemonjelly76.babymilestones.core.json.Date
 import kotlinx.serialization.Serializable
+import java.time.LocalDate
 
 @Serializable
 data class FoodView(
@@ -53,6 +57,7 @@ data class GuideView(
     val sections: List<GuideSection>,
     val checklist: List<ChecklistItemView>,
     val sources: List<SourceRef>,
+    val schoolDates: SchoolDates? = null,
 )
 
 @Serializable
@@ -74,12 +79,13 @@ object FoodAndGuideViews {
     fun summary(g: Guide, ticks: List<ChecklistTick>) =
         GuideSummaryView(g.id, g.title, g.summary, g.topic, ages(g), Guides.progress(g, ticks))
 
-    fun guide(content: ContentBundle, g: Guide, ticks: List<ChecklistTick>): GuideView {
+    fun guide(content: ContentBundle, g: Guide, ticks: List<ChecklistTick>, region: String, dateOfBirth: LocalDate): GuideView {
         val byItem = ticks.associateBy { it.itemId }
         return GuideView(
             g.id, g.title, g.summary, g.topic, ages(g), g.card, g.sections,
             g.checklist.map { ChecklistItemView(it.id, it.text, it.id in byItem, byItem[it.id]?.tickedOn) },
             ToolViews.sources(content, g.sources),
+            if (g.feature == GuideFeature.SCHOOL_DATES) SchoolStart.forRegion(region, dateOfBirth) else null,
         )
     }
 }

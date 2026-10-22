@@ -121,4 +121,44 @@ class FoodTrackerTest {
         assertEquals("food.peanut_butter", content.findFood("food.peanut_butter")?.id)
         assertNull(content.findFood("gran's lentil soup"))
     }
+
+    @Test
+    fun `a due allergen is never suggested through a food with an allergen that caused a possible reaction`() {
+        val report = tracker.report(listOf(
+            tasted("food.pancakes", "2026-10-01", Liking.LIKED),
+            tasted("food.yoghurt", "2026-10-05", reaction = "hives"),
+        ), today, 7)
+        val egg = report.suggestions.first { it.kind == SuggestionKind.ALLERGEN_KEEP_GOING }
+        assertEquals("food.egg", egg.foodId)
+        assertTrue(report.suggestions.none { content.food(it.foodId)!!.allergens.contains(Allergen.MILK) })
+    }
+
+    @Test
+    fun `plain milk is not taken to mean cows' milk`() {
+        assertNull(content.findFood("milk"))
+        assertEquals("food.cows_milk", content.findFood("cows' milk")?.id)
+    }
+
+    @Test
+    fun `food search matches names and aliases, never a short name inside a longer query`() {
+        assertEquals(emptyList(), content.searchFoods("milkshake").map { it.id })
+        assertEquals(listOf("food.aubergine"), content.searchFoods("eggplant").map { it.id })
+        assertTrue(content.searchFoods("berries").map { it.id }.containsAll(listOf("food.strawberries", "food.blueberries")))
+        assertTrue(content.searchFoods("eggs").any { it.id == "food.egg" })
+        assertTrue(content.searchFoods(null, FoodGroup.DAIRY).all { it.group == FoodGroup.DAIRY })
+    }
+
+    @Test
+    fun `own foods share one key however they're typed`() {
+        assertEquals(FoodNames.key(null, " Gran's Soup"), own("gran's soup", "2026-10-01").key)
+        assertEquals("food.egg", FoodNames.key("food.egg", "Egg"))
+    }
+
+    @Test
+    fun `the tracker shows from 4 months to 3 years, or whenever foods have been logged`() {
+        assertEquals(false, FoodTracker.showsTracker(3, hasTastings = false))
+        assertTrue(FoodTracker.showsTracker(4, hasTastings = false))
+        assertEquals(false, FoodTracker.showsTracker(40, hasTastings = false))
+        assertTrue(FoodTracker.showsTracker(40, hasTastings = true))
+    }
 }

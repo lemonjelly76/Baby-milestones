@@ -88,6 +88,9 @@
     "id": "food.courgette",
     "name": "Courgette",
     "group": "vegetables",
+    "aliases": [
+      "zucchini"
+    ],
     "serving": [
       {
         "from_months": 6,
@@ -168,6 +171,9 @@
     "id": "food.aubergine",
     "name": "Aubergine",
     "group": "vegetables",
+    "aliases": [
+      "eggplant"
+    ],
     "serving": [
       {
         "from_months": 6,
@@ -1935,7 +1941,9 @@
     "name": "Cows' milk",
     "group": "dairy",
     "aliases": [
-      "milk"
+      "cows milk",
+      "cow's milk",
+      "whole milk"
     ],
     "allergens": [
       "milk"

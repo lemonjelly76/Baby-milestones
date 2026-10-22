@@ -24,12 +24,15 @@ data class TastingInput(
     val photoRef: String? = null,
 )
 
+/** Null leaves a field as it is; an empty reaction or note clears it, and the clear flags clear the others. */
 data class TastingChanges(
     val tastedOn: LocalDate? = null,
     val liking: Liking? = null,
     val reaction: String? = null,
     val note: String? = null,
     val photoRef: String? = null,
+    val clearLiking: Boolean = false,
+    val clearPhoto: Boolean = false,
 )
 
 /** The foods tracker's records: each time a baby was offered a food. */
@@ -47,6 +50,7 @@ class FoodService(
         access.checkBaby(writer, babyId)
         access.checkPhoto(writer, input.photoRef)
         val food = input.foodId?.let { content.food(it) ?: throw NotFoundException("Unknown food $it") }
+            ?: input.name?.let(content::findFood)
         val name = food?.name ?: input.name?.trim()?.ifEmpty { null } ?: throw IllegalArgumentException("Choose a food or give its name")
         val tastedOn = input.tastedOn ?: today()
         require(!tastedOn.isAfter(today())) { "The date can't be in the future" }
@@ -75,10 +79,10 @@ class FoodService(
         changes.tastedOn?.let { require(!it.isAfter(today())) { "The date can't be in the future" } }
         val updated = current.copy(
             tastedOn = changes.tastedOn ?: current.tastedOn,
-            liking = changes.liking ?: current.liking,
+            liking = if (changes.clearLiking) null else changes.liking ?: current.liking,
             reaction = if (changes.reaction != null) changes.reaction.clean() else current.reaction,
             note = if (changes.note != null) changes.note.clean() else current.note,
-            photoRef = changes.photoRef ?: current.photoRef,
+            photoRef = if (changes.clearPhoto) null else changes.photoRef ?: current.photoRef,
         )
         babies.saveTasting(updated)
         return updated

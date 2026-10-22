@@ -211,7 +211,7 @@ class ApiController(
     @PatchMapping("/babies/{babyId}/tastings/{tastingId}")
     fun updateFood(@PathVariable babyId: String, @PathVariable tastingId: String, @RequestBody request: TastingUpdateRequest): FoodTasting =
         foods.update(writer(), babyId, tastingId, TastingChanges(
-            request.tastedOn, request.liking, request.reaction, request.note, request.photoRef,
+            request.tastedOn, request.liking, request.reaction, request.note, request.photoRef, request.clearLiking, request.clearPhoto,
         ))
 
     @DeleteMapping("/babies/{babyId}/tastings/{tastingId}")

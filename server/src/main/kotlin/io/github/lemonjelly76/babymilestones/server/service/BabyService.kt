@@ -34,10 +34,13 @@ class BabyContext(
     val moments: List<Moment>,
     val reviewNotes: List<ReviewNote>,
     val schedule: BabySchedule,
-    val tastings: List<FoodTasting> = emptyList(),
-    val ticks: List<ChecklistTick> = emptyList(),
-    val notes: List<AssistantNote> = emptyList(),
+    loadTastings: () -> List<FoodTasting> = { emptyList() },
+    loadTicks: () -> List<ChecklistTick> = { emptyList() },
+    loadNotes: () -> List<AssistantNote> = { emptyList() },
 ) {
+    val tastings: List<FoodTasting> by lazy(loadTastings)
+    val ticks: List<ChecklistTick> by lazy(loadTicks)
+    val notes: List<AssistantNote> by lazy(loadNotes)
     val today: LocalDate get() = snapshot.today
     val concerns: List<Concern> by lazy { ConcernEngine.concerns(snapshot, content.concerns) }
     val foods: FoodReport by lazy { FoodTracker(content).report(tastings, today, snapshot.ages.chronological.months) }
@@ -96,9 +99,9 @@ class BabyService(
             moments = babies.moments(babyId),
             reviewNotes = babies.reviewNotes(babyId),
             schedule = schedule,
-            tastings = babies.tastings(babyId),
-            ticks = babies.ticks(babyId),
-            notes = babies.assistantNotes(babyId),
+            loadTastings = { babies.tastings(babyId) },
+            loadTicks = { babies.ticks(babyId) },
+            loadNotes = { babies.assistantNotes(babyId) },
         )
     }
 

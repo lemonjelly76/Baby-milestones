@@ -79,5 +79,5 @@ data class FoodTasting(
     val loggedBy: String? = null,
 ) {
     /** Tastings of the same food share a key: the catalogue id, or the family's own food by name. */
-    val key: String get() = foodId ?: ("own:" + name.trim().lowercase())
+    val key: String get() = FoodNames.key(foodId, name)
 }

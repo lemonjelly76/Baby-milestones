@@ -18,6 +18,7 @@ import io.github.lemonjelly76.babymilestones.core.timeline.TimelineEntry
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneLog
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
+import io.github.lemonjelly76.babymilestones.core.food.FoodNames
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
@@ -39,6 +40,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.put
 import kotlinx.serialization.KSerializer
+import io.github.lemonjelly76.babymilestones.server.store.BabyStore
 import org.springframework.stereotype.Component
 
 /** The MCP tools from the spec. Each returns JSON plus the content version, so answers can say where they came from. */
@@ -50,6 +52,7 @@ class ToolCatalog(
     private val guides: GuideService,
     private val content: ContentBundle,
     private val search: GuidanceSearch,
+    private val babyStore: BabyStore,
 ) {
     val tools: List<BabyTool> = readTools() + everydayReadTools() + writeTools() + everydayWriteTools()
 
@@ -247,29 +250,38 @@ class ToolCatalog(
             "get_foods", "Foods tried",
             "The baby's foods tracker: how many foods tried, by group; each food with times offered, last offered and " +
                 "whether they liked it; allergens introduced or due again; foods worth offering again; possible reactions the " +
-                "parents noted; and suggestions for what to try next, worked out by the app's rules. Give query to look up " +
-                "catalogue foods (with how to serve them at this age) instead.",
+                "parents noted; suggestions for what to try next, worked out by the app's rules; and the 20 most recently " +
+                "logged entries with their ids. Give food to list every entry for one food (to correct or remove one), or " +
+                "query/group to search the food catalogue (with how to serve each food at this age) instead.",
             schema {
                 string("baby_id", "Id from list_babies", required = true)
+                string("food", "Optional: a food id or name, to list all its entries")
                 string("query", "Optional: search the food catalogue by name, e.g. 'salmon' or 'berries'")
                 string("group", "Optional: only catalogue foods in this group", enum = names(FoodGroup.serializer()))
             }, write = false,
         ) { caller, args ->
             val ctx = ctx(caller, args)
             val months = ctx.snapshot.ages.chronological.months
-            val query = args.optString("query")?.lowercase()
+            val food = args.optString("food")
+            val query = args.optString("query")
             val group = enumValue(FoodGroup.serializer(), FoodGroup.entries.toTypedArray(), "group", args.optString("group"))
-            if (query != null || group != null) {
-                val matches = content.foods.filter { f ->
-                    (group == null || f.group == group) &&
-                        (query == null || (listOf(f.name) + f.aliases).any { query in it.lowercase() || it.lowercase() in query })
+            when {
+                food != null -> {
+                    val key = FoodNames.key(content.findFood(food)?.id, food)
+                    JsonObject(mapOf(
+                        "food" to JsonPrimitive(food),
+                        "tastings" to BabyJson.encodeToJsonElement(
+                            ListSerializer(FoodTasting.serializer()), ctx.tastings.filter { it.key == key }.reversed(),
+                        ),
+                        "content_version" to JsonPrimitive(content.version),
+                    ))
                 }
-                json(ListSerializer(FoodView.serializer()), matches.map { FoodAndGuideViews.briefFood(it, months) })
-            } else {
-                json(FoodReport.serializer(), ctx.foods, mapOf(
+                query != null || group != null ->
+                    json(ListSerializer(FoodView.serializer()), content.searchFoods(query, group).map { FoodAndGuideViews.briefFood(it, months) })
+                else -> json(FoodReport.serializer(), ctx.foods, mapOf(
                     "baby_name" to JsonPrimitive(ctx.baby.name),
                     "age_months" to JsonPrimitive(months),
-                    "recent" to BabyJson.encodeToJsonElement(ListSerializer(FoodTasting.serializer()), ctx.tastings.takeLast(20).reversed()),
+                    "recent" to BabyJson.encodeToJsonElement(ListSerializer(FoodTasting.serializer()), babyStore.recentTastings(ctx.baby.id, 20)),
                 ))
             }
         },
@@ -303,7 +315,7 @@ class ToolCatalog(
             val id = args.optString("guide_id")
             if (id != null) {
                 val guide = content.guide(id) ?: throw ToolInputException("Unknown guide $id; call get_guides without guide_id")
-                json(GuideView.serializer(), FoodAndGuideViews.guide(content, guide, ctx.ticks))
+                json(GuideView.serializer(), FoodAndGuideViews.guide(content, guide, ctx.ticks, ctx.region, ctx.baby.dateOfBirth))
             } else {
                 val months = ctx.snapshot.ages.chronological.months
                 val forAge = Guides.forAge(content.guides, months)
@@ -331,9 +343,11 @@ class ToolCatalog(
     private fun everydayWriteTools() = listOf(
         BabyTool(
             "log_food", "Log a food",
-            "Records that the baby was offered a food. Give the food's id or name: names are matched to the catalogue " +
-                "('eggs' finds food.egg); anything else is saved as the family's own food, with group if you know it. " +
-                "Log each food separately. reaction is only for a possible reaction the parent describes, in their words.",
+            "Records that the baby was offered a solid food or drink other than their usual milk (never log breast milk or " +
+                "formula). Give the food's id or name: names are matched to the catalogue ('eggs' finds food.egg); anything " +
+                "else is saved as the family's own food, with group if you know it. 'Milk' alone isn't matched: use " +
+                "food.cows_milk only when the parent means cows' milk. Log each food separately. reaction is only for a " +
+                "possible reaction the parent describes, in their words.",
             schema {
                 string("baby_id", "Id from list_babies", required = true)
                 string("food", "Catalogue food id or a food name", required = true)
@@ -345,22 +359,21 @@ class ToolCatalog(
             }, write = true,
         ) { caller, args ->
             val text = args.string("food")
-            val food = content.findFood(text)
             val tasting = foods.log(writer(caller), args.string("baby_id"), TastingInput(
-                foodId = food?.id,
-                name = if (food == null) text else null,
+                foodId = content.food(text)?.id,
+                name = text,
                 group = enumValue(FoodGroup.serializer(), FoodGroup.entries.toTypedArray(), "group", args.optString("group")),
                 tastedOn = args.optDate("tasted_on"),
                 liking = enumValue(Liking.serializer(), Liking.entries.toTypedArray(), "liking", args.optString("liking")),
                 reaction = args.optString("reaction"),
                 note = args.optString("note"),
             ))
-            json(FoodTasting.serializer(), tasting, mapOf("in_catalogue" to JsonPrimitive(food != null)))
+            json(FoodTasting.serializer(), tasting, mapOf("in_catalogue" to JsonPrimitive(tasting.foodId != null)))
         },
 
         BabyTool(
             "remove_food_tasting", "Remove a food entry",
-            "Deletes one food entry logged by mistake. Ids are in get_foods' recent list.",
+            "Deletes one food entry logged by mistake. Find its id with get_foods (recent, or food for one food's entries).",
             schema {
                 string("baby_id", "Id from list_babies", required = true)
                 string("tasting_id", "Id of the food entry", required = true)

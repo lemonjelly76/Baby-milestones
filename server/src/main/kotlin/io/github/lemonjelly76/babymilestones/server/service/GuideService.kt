@@ -36,11 +36,13 @@ class GuideService(
     @Transactional
     fun saveNote(writer: Writer, babyId: String, kind: NoteKind, title: String, body: String): AssistantNote {
         access.checkBaby(writer, babyId)
-        require(title.isNotBlank()) { "A title is needed" }
-        require(body.isNotBlank()) { "The note is empty" }
-        require(title.length <= AssistantNote.MAX_TITLE) { "Keep the title under ${AssistantNote.MAX_TITLE} characters" }
-        require(body.length <= AssistantNote.MAX_BODY) { "Keep the note under ${AssistantNote.MAX_BODY} characters" }
-        val note = AssistantNote(Ids.new("cn"), babyId, kind, title.trim(), body.trim(), writer.carerId, clock.instant())
+        val cleanTitle = title.trim()
+        val cleanBody = body.trim()
+        require(cleanTitle.isNotEmpty()) { "A title is needed" }
+        require(cleanBody.isNotEmpty()) { "The note is empty" }
+        require(cleanTitle.length <= AssistantNote.MAX_TITLE) { "Keep the title under ${AssistantNote.MAX_TITLE} characters" }
+        require(cleanBody.length <= AssistantNote.MAX_BODY) { "Keep the note under ${AssistantNote.MAX_BODY} characters" }
+        val note = AssistantNote(Ids.new("cn"), babyId, kind, cleanTitle, cleanBody, writer.carerId, clock.instant())
         babies.saveAssistantNote(note)
         return note
     }

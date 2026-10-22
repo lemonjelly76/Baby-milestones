@@ -1,6 +1,8 @@
 package io.github.lemonjelly76.babymilestones.core.content
 
 import io.github.lemonjelly76.babymilestones.core.food.Food
+import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
+import io.github.lemonjelly76.babymilestones.core.food.FoodNames
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistItem
 import io.github.lemonjelly76.babymilestones.core.guides.Guide
 import io.github.lemonjelly76.babymilestones.core.json.Date
@@ -178,7 +180,7 @@ data class ContentBundle(
     private val referencesById by lazy { references.associateBy { it.id } }
     private val foodsById by lazy { foods.associateBy { it.id } }
     private val foodsByName by lazy {
-        foods.flatMap { f -> (listOf(f.name) + f.aliases).flatMap { nameForms(it) }.map { it to f } }.toMap()
+        foods.flatMap { f -> (listOf(f.name) + f.aliases).flatMap(FoodNames::forms).map { it to f } }.toMap()
     }
 
     fun milestone(id: String): Milestone? = milestonesById[id]
@@ -190,11 +192,15 @@ data class ContentBundle(
         guides.firstNotNullOfOrNull { g -> g.checklist.firstOrNull { it.id == id }?.let { g to it } }
 
     /** A catalogue food by id, name or alias, ignoring case and a plural ending ("eggs" finds Egg). */
-    fun findFood(text: String): Food? = food(text.trim()) ?: nameForms(text).firstNotNullOfOrNull { foodsByName[it] }
+    fun findFood(text: String): Food? = food(text.trim()) ?: FoodNames.forms(text).firstNotNullOfOrNull { foodsByName[it] }
 
-    private fun nameForms(text: String): List<String> {
-        val t = text.trim().lowercase()
-        return listOfNotNull(t, t.removeSuffix("es").takeIf { t.endsWith("es") }, t.removeSuffix("s").takeIf { t.endsWith("s") })
+    /** Foods whose name or an alias contains the query (or its singular), optionally in one group. */
+    fun searchFoods(query: String?, group: FoodGroup? = null): List<Food> {
+        val forms = query?.let(FoodNames::forms).orEmpty()
+        return foods.filter { f ->
+            (group == null || f.group == group) &&
+                (forms.isEmpty() || (listOf(f.name) + f.aliases).any { n -> forms.any { it in n.lowercase() } })
+        }
     }
 
     /** The schedule for a UK nation; nations without their own schedule yet fall back to the first one. */

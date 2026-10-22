@@ -142,4 +142,33 @@ class McpTest : IntegrationTest() {
         val items = one.getValue("checklist").jsonArray.map { it.jsonObject }
         assertEquals("true", items.first { it.getValue("id").jsonPrimitive.content == "check.ready_sits" }.getValue("done").jsonPrimitive.content)
     }
+
+    @Test
+    fun `claude can find any food entry to correct it, and food search doesn't over-match`() {
+        val token = newFamily()
+        val babyId = newBaby(token)
+        val session = connect(token)
+        callTool(token, session, "log_food", """{"baby_id":"$babyId","food":"banana","tasted_on":"2026-05-01"}""")
+        repeat(21) { callTool(token, session, "log_food", """{"baby_id":"$babyId","food":"broccoli"}""") }
+
+        val recent = BabyJson.parseToJsonElement(text(callTool(token, session, "get_foods", """{"baby_id":"$babyId"}"""))).jsonObject
+            .getValue("recent").jsonArray
+        assertEquals(20, recent.size)
+        val banana = BabyJson.parseToJsonElement(text(callTool(token, session, "get_foods", """{"baby_id":"$babyId","food":"banana"}""")))
+            .jsonObject.getValue("tastings").jsonArray
+        assertEquals("2026-05-01", banana.single().jsonObject.getValue("tasted_on").jsonPrimitive.content)
+
+        val search = text(callTool(token, session, "get_foods", """{"baby_id":"$babyId","query":"eggplant"}"""))
+        assertTrue("food.aubergine" in search && "food.egg\"" !in search, search)
+    }
+
+    @Test
+    fun `school dates come with the starting school guide`() {
+        val token = newFamily()
+        val babyId = newBaby(token, dob = "2026-04-21")
+        val session = connect(token)
+        val guide = BabyJson.parseToJsonElement(text(callTool(token, session, "get_guides",
+            """{"baby_id":"$babyId","guide_id":"guide.starting_school"}"""))).jsonObject
+        assertEquals("2030-01-15", guide.getValue("school_dates").jsonObject.getValue("apply_by").jsonPrimitive.content)
+    }
 }

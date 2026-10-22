@@ -2,6 +2,7 @@ package io.github.lemonjelly76.babymilestones.core.guides
 
 import io.github.lemonjelly76.babymilestones.core.json.Date
 import kotlinx.serialization.Serializable
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.Month
 
@@ -43,7 +44,29 @@ object SchoolStart {
         return SchoolDates(
             startsOn = LocalDate.of(startYear, Month.SEPTEMBER, 1),
             applyBy = LocalDate.of(startYear, Month.JANUARY, 15),
-            offersOn = LocalDate.of(startYear, Month.APRIL, 16),
+            offersOn = nextWorkingDay(LocalDate.of(startYear, Month.APRIL, 16)),
         )
+    }
+
+    /** Other nations' admissions work differently, so dates are only worked out for England. */
+    fun forRegion(region: String, dateOfBirth: LocalDate): SchoolDates? = if (region == "england") england(dateOfBirth) else null
+
+    /** Skips weekends and England's Easter bank holidays, the only ones that can fall around 16 April. */
+    private fun nextWorkingDay(date: LocalDate): LocalDate {
+        val easter = easterSunday(date.year)
+        val holidays = setOf(easter.minusDays(2), easter.plusDays(1))
+        return generateSequence(date) { it.plusDays(1) }
+            .first { it.dayOfWeek != DayOfWeek.SATURDAY && it.dayOfWeek != DayOfWeek.SUNDAY && it !in holidays }
+    }
+
+    /** The Gregorian computus (Meeus/Jones/Butcher). */
+    private fun easterSunday(year: Int): LocalDate {
+        val a = year % 19
+        val b = year / 100
+        val c = year % 100
+        val h = (19 * a + b - b / 4 - (b - (b + 8) / 25 + 1) / 3 + 15) % 30
+        val l = (32 + 2 * (b % 4) + 2 * (c / 4) - h - c % 4) % 7
+        val m = (a + 11 * h + 22 * l) / 451
+        return LocalDate.of(year, (h + l - 7 * m + 114) / 31, (h + l - 7 * m + 114) % 31 + 1)
     }
 }

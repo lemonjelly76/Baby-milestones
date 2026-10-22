@@ -1,6 +1,7 @@
 package io.github.lemonjelly76.babymilestones.core.content
 
 import io.github.lemonjelly76.babymilestones.core.food.Food
+import io.github.lemonjelly76.babymilestones.core.food.FoodNames
 import io.github.lemonjelly76.babymilestones.core.guides.Guide
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
 import kotlinx.serialization.Serializable
@@ -94,7 +95,7 @@ private fun MutableList<String>.checkFoods(bundle: ContentBundle, checkSources: 
     bundle.foods.map { it.id }.groupingBy { it }.eachCount().filterValues { it > 1 }.keys.forEach { add("Duplicate food id $it") }
     bundle.foods.map { it.name.lowercase() }.groupingBy { it }.eachCount().filterValues { it > 1 }.keys
         .forEach { add("Duplicate food name $it") }
-    bundle.foods.flatMap { f -> (listOf(f.name) + f.aliases).map { it.lowercase() to f.id }.distinct() }
+    bundle.foods.flatMap { f -> (listOf(f.name) + f.aliases).flatMap(FoodNames::forms).map { it to f.id }.distinct() }
         .groupBy({ it.first }, { it.second }).filterValues { it.size > 1 }
         .forEach { (name, ids) -> add("'$name' names more than one food: ${ids.joinToString()}") }
     bundle.foods.forEach { f ->

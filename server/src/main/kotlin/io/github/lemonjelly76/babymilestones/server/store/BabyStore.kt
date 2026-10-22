@@ -192,6 +192,10 @@ class BabyStore(private val jdbc: JdbcClient) {
         jdbc.sql("select * from food_tasting where baby_id = :babyId order by tasted_on, created_at").param("babyId", babyId)
             .query { rs, _ -> tasting(rs) }.list()
 
+    fun recentTastings(babyId: String, limit: Int): List<FoodTasting> =
+        jdbc.sql("select * from food_tasting where baby_id = :babyId order by created_at desc limit :limit")
+            .param("babyId", babyId).param("limit", limit).query { rs, _ -> tasting(rs) }.list()
+
     fun tasting(babyId: String, id: String): FoodTasting? =
         jdbc.sql("select * from food_tasting where id = :id and baby_id = :babyId").param("id", id).param("babyId", babyId)
             .query { rs, _ -> tasting(rs) }.optional().orElse(null)

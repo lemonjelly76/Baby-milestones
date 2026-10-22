@@ -138,6 +138,8 @@ data class TastingUpdateRequest(
     val reaction: String? = null,
     val note: String? = null,
     val photoRef: String? = null,
+    val clearLiking: Boolean = false,
+    val clearPhoto: Boolean = false,
 )
 
 @Serializable

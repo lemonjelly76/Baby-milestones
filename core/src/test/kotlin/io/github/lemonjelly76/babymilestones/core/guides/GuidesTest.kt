@@ -56,4 +56,21 @@ class GuidesTest {
         assertEquals(false, dates.applicationOpen(date("2030-01-16")))
         assertEquals(false, dates.applicationOpen(date("2029-08-31")))
     }
+
+    @Test
+    fun `offer day moves to the next working day after weekends and Easter`() {
+        assertEquals(date("2030-04-16"), SchoolStart.england(date("2026-04-21")).offersOn)
+        // 16 April 2028 is Easter Sunday, so Easter Monday is skipped too.
+        assertEquals(date("2028-04-18"), SchoolStart.england(date("2024-04-21")).offersOn)
+        // 16 April 2033 is a Saturday, the 17th Easter Sunday and the 18th Easter Monday.
+        assertEquals(date("2033-04-19"), SchoolStart.england(date("2029-04-21")).offersOn)
+        // 16 April 2034 is a Sunday.
+        assertEquals(date("2034-04-17"), SchoolStart.england(date("2030-04-21")).offersOn)
+    }
+
+    @Test
+    fun `school dates are worked out for England only`() {
+        assertEquals(date("2030-01-15"), SchoolStart.forRegion("england", date("2026-04-21"))?.applyBy)
+        assertEquals(null, SchoolStart.forRegion("scotland", date("2026-04-21")))
+    }
 }

@@ -49,10 +49,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
 import io.github.lemonjelly76.babymilestones.app.data.TastingRequest
+import io.github.lemonjelly76.babymilestones.app.data.TastingUpdateRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.food.AllergenState
 import io.github.lemonjelly76.babymilestones.core.food.Food
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
+import io.github.lemonjelly76.babymilestones.core.food.FoodNames
+import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.FoodProgress
 import io.github.lemonjelly76.babymilestones.core.food.Liking
 import java.time.LocalDate
@@ -68,7 +71,7 @@ private enum class FoodFilter(val label: String) {
 private data class FoodTarget(val key: String, val name: String, val group: FoodGroup, val food: Food?) {
     companion object {
         fun of(food: Food) = FoodTarget(food.id, food.name, food.group, food)
-        fun own(name: String, group: FoodGroup) = FoodTarget("own:" + name.trim().lowercase(), name.trim(), group, null)
+        fun own(name: String, group: FoodGroup) = FoodTarget(FoodNames.key(null, name), name.trim(), group, null)
     }
 }
 
@@ -199,8 +202,7 @@ private fun TryNext(
 private fun AllFoods(view: BabyView, content: ContentBundle, onOpen: (FoodTarget) -> Unit, onLog: (FoodTarget) -> Unit) {
     var query by rememberSaveable { mutableStateOf("") }
     OutlinedTextField(query, { query = it }, label = { Text("Search foods") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-    val q = query.trim().lowercase()
-    val matches = content.foods.filter { f -> q.isEmpty() || (listOf(f.name) + f.aliases).any { q in it.lowercase() } }
+    val matches = content.searchFoods(query.ifBlank { null })
     FoodGroup.entries.forEach { group ->
         val inGroup = matches.filter { it.group == group }
         if (inGroup.isEmpty()) return@forEach
@@ -275,6 +277,7 @@ private fun FoodSheet(view: BabyView, content: ContentBundle, target: FoodTarget
     var reaction by remember { mutableStateOf("") }
     var note by remember { mutableStateOf("") }
     var deleting by remember { mutableStateOf<String?>(null) }
+    var editing by remember { mutableStateOf<FoodTasting?>(null) }
     val history = view.data.tastings.filter { it.key == target.key }.sortedByDescending { it.tastedOn }
 
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
@@ -326,7 +329,7 @@ private fun FoodSheet(view: BabyView, content: ContentBundle, target: FoodTarget
             if (history.isNotEmpty()) {
                 SectionTitle("Offered ${history.size} ${if (history.size == 1) "time" else "times"}")
                 history.forEach { t ->
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(Modifier.clickable { editing = t }, verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(t.tastedOn.pretty() + (t.liking?.let { " · ${it.label.lowercase()}" } ?: ""))
                             t.reaction?.let { Text("Possible reaction: $it", style = MaterialTheme.typography.bodySmall,
@@ -340,6 +343,10 @@ private fun FoodSheet(view: BabyView, content: ContentBundle, target: FoodTarget
             food?.let { Sources(content, it.sources) }
         }
     }
+    editing?.let { t -> EditTastingDialog(t, onDismiss = { editing = null }, onSave = { request ->
+        viewModel.updateFood(babyId, t.id, request)
+        editing = null
+    }) }
     deleting?.let { id ->
         ConfirmDialog("Remove this entry?", "It will no longer count towards ${target.name}.", "Remove",
             { viewModel.removeFood(babyId, id) }, { deleting = null })
@@ -371,6 +378,36 @@ private fun OwnFoodDialog(onDismiss: () -> Unit, onChoose: (String, FoodGroup) -
             }
         },
         confirmButton = { TextButton(onClick = { onChoose(name, group) }, enabled = name.isNotBlank()) { Text("Next") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+    )
+}
+
+/** Changes how a past taste went, or the reaction and note; "Not recorded" clears how it went. */
+@Composable
+private fun EditTastingDialog(tasting: FoodTasting, onDismiss: () -> Unit, onSave: (TastingUpdateRequest) -> Unit) {
+    var liking by remember { mutableStateOf(tasting.liking) }
+    var reaction by remember { mutableStateOf(tasting.reaction.orEmpty()) }
+    var note by remember { mutableStateOf(tasting.note.orEmpty()) }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("${tasting.name}, ${tasting.tastedOn.pretty()}") },
+        text = {
+            Column {
+                Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Gap) {
+                    FilterChip(liking == null, { liking = null }, label = { Text("Not recorded") })
+                    Liking.entries.forEach { l -> FilterChip(liking == l, { liking = l }, label = { Text(l.label) }) }
+                }
+                OutlinedTextField(reaction, { reaction = it }, label = { Text("Possible reaction") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(note, { note = it }, label = { Text("Note") }, modifier = Modifier.fillMaxWidth())
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                onSave(TastingUpdateRequest(
+                    liking = liking, clearLiking = liking == null, reaction = reaction.trim(), note = note.trim(),
+                ))
+            }) { Text("Save") }
+        },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }

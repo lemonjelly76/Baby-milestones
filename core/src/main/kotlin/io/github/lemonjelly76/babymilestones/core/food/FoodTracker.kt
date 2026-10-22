@@ -91,6 +91,11 @@ class FoodTracker(private val content: ContentBundle) {
         const val NEW_ALLERGEN_GAP_DAYS = 3
         const val WEANING_FROM_MONTHS = 6
         const val MAX_SUGGESTIONS = 5
+        const val SHOW_FROM_MONTHS = 4
+        const val SHOW_UNTIL_MONTHS = 36
+
+        /** The tracker is offered around weaning and through the toddler years, or whenever foods have been logged. */
+        fun showsTracker(ageMonths: Int, hasTastings: Boolean) = hasTastings || ageMonths in SHOW_FROM_MONTHS until SHOW_UNTIL_MONTHS
     }
 
     fun report(tastings: List<FoodTasting>, today: LocalDate, ageMonths: Int): FoodReport {
@@ -156,20 +161,23 @@ class FoodTracker(private val content: ContentBundle) {
             if (food.id !in out && out.size < MAX_SUGGESTIONS) out[food.id] = FoodSuggestion(food.id, food.name, kind, reason)
         }
 
+        val reactionAllergens = allergens.filter { it.state == AllergenState.REACTION }.map { it.allergen }.toSet()
+        val safe = suitable.filter { f -> f.allergens.none { it in reactionAllergens } }
+
         allergens.filter { it.state == AllergenState.DUE }.sortedByDescending { it.daysSinceLast }.take(2).forEach { status ->
-            val usual = tastings.filter { t -> t.liking != Liking.DISLIKED && t.foodId?.let(content::food)?.allergens?.contains(status.allergen) == true }
-                .maxByOrNull { it.tastedOn }?.foodId?.let(content::food)
-            (usual ?: starterFood(status.allergen, suitable))?.let {
+            val usual = tastings.filter { t -> t.liking != Liking.DISLIKED }
+                .sortedByDescending { it.tastedOn }
+                .firstNotNullOfOrNull { t -> t.foodId?.let(content::food)?.takeIf { f -> status.allergen in f.allergens && f in safe } }
+            (usual ?: starterFood(status.allergen, safe))?.let {
                 add(it, SuggestionKind.ALLERGEN_KEEP_GOING,
                     "${status.allergen.label} was last offered ${status.daysSinceLast} days ago. Once introduced, keep it in the usual diet.")
             }
         }
 
-        val reactionAllergens = allergens.filter { it.state == AllergenState.REACTION }.map { it.allergen }.toSet()
         val recentNew = allergens.any { it.firstOffered != null && ChronoUnit.DAYS.between(it.firstOffered, today) < NEW_ALLERGEN_GAP_DAYS }
         if (!recentNew) {
             allergens.firstOrNull { it.state == AllergenState.NOT_YET }?.let { next ->
-                starterFood(next.allergen, suitable.filter { f -> f.allergens.none { it in reactionAllergens } })?.let {
+                starterFood(next.allergen, safe)?.let {
                     add(it, SuggestionKind.NEW_ALLERGEN,
                         "${next.allergen.label} isn't introduced yet. Offer one new allergen at a time, in a small amount, so you can spot any reaction.")
                 }

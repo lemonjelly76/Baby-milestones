@@ -180,4 +180,16 @@ class ApiTest : IntegrationTest() {
         assertEquals(404, request("DELETE", "/api/babies/$babyId/tastings/$tasting", token = other).status)
         assertEquals(404, request("PUT", "/api/babies/$babyId/checklist/check.ready_sits", """{"done":true}""", other).status)
     }
+
+    @Test
+    fun `a food typed by name is matched to the catalogue, and how it went can be cleared`() {
+        val token = newFamily()
+        val babyId = newBaby(token)
+        val eggs = post("/api/babies/$babyId/tastings", """{"name":"Eggs","liking":"disliked"}""", token)
+        assertEquals("food.egg", eggs["food_id"])
+
+        val cleared = request("PATCH", "/api/babies/$babyId/tastings/${eggs["id"]}", """{"clear_liking":true}""", token)
+        assertEquals(200, cleared.status, cleared.body)
+        assertTrue("liking" !in cleared.json.jsonObject, cleared.body)
+    }
 }
