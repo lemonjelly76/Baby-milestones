@@ -31,6 +31,8 @@ class BabyTool(
     val inputSchema: JsonObject,
     val write: Boolean,
     val destructive: Boolean = false,
+    /** For write tools: the words on the in-app confirm chip. It also checks ids, so a bad one fails before the parent sees it. */
+    val confirm: ((Args, LocalDate) -> String)? = null,
     val handler: (ToolCaller, Args) -> JsonElement,
 )
 

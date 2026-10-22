@@ -54,9 +54,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
-import io.github.lemonjelly76.babymilestones.app.data.ContactRequest
-import io.github.lemonjelly76.babymilestones.app.data.GrowthRequest
-import io.github.lemonjelly76.babymilestones.app.data.WordRequest
+import io.github.lemonjelly76.babymilestones.core.api.ContactRequest
+import io.github.lemonjelly76.babymilestones.core.api.GrowthRequest
+import io.github.lemonjelly76.babymilestones.core.api.WordRequest
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthEngine
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthPoint
 import io.github.lemonjelly76.babymilestones.core.growth.Measure

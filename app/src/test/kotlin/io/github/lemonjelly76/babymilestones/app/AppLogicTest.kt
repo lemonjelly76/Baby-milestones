@@ -2,12 +2,12 @@ package io.github.lemonjelly76.babymilestones.app
 
 import io.github.lemonjelly76.babymilestones.app.data.ApiClient
 import io.github.lemonjelly76.babymilestones.app.data.ApiException
-import io.github.lemonjelly76.babymilestones.app.data.BabyData
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
-import io.github.lemonjelly76.babymilestones.app.data.LogRequest
 import io.github.lemonjelly76.babymilestones.app.data.NotificationSettings
-import io.github.lemonjelly76.babymilestones.app.data.TastingRequest
 import io.github.lemonjelly76.babymilestones.app.notify.ReminderPlanner
+import io.github.lemonjelly76.babymilestones.core.api.BabyData
+import io.github.lemonjelly76.babymilestones.core.api.LogRequest
+import io.github.lemonjelly76.babymilestones.core.api.TastingRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentLoader
 import io.github.lemonjelly76.babymilestones.core.food.Liking
 import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
@@ -23,12 +23,12 @@ import io.ktor.client.engine.mock.toByteArray
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
-import kotlinx.coroutines.test.runTest
-import org.junit.Test
 import java.time.LocalDate
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
+import kotlinx.coroutines.test.runTest
+import org.junit.Test
 
 class AppLogicTest {
 

@@ -1,12 +1,14 @@
 package io.github.lemonjelly76.babymilestones.server.store
 
+import io.github.lemonjelly76.babymilestones.core.api.Carer
+import io.github.lemonjelly76.babymilestones.core.api.Family
 import io.github.lemonjelly76.babymilestones.core.records.Contact
 import io.github.lemonjelly76.babymilestones.core.records.ContactRole
-import org.springframework.jdbc.core.simple.JdbcClient
-import org.springframework.stereotype.Repository
 import java.sql.ResultSet
 import java.sql.Timestamp
 import java.time.Instant
+import org.springframework.jdbc.core.simple.JdbcClient
+import org.springframework.stereotype.Repository
 
 @Repository
 class FamilyStore(private val jdbc: JdbcClient) {
@@ -92,7 +94,7 @@ class FamilyStore(private val jdbc: JdbcClient) {
     fun contacts(familyId: String): List<Contact> =
         jdbc.sql("select * from contact where family_id = :familyId order by created_at").param("familyId", familyId)
             .query { rs, _ ->
-                Contact(rs.getString("id"), enumValueOf<ContactRole>(rs.getString("role").uppercase()), rs.getString("name"),
+                Contact(rs.getString("id"), fromDb<ContactRole>(rs.getString("role")), rs.getString("name"),
                     rs.getString("phone"), rs.getString("email"), rs.getString("note"))
             }.list()
 
@@ -104,7 +106,7 @@ class FamilyStore(private val jdbc: JdbcClient) {
             on conflict (id) do update set role = excluded.role, name = excluded.name, phone = excluded.phone,
                 email = excluded.email, note = excluded.note
             """,
-        ).param("id", contact.id).param("familyId", familyId).param("role", contact.role.name.lowercase())
+        ).param("id", contact.id).param("familyId", familyId).param("role", dbName(contact.role))
             .param("name", contact.name).param("phone", contact.phone).param("email", contact.email).param("note", contact.note)
             .update()
     }

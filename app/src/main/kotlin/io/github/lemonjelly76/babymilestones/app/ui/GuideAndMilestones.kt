@@ -36,7 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
-import io.github.lemonjelly76.babymilestones.app.data.LogRequest
+import io.github.lemonjelly76.babymilestones.core.api.LogRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.content.Domain
 import io.github.lemonjelly76.babymilestones.core.content.PeriodGuide

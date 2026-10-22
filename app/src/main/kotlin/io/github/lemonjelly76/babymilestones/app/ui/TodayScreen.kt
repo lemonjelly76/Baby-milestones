@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -23,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
-import io.github.lemonjelly76.babymilestones.app.data.LogRequest
+import io.github.lemonjelly76.babymilestones.core.api.LogRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
 import io.github.lemonjelly76.babymilestones.core.tracking.TrackedMilestone

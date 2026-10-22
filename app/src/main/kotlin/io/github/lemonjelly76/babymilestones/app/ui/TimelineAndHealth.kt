@@ -47,14 +47,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
-import io.github.lemonjelly76.babymilestones.app.data.MomentRequest
+import io.github.lemonjelly76.babymilestones.core.api.MomentRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentStatus
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseStatus
 import io.github.lemonjelly76.babymilestones.core.schedule.ScheduledAppointment
 import io.github.lemonjelly76.babymilestones.core.timeline.TimelineKind
-import kotlinx.coroutines.launch
 import java.time.LocalDate
+import kotlinx.coroutines.launch
 
 @Composable
 fun TimelineScreen(view: BabyView, content: ContentBundle, viewModel: AppViewModel, canEdit: Boolean, onSummary: () -> Unit) {

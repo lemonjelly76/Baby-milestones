@@ -1,10 +1,12 @@
 package io.github.lemonjelly76.babymilestones.server.assistant
 
+import io.github.lemonjelly76.babymilestones.core.api.AssistantReply
+import io.github.lemonjelly76.babymilestones.core.api.ChatMessage
+import io.github.lemonjelly76.babymilestones.core.api.ConfirmResult
+import io.github.lemonjelly76.babymilestones.core.api.Proposal
+import io.github.lemonjelly76.babymilestones.core.api.SafetyCard
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
-import io.github.lemonjelly76.babymilestones.core.content.SignpostCopy
-import io.github.lemonjelly76.babymilestones.core.food.Liking
 import io.github.lemonjelly76.babymilestones.core.safety.SafetyCheck
-import io.github.lemonjelly76.babymilestones.core.safety.SafetyKind
 import io.github.lemonjelly76.babymilestones.core.tracking.LogSource
 import io.github.lemonjelly76.babymilestones.server.security.CarerPrincipal
 import io.github.lemonjelly76.babymilestones.server.service.BabyService
@@ -14,33 +16,14 @@ import io.github.lemonjelly76.babymilestones.server.tools.BabyTool
 import io.github.lemonjelly76.babymilestones.server.tools.ToolCaller
 import io.github.lemonjelly76.babymilestones.server.tools.ToolCatalog
 import io.github.lemonjelly76.babymilestones.server.tools.ToolInputException
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonElement
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Locale
-
-/** A write the assistant suggested, shown to the parent as a confirm chip. Nothing is saved until they confirm. */
-@Serializable
-data class Proposal(val id: String, val tool: String, val input: JsonObject, val summary: String)
-
-@Serializable
-data class AssistantReply(
-    val reply: String? = null,
-    val proposals: List<Proposal> = emptyList(),
-    val safety: SafetyCard? = null,
-)
-
-@Serializable
-data class SafetyCard(val kind: SafetyKind, val card: SignpostCopy)
-
-@Serializable
-data class ConfirmResult(val proposalId: String, val tool: String, val ok: Boolean, val result: JsonElement? = null, val error: String? = null)
 
 @Service
 class AssistantService(
@@ -151,7 +134,7 @@ class AssistantService(
     private fun propose(tool: BabyTool, input: JsonObject, today: LocalDate, proposals: MutableList<Proposal>): ToolOutcome {
         val args = Args(input)
         val summary = try {
-            summarise(tool.name, args, today)
+            tool.confirm?.invoke(args, today) ?: tool.title
         } catch (e: ToolInputException) {
             return ToolOutcome(e.message ?: "Invalid input", isError = true)
         }
@@ -163,60 +146,5 @@ class AssistantService(
             put("shown_to_parent_as", summary)
             put("note", "Shown to the parent as a confirm chip. It is not saved until they tap confirm.")
         }.toString())
-    }
-
-    /** The words on the confirm chip; also validates ids so the model hears about a bad id before the parent does. */
-    private fun summarise(tool: String, args: Args, today: LocalDate): String {
-        fun milestoneTitle() = args.string("milestone_id").let {
-            content.milestone(it)?.title ?: throw ToolInputException("Unknown milestone $it; use search_guidance to find the id")
-        }
-        fun day(date: LocalDate?) = when (date) {
-            null, today -> "today"
-            today.minusDays(1) -> "yesterday"
-            else -> date.format(DATE)
-        }
-        return when (tool) {
-            "log_milestone" -> "${milestoneTitle()} — ${if (args.optBoolean("approximate") == true) "around " else ""}${day(args.optDate("achieved_on"))}"
-            "mark_not_sure" -> "Not sure yet: ${milestoneTitle()}"
-            "update_milestone_log" -> "Update log entry" + (args.optDate("achieved_on")?.let { " to ${day(it)}" } ?: "") +
-                (args.optString("note")?.let { ": \"$it\"" } ?: "")
-            "remove_milestone_log" -> "Remove log entry ${args.string("log_id")}"
-            "add_moment" -> "Moment: ${args.string("title")} — ${day(args.date("date"))}"
-            "update_appointment" -> {
-                val id = args.string("appointment_id")
-                val title = content.schedules.flatMap { it.appointments }.firstOrNull { it.id == id }?.title
-                    ?: throw ToolInputException("Unknown appointment $id; use get_schedule")
-                "$title: ${args.string("status").replace('_', ' ')}" + (args.optDate("date")?.let { " ${it.format(DATE)}" } ?: "")
-            }
-            "record_vaccination" -> {
-                val code = args.string("dose_id")
-                val dose = content.schedules.flatMap { it.doses }.firstOrNull { it.code == code }
-                    ?: throw ToolInputException("Unknown dose $code; use get_schedule")
-                "${dose.vaccine} (${dose.dose}) given ${day(args.date("given_on"))}"
-            }
-            "add_review_note" -> "Question for the health visitor: ${args.string("text")}"
-            "log_food" -> {
-                val text = args.string("food")
-                "Tried ${content.findFood(text)?.name ?: text} — ${day(args.optDate("tasted_on"))}" +
-                    (args.optString("liking")?.let { l -> Liking.entries.firstOrNull { it.name.lowercase() == l }?.let { " (${it.label.lowercase()})" } } ?: "")
-            }
-            "remove_food_tasting" -> "Remove food entry ${args.string("tasting_id")}"
-            "update_checklist" -> {
-                val id = args.string("item_id")
-                val item = content.checklistItem(id)?.second ?: throw ToolInputException("Unknown checklist item $id; use get_guides")
-                (if (args.optBoolean("done") == false) "Untick: " else "Tick: ") + item.text
-            }
-            "save_note" -> "Save note: ${args.string("title")}"
-            "log_growth" -> "Measurement ${day(args.optDate("measured_on"))}: " + listOfNotNull(
-                args.optDouble("weight_kg")?.let { "$it kg" }, args.optDouble("length_cm")?.let { "$it cm long" },
-                args.optDouble("head_cm")?.let { "head $it cm" },
-            ).joinToString()
-            "log_word" -> "New word: \u201c${args.string("word")}\u201d — ${day(args.optDate("said_on"))}"
-            "log_tooth" -> {
-                val id = args.string("tooth")
-                "Tooth: ${content.tooth(id)?.name ?: throw ToolInputException("Unknown tooth $id; use get_firsts")} — ${day(args.optDate("came_on"))}"
-            }
-            else -> tool
-        }
     }
 }

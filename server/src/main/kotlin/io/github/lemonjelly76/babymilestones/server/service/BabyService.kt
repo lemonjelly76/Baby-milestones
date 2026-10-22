@@ -2,6 +2,7 @@ package io.github.lemonjelly76.babymilestones.server.service
 
 import io.github.lemonjelly76.babymilestones.core.concerns.Concern
 import io.github.lemonjelly76.babymilestones.core.concerns.ConcernEngine
+import io.github.lemonjelly76.babymilestones.core.api.BabyData
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
@@ -24,6 +25,8 @@ import io.github.lemonjelly76.babymilestones.core.tracking.BabySnapshot
 import io.github.lemonjelly76.babymilestones.core.tracking.Tracker
 import io.github.lemonjelly76.babymilestones.server.store.BabyStore
 import io.github.lemonjelly76.babymilestones.server.store.ChildRecordStore
+import io.github.lemonjelly76.babymilestones.server.store.FoodStore
+import io.github.lemonjelly76.babymilestones.server.store.GuideStore
 import io.github.lemonjelly76.babymilestones.server.store.FamilyStore
 import io.github.lemonjelly76.babymilestones.server.store.Ids
 import io.github.lemonjelly76.babymilestones.server.store.NotFoundException
@@ -76,6 +79,8 @@ data class BabyInput(
 class BabyService(
     private val babies: BabyStore,
     private val records: ChildRecordStore,
+    private val foodStore: FoodStore,
+    private val guideStore: GuideStore,
     private val families: FamilyStore,
     private val content: ContentBundle,
     private val tracker: Tracker,
@@ -117,12 +122,23 @@ class BabyService(
             moments = babies.moments(babyId),
             reviewNotes = babies.reviewNotes(babyId),
             schedule = schedule,
-            loadTastings = { babies.tastings(babyId) },
-            loadTicks = { babies.ticks(babyId) },
-            loadNotes = { babies.assistantNotes(babyId) },
+            loadTastings = { foodStore.tastings(babyId) },
+            loadTicks = { guideStore.ticks(babyId) },
+            loadNotes = { guideStore.assistantNotes(babyId) },
             loadGrowth = { records.growth(babyId) },
             loadWords = { records.words(babyId) },
             loadTeeth = { records.teeth(babyId) },
+        )
+    }
+
+    /** The raw records the app computes its views from with the same core library (ADR-009). */
+    fun data(familyId: String, babyId: String): BabyData {
+        val baby = baby(familyId, babyId)
+        return BabyData(
+            baby, families.family(familyId)?.region ?: "england", babies.logs(babyId), babies.moments(babyId),
+            babies.appointments(babyId), babies.doses(babyId), babies.reviewNotes(babyId), content.version,
+            foodStore.tastings(babyId), guideStore.ticks(babyId), guideStore.assistantNotes(babyId),
+            records.growth(babyId), records.words(babyId), records.teeth(babyId),
         )
     }
 

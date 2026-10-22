@@ -1,11 +1,13 @@
 package io.github.lemonjelly76.babymilestones.server
 
+import io.github.lemonjelly76.babymilestones.core.api.ChatMessage
 import io.github.lemonjelly76.babymilestones.server.assistant.AssistantModel
-import io.github.lemonjelly76.babymilestones.server.assistant.ChatMessage
 import io.github.lemonjelly76.babymilestones.server.assistant.SystemPrompt
 import io.github.lemonjelly76.babymilestones.server.assistant.ToolCall
 import io.github.lemonjelly76.babymilestones.server.assistant.ToolOutcome
 import io.github.lemonjelly76.babymilestones.server.tools.BabyTool
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
@@ -16,8 +18,6 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 /** Stands in for Claude: searches for the milestone the parent named, then proposes logging it. */
 class ScriptedModel : AssistantModel {

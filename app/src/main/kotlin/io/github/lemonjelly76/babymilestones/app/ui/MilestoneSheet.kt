@@ -40,14 +40,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
-import io.github.lemonjelly76.babymilestones.app.data.LogRequest
-import io.github.lemonjelly76.babymilestones.app.data.LogUpdateRequest
+import io.github.lemonjelly76.babymilestones.core.api.LogRequest
+import io.github.lemonjelly76.babymilestones.core.api.LogUpdateRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.tracking.LogState
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
 import io.github.lemonjelly76.babymilestones.core.tracking.TrackedMilestone
-import kotlinx.coroutines.launch
 import java.time.LocalDate
+import kotlinx.coroutines.launch
 
 /** A milestone row: tick it in one tap from the circle, or open it for details, a date, a note or a photo. */
 @Composable

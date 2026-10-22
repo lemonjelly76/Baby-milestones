@@ -6,7 +6,6 @@ import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
 import org.springframework.jdbc.core.simple.JdbcClient
 import org.springframework.stereotype.Repository
 import java.sql.ResultSet
-import java.time.LocalDate
 
 /** Growth measurements, first words and teeth. Callers check the baby belongs to the family first. */
 @Repository
@@ -33,7 +32,7 @@ class ChildRecordStore(private val jdbc: JdbcClient) {
 
     fun words(babyId: String): List<FirstWord> =
         jdbc.sql("select * from first_word where baby_id = :babyId order by said_on, created_at").param("babyId", babyId)
-            .query { rs, _ -> FirstWord(rs.getString("id"), rs.getString("baby_id"), rs.getString("word"), date(rs, "said_on"), rs.getString("note")) }
+            .query { rs, _ -> FirstWord(rs.getString("id"), rs.getString("baby_id"), rs.getString("word"), rs.date("said_on")!!, rs.getString("note")) }
             .list()
 
     fun hasWord(babyId: String, word: String): Boolean =
@@ -51,7 +50,7 @@ class ChildRecordStore(private val jdbc: JdbcClient) {
 
     fun teeth(babyId: String): List<ToothRecord> =
         jdbc.sql("select * from tooth where baby_id = :babyId order by came_on").param("babyId", babyId)
-            .query { rs, _ -> ToothRecord(rs.getString("baby_id"), rs.getString("tooth_id"), date(rs, "came_on")) }.list()
+            .query { rs, _ -> ToothRecord(rs.getString("baby_id"), rs.getString("tooth_id"), rs.date("came_on")!!) }.list()
 
     fun saveTooth(t: ToothRecord) {
         jdbc.sql(
@@ -69,13 +68,11 @@ class ChildRecordStore(private val jdbc: JdbcClient) {
     private fun measurement(rs: ResultSet) = GrowthMeasurement(
         id = rs.getString("id"),
         babyId = rs.getString("baby_id"),
-        measuredOn = date(rs, "measured_on"),
+        measuredOn = rs.date("measured_on")!!,
         weightKg = rs.getObject("weight_kg") as Double?,
         lengthCm = rs.getObject("length_cm") as Double?,
         headCm = rs.getObject("head_cm") as Double?,
         measuredBy = rs.getString("measured_by"),
         note = rs.getString("note"),
     )
-
-    private fun date(rs: ResultSet, column: String): LocalDate = rs.getObject(column, LocalDate::class.java)
 }

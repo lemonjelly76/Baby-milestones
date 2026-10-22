@@ -1,5 +1,6 @@
 package io.github.lemonjelly76.babymilestones.server.web
 
+import io.github.lemonjelly76.babymilestones.core.api.ErrorResponse
 import io.github.lemonjelly76.babymilestones.server.service.ForbiddenException
 import io.github.lemonjelly76.babymilestones.server.store.NotFoundException
 import io.github.lemonjelly76.babymilestones.server.tools.ToolInputException

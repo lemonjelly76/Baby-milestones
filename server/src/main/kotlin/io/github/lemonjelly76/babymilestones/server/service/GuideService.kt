@@ -4,7 +4,7 @@ import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistTick
 import io.github.lemonjelly76.babymilestones.core.notes.AssistantNote
 import io.github.lemonjelly76.babymilestones.core.notes.NoteKind
-import io.github.lemonjelly76.babymilestones.server.store.BabyStore
+import io.github.lemonjelly76.babymilestones.server.store.GuideStore
 import io.github.lemonjelly76.babymilestones.server.store.Ids
 import io.github.lemonjelly76.babymilestones.server.store.NotFoundException
 import org.springframework.stereotype.Service
@@ -15,7 +15,7 @@ import java.time.LocalDate
 /** Guide checklist ticks, and the notes Claude saves for the family. */
 @Service
 class GuideService(
-    private val babies: BabyStore,
+    private val guideStore: GuideStore,
     private val access: BabyAccess,
     private val content: ContentBundle,
     private val clock: Clock,
@@ -25,12 +25,12 @@ class GuideService(
         access.checkBaby(writer, babyId)
         content.checklistItem(itemId) ?: throw NotFoundException("Unknown checklist item $itemId")
         if (!done) {
-            babies.deleteTick(babyId, itemId)
+            guideStore.deleteTick(babyId, itemId)
             return null
         }
         val tick = ChecklistTick(babyId, itemId, LocalDate.now(clock), writer.carerId)
-        babies.saveTick(tick)
-        return babies.ticks(babyId).first { it.itemId == itemId }
+        guideStore.saveTick(tick)
+        return guideStore.ticks(babyId).first { it.itemId == itemId }
     }
 
     @Transactional
@@ -43,13 +43,13 @@ class GuideService(
         require(cleanTitle.length <= AssistantNote.MAX_TITLE) { "Keep the title under ${AssistantNote.MAX_TITLE} characters" }
         require(cleanBody.length <= AssistantNote.MAX_BODY) { "Keep the note under ${AssistantNote.MAX_BODY} characters" }
         val note = AssistantNote(Ids.new("cn"), babyId, kind, cleanTitle, cleanBody, writer.carerId, clock.instant())
-        babies.saveAssistantNote(note)
+        guideStore.saveAssistantNote(note)
         return note
     }
 
     @Transactional
     fun deleteNote(writer: Writer, babyId: String, noteId: String) {
         access.checkBaby(writer, babyId)
-        if (!babies.deleteAssistantNote(babyId, noteId)) throw NotFoundException("No note $noteId")
+        if (!guideStore.deleteAssistantNote(babyId, noteId)) throw NotFoundException("No note $noteId")
     }
 }

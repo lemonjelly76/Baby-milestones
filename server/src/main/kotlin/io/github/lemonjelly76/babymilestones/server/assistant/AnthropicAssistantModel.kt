@@ -14,6 +14,7 @@ import com.anthropic.models.messages.TextBlockParam
 import com.anthropic.models.messages.Tool
 import com.anthropic.models.messages.ToolResultBlockParam
 import com.anthropic.models.messages.ToolUnion
+import io.github.lemonjelly76.babymilestones.core.api.ChatMessage
 import io.github.lemonjelly76.babymilestones.server.tools.BabyTool
 import io.github.lemonjelly76.babymilestones.server.tools.PlainJson
 import kotlinx.serialization.json.JsonObject

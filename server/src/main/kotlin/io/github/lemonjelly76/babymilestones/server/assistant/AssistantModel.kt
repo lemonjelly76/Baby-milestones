@@ -1,18 +1,8 @@
 package io.github.lemonjelly76.babymilestones.server.assistant
 
+import io.github.lemonjelly76.babymilestones.core.api.ChatMessage
 import io.github.lemonjelly76.babymilestones.server.tools.BabyTool
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
-
-@Serializable
-data class ChatMessage(val role: Role, val text: String) {
-    @Serializable
-    enum class Role {
-        @SerialName("user") USER,
-        @SerialName("assistant") ASSISTANT,
-    }
-}
 
 data class ToolCall(val id: String, val name: String, val input: JsonObject)
 

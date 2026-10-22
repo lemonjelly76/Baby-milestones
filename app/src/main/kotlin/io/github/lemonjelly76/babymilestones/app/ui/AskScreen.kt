@@ -39,8 +39,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
-import io.github.lemonjelly76.babymilestones.app.data.ChatMessage
-import io.github.lemonjelly76.babymilestones.app.data.Proposal
+import io.github.lemonjelly76.babymilestones.core.api.ChatMessage
+import io.github.lemonjelly76.babymilestones.core.api.Proposal
 
 @Composable
 fun AskScreen(state: AppState, view: BabyView, viewModel: AppViewModel) {

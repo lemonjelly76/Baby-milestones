@@ -4,7 +4,7 @@ import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
-import io.github.lemonjelly76.babymilestones.server.store.BabyStore
+import io.github.lemonjelly76.babymilestones.server.store.FoodStore
 import io.github.lemonjelly76.babymilestones.server.store.Ids
 import io.github.lemonjelly76.babymilestones.server.store.NotFoundException
 import org.springframework.stereotype.Service
@@ -38,7 +38,7 @@ data class TastingChanges(
 /** The foods tracker's records: each time a baby was offered a food. */
 @Service
 class FoodService(
-    private val babies: BabyStore,
+    private val foodStore: FoodStore,
     private val access: BabyAccess,
     private val content: ContentBundle,
     private val clock: Clock,
@@ -67,7 +67,7 @@ class FoodService(
             photoRef = input.photoRef,
             loggedBy = writer.carerId,
         )
-        babies.saveTasting(tasting)
+        foodStore.saveTasting(tasting)
         return tasting
     }
 
@@ -75,7 +75,7 @@ class FoodService(
     fun update(writer: Writer, babyId: String, tastingId: String, changes: TastingChanges): FoodTasting {
         access.checkBaby(writer, babyId)
         access.checkPhoto(writer, changes.photoRef)
-        val current = babies.tasting(babyId, tastingId) ?: throw NotFoundException("No food entry $tastingId")
+        val current = foodStore.tasting(babyId, tastingId) ?: throw NotFoundException("No food entry $tastingId")
         changes.tastedOn?.let { require(!it.isAfter(today())) { "The date can't be in the future" } }
         val updated = current.copy(
             tastedOn = changes.tastedOn ?: current.tastedOn,
@@ -84,14 +84,14 @@ class FoodService(
             note = if (changes.note != null) changes.note.clean() else current.note,
             photoRef = if (changes.clearPhoto) null else changes.photoRef ?: current.photoRef,
         )
-        babies.saveTasting(updated)
+        foodStore.saveTasting(updated)
         return updated
     }
 
     @Transactional
     fun remove(writer: Writer, babyId: String, tastingId: String) {
         access.checkBaby(writer, babyId)
-        if (!babies.deleteTasting(babyId, tastingId)) throw NotFoundException("No food entry $tastingId")
+        if (!foodStore.deleteTasting(babyId, tastingId)) throw NotFoundException("No food entry $tastingId")
     }
 
     private fun String?.clean() = this?.trim()?.ifEmpty { null }?.take(MAX_TEXT)

@@ -45,10 +45,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import io.github.lemonjelly76.babymilestones.app.data.BabyRequest
-import io.github.lemonjelly76.babymilestones.app.data.LogRequest
 import io.github.lemonjelly76.babymilestones.core.age.AgeEngine
 import io.github.lemonjelly76.babymilestones.core.age.BabyDates
+import io.github.lemonjelly76.babymilestones.core.api.BabyRequest
+import io.github.lemonjelly76.babymilestones.core.api.Family
+import io.github.lemonjelly76.babymilestones.core.api.LogRequest
 import io.github.lemonjelly76.babymilestones.core.tracking.Baby
 import java.time.LocalDate
 

@@ -48,15 +48,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
-import io.github.lemonjelly76.babymilestones.app.data.TastingRequest
-import io.github.lemonjelly76.babymilestones.app.data.TastingUpdateRequest
+import io.github.lemonjelly76.babymilestones.core.api.TastingRequest
+import io.github.lemonjelly76.babymilestones.core.api.TastingUpdateRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.food.AllergenState
 import io.github.lemonjelly76.babymilestones.core.food.Food
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
 import io.github.lemonjelly76.babymilestones.core.food.FoodNames
-import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.FoodProgress
+import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
 import java.time.LocalDate
 

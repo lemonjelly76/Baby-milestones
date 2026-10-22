@@ -1,17 +1,19 @@
-package io.github.lemonjelly76.babymilestones.server.web
+package io.github.lemonjelly76.babymilestones.core.api
 
+import io.github.lemonjelly76.babymilestones.core.content.SignpostCopy
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistTick
 import io.github.lemonjelly76.babymilestones.core.json.Date
-import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
+import io.github.lemonjelly76.babymilestones.core.json.Timestamp
 import io.github.lemonjelly76.babymilestones.core.notes.AssistantNote
 import io.github.lemonjelly76.babymilestones.core.records.Contact
 import io.github.lemonjelly76.babymilestones.core.records.ContactRole
 import io.github.lemonjelly76.babymilestones.core.records.FirstWord
 import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
-import io.github.lemonjelly76.babymilestones.core.json.Timestamp
+import io.github.lemonjelly76.babymilestones.core.safety.SafetyKind
 import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
 import io.github.lemonjelly76.babymilestones.core.summary.ReviewNote
@@ -19,11 +21,52 @@ import io.github.lemonjelly76.babymilestones.core.summary.ReviewSummary
 import io.github.lemonjelly76.babymilestones.core.timeline.Moment
 import io.github.lemonjelly76.babymilestones.core.tracking.Baby
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneLog
-import io.github.lemonjelly76.babymilestones.server.assistant.ChatMessage
-import io.github.lemonjelly76.babymilestones.server.assistant.Proposal
-import io.github.lemonjelly76.babymilestones.server.store.Carer
-import io.github.lemonjelly76.babymilestones.server.store.Family
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+
+/** The JSON shapes the app and server exchange, defined once so both always agree (snake_case on the wire). */
+
+@Serializable
+data class Family(val id: String, val name: String, val region: String)
+
+@Serializable
+data class Carer(
+    val id: String,
+    val familyId: String,
+    val name: String,
+    val email: String? = null,
+    val role: String,
+    /** "edit", or "view" for carers who can see everything but change nothing. */
+    val access: String = "edit",
+)
+
+@Serializable
+data class ChatMessage(val role: Role, val text: String) {
+    @Serializable
+    enum class Role {
+        @SerialName("user") USER,
+        @SerialName("assistant") ASSISTANT,
+    }
+}
+
+/** A write the assistant suggested, shown to the parent as a confirm chip. Nothing is saved until they confirm. */
+@Serializable
+data class Proposal(val id: String, val tool: String, val input: JsonObject, val summary: String)
+
+@Serializable
+data class AssistantReply(
+    val reply: String? = null,
+    val proposals: List<Proposal> = emptyList(),
+    val safety: SafetyCard? = null,
+)
+
+@Serializable
+data class SafetyCard(val kind: SafetyKind, val card: SignpostCopy)
+
+@Serializable
+data class ConfirmResult(val proposalId: String, val tool: String, val ok: Boolean, val result: JsonElement? = null, val error: String? = null)
 
 @Serializable
 data class CreateFamilyRequest(
