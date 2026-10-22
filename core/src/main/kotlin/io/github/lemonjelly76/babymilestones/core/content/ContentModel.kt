@@ -1,5 +1,8 @@
 package io.github.lemonjelly76.babymilestones.core.content
 
+import io.github.lemonjelly76.babymilestones.core.food.Food
+import io.github.lemonjelly76.babymilestones.core.guides.ChecklistItem
+import io.github.lemonjelly76.babymilestones.core.guides.Guide
 import io.github.lemonjelly76.babymilestones.core.json.Date
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -168,13 +171,31 @@ data class ContentBundle(
     val concerns: ConcernRules,
     val safety: SafetyContent,
     val schedules: List<RegionSchedule>,
+    val foods: List<Food> = emptyList(),
+    val guides: List<Guide> = emptyList(),
 ) {
     private val milestonesById by lazy { milestones.associateBy { it.id } }
     private val referencesById by lazy { references.associateBy { it.id } }
+    private val foodsById by lazy { foods.associateBy { it.id } }
+    private val foodsByName by lazy {
+        foods.flatMap { f -> (listOf(f.name) + f.aliases).flatMap { nameForms(it) }.map { it to f } }.toMap()
+    }
 
     fun milestone(id: String): Milestone? = milestonesById[id]
     fun reference(id: String): Reference? = referencesById[id]
     fun period(id: String): PeriodGuide? = periods.firstOrNull { it.id == id }
+    fun food(id: String): Food? = foodsById[id]
+    fun guide(id: String): Guide? = guides.firstOrNull { it.id == id }
+    fun checklistItem(id: String): Pair<Guide, ChecklistItem>? =
+        guides.firstNotNullOfOrNull { g -> g.checklist.firstOrNull { it.id == id }?.let { g to it } }
+
+    /** A catalogue food by id, name or alias, ignoring case and a plural ending ("eggs" finds Egg). */
+    fun findFood(text: String): Food? = food(text.trim()) ?: nameForms(text).firstNotNullOfOrNull { foodsByName[it] }
+
+    private fun nameForms(text: String): List<String> {
+        val t = text.trim().lowercase()
+        return listOfNotNull(t, t.removeSuffix("es").takeIf { t.endsWith("es") }, t.removeSuffix("s").takeIf { t.endsWith("s") })
+    }
 
     /** The schedule for a UK nation; nations without their own schedule yet fall back to the first one. */
     fun schedule(region: String): RegionSchedule =

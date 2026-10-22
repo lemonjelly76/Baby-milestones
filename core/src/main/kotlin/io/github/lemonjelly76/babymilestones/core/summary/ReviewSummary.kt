@@ -2,6 +2,7 @@ package io.github.lemonjelly76.babymilestones.core.summary
 
 import io.github.lemonjelly76.babymilestones.core.concerns.Concern
 import io.github.lemonjelly76.babymilestones.core.content.Domain
+import io.github.lemonjelly76.babymilestones.core.food.FoodReport
 import io.github.lemonjelly76.babymilestones.core.json.Date
 import io.github.lemonjelly76.babymilestones.core.json.Timestamp
 import io.github.lemonjelly76.babymilestones.core.tracking.BabySnapshot
@@ -29,6 +30,9 @@ data class SummaryLine(
     val before: Boolean = false,
 )
 
+@Serializable
+data class FoodSummary(val tried: Int, val allergensIntroduced: List<String>, val reactions: List<SummaryLine>)
+
 /** What a parent takes to a health visitor review: achieved milestones with dates, anything not seen yet, and their questions. */
 @Serializable
 data class ReviewSummary(
@@ -44,6 +48,7 @@ data class ReviewSummary(
     val concerns: List<Concern>,
     val questions: List<String>,
     val contentVersion: String,
+    val foods: FoodSummary? = null,
 ) {
     fun toPlainText(): String = buildString {
         val format = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.UK)
@@ -68,6 +73,15 @@ data class ReviewSummary(
             notSeenYet.forEach { appendLine(line(it)) }
             notSure.forEach { appendLine(line(it.copy(title = "${it.title} (not sure)"))) }
         }
+        foods?.let { f ->
+            appendLine().appendLine("Food")
+            appendLine("Foods tried: ${f.tried}")
+            if (f.allergensIntroduced.isNotEmpty()) appendLine("Allergens introduced: ${f.allergensIntroduced.joinToString()}")
+            if (f.reactions.isNotEmpty()) {
+                appendLine("Possible reactions noted (parents' words)")
+                f.reactions.forEach { appendLine(line(it)) }
+            }
+        }
         appendLine().appendLine("Achieved")
         if (achieved.isEmpty()) appendLine("• Nothing logged yet")
         achieved.forEach { (domain, lines) ->
@@ -78,7 +92,7 @@ data class ReviewSummary(
     }
 
     companion object {
-        fun build(snapshot: BabySnapshot, concerns: List<Concern>, notes: List<ReviewNote>): ReviewSummary {
+        fun build(snapshot: BabySnapshot, concerns: List<Concern>, notes: List<ReviewNote>, foods: FoodReport? = null): ReviewSummary {
             fun titles(status: MilestoneStatus) =
                 snapshot.withStatus(status).map { SummaryLine(it.milestone.title, note = it.log?.note) }
             val achieved = snapshot.withStatus(MilestoneStatus.ACHIEVED)
@@ -101,6 +115,13 @@ data class ReviewSummary(
                 concerns = concerns,
                 questions = notes.filterNot { it.resolved }.map { it.text },
                 contentVersion = snapshot.contentVersion,
+                foods = foods?.takeIf { it.tried > 0 }?.let { f ->
+                    FoodSummary(
+                        f.tried,
+                        f.allergensIntroduced.map { it.label },
+                        f.reactions.map { SummaryLine(it.name, it.date, note = it.text) },
+                    )
+                },
             )
         }
     }

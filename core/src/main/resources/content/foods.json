@@ -1,0 +1,2011 @@
+[
+  {
+    "id": "food.broccoli",
+    "name": "Broccoli",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Steam or boil until soft and offer florets with a bit of stalk to hold, or mash them. Let it cool right down first."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-what-to-feed-7-9"
+    ]
+  },
+  {
+    "id": "food.cauliflower",
+    "name": "Cauliflower",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Steam or boil until soft and offer florets with a bit of stalk to hold, or mash them. Let it cool right down first."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.spinach",
+    "name": "Spinach",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook, chop finely and stir into other food such as pasta sauce, omelette or mash: whole leaves are hard to chew."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.kale",
+    "name": "Kale",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook, chop finely and stir into other food such as pasta sauce, omelette or mash: whole leaves are hard to chew."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.cabbage",
+    "name": "Cabbage",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook, chop finely and stir into other food such as pasta sauce, omelette or mash: whole leaves are hard to chew."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.green_beans",
+    "name": "Green beans",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and offer whole beans to hold, or chop them. Let it cool right down first."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.courgette",
+    "name": "Courgette",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft, then offer finger-sized pieces to hold, or mash it. Let it cool right down first."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.asparagus",
+    "name": "Asparagus",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and offer whole spears to hold. Let it cool right down first."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.peas",
+    "name": "Peas",
+    "group": "vegetables",
+    "aliases": [
+      "garden peas"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Mash or flatten them, or stir them into other food. Whole peas are on the BLISS trial's list of foods to avoid for young babies."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "cameron-2015-bliss"
+    ]
+  },
+  {
+    "id": "food.leek",
+    "name": "Leek",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and chop finely into other food."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.brussels_sprouts",
+    "name": "Brussels sprouts",
+    "group": "vegetables",
+    "aliases": [
+      "sprouts"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and cut into quarters, or mash."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.aubergine",
+    "name": "Aubergine",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Roast or cook until soft and offer strips without the tough skin, or mash it."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.cucumber",
+    "name": "Cucumber",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into narrow batons, not rounds."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep",
+      "cameron-2015-bliss"
+    ]
+  },
+  {
+    "id": "food.pepper",
+    "name": "Pepper",
+    "group": "vegetables",
+    "aliases": [
+      "peppers",
+      "bell pepper"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and cut into strips."
+      },
+      {
+        "from_months": 12,
+        "text": "Cooked strips, or raw in narrow batons."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.mushroom",
+    "name": "Mushrooms",
+    "group": "vegetables",
+    "aliases": [
+      "mushroom"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and slice into strips, or chop into sauces."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.tomato",
+    "name": "Tomato",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer soft, ripe wedges, or cook into sauces."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.cherry_tomatoes",
+    "name": "Cherry tomatoes",
+    "group": "vegetables",
+    "aliases": [
+      "cherry tomato"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into quarters, and remove any stones or hard pips."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.carrot",
+    "name": "Carrot",
+    "group": "vegetables",
+    "aliases": [
+      "carrots"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft, then offer finger-sized sticks, or mash it. Hard raw pieces and coin-shaped slices are a choking risk."
+      },
+      {
+        "from_months": 12,
+        "text": "Keep cooking it until soft, or grate it raw. Avoid coin-shaped slices."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep",
+      "cameron-2015-bliss"
+    ]
+  },
+  {
+    "id": "food.parsnip",
+    "name": "Parsnip",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft, then offer finger-sized sticks, or mash it. Hard raw pieces and coin-shaped slices are a choking risk."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.swede",
+    "name": "Swede",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft, then offer finger-sized sticks or mash it. Let it cool right down first."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.butternut_squash",
+    "name": "Butternut squash",
+    "group": "vegetables",
+    "aliases": [
+      "squash"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Roast or steam until soft and offer finger-sized sticks, or mash it. Let it cool right down first."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9"
+    ]
+  },
+  {
+    "id": "food.beetroot",
+    "name": "Beetroot",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and offer finger-sized wedges, or grate it into other food."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.sweetcorn",
+    "name": "Sweetcorn",
+    "group": "vegetables",
+    "aliases": [
+      "corn"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Blend or mash it into other food. Whole kernels are on the BLISS trial's list of foods to avoid for young babies."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-what-to-feed",
+      "cameron-2015-bliss"
+    ]
+  },
+  {
+    "id": "food.onion",
+    "name": "Onion",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and chop finely into sauces and dishes."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.celery",
+    "name": "Celery",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and chop finely into dishes: raw celery is stringy and hard."
+      },
+      {
+        "from_months": 12,
+        "text": "Cooked and chopped, or raw in narrow batons with the strings removed."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.pak_choi",
+    "name": "Pak choi",
+    "group": "vegetables",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook, chop finely and stir into other food such as pasta sauce, omelette or mash: whole leaves are hard to chew."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.beef",
+    "name": "Beef",
+    "group": "protein",
+    "aliases": [
+      "steak"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly and cut into strips as thinly as possible, or shred it. Remove all bones. Don't add salt."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep",
+      "cameron-2015-bliss",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.beef_mince",
+    "name": "Beef mince",
+    "group": "protein",
+    "aliases": [
+      "mince",
+      "meatballs"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly and shape into soft meatballs or patties, or stir into sauces. Don't add salt."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.lamb",
+    "name": "Lamb",
+    "group": "protein",
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly and cut into strips as thinly as possible, or shred it. Remove all bones. Don't add salt."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.pork",
+    "name": "Pork",
+    "group": "protein",
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly and cut into strips as thinly as possible, or shred it. Remove all bones. Don't add salt."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.chicken",
+    "name": "Chicken",
+    "group": "protein",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly and offer strips of thigh or shredded meat. Remove all bones. Don't add salt."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.turkey",
+    "name": "Turkey",
+    "group": "protein",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly and offer thin strips or shredded meat, or mince in patties. Don't add salt."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.lentils",
+    "name": "Lentils",
+    "group": "protein",
+    "aliases": [
+      "dhal",
+      "dal"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until very soft: as dhal on a preloaded spoon, or mixed into sauces."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.chickpeas",
+    "name": "Chickpeas",
+    "group": "protein",
+    "aliases": [
+      "chickpea"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and mash or squash them, or stir into dishes."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.kidney_beans",
+    "name": "Kidney beans",
+    "group": "protein",
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and mash or squash them, or stir into dishes."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.black_beans",
+    "name": "Black beans",
+    "group": "protein",
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and mash or squash them, or stir into dishes."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.butter_beans",
+    "name": "Butter beans",
+    "group": "protein",
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and mash or squash them, or stir into dishes."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.baked_beans",
+    "name": "Baked beans",
+    "group": "protein",
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Choose reduced-salt and reduced-sugar, and squash the beans."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-foods-to-avoid",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.egg",
+    "name": "Egg",
+    "group": "protein",
+    "aliases": [
+      "eggs",
+      "boiled egg",
+      "scrambled egg",
+      "omelette"
+    ],
+    "allergens": [
+      "egg"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Hard-boil and cut into quarters, or offer strips of well-cooked omelette. Eggs with the British Lion stamp can be lightly cooked; cook other eggs until the white and yolk are solid."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.peanut_butter",
+    "name": "Peanut butter",
+    "group": "protein",
+    "aliases": [
+      "peanut",
+      "peanuts"
+    ],
+    "allergens": [
+      "peanut"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Smooth and with no added salt or sugar, spread thinly on toast fingers or stirred into porridge. Never on its own, and never whole peanuts before 5."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-foods-to-avoid",
+      "du-toit-2015-leap",
+      "bsaci-early-allergens",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.salmon",
+    "name": "Salmon",
+    "group": "protein",
+    "allergens": [
+      "fish"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly, flake it and check carefully for bones."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.cod",
+    "name": "Cod",
+    "group": "protein",
+    "allergens": [
+      "fish"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly, flake it and check carefully for bones."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.haddock",
+    "name": "Haddock",
+    "group": "protein",
+    "allergens": [
+      "fish"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly, flake it and check carefully for bones."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.sardines",
+    "name": "Sardines",
+    "group": "protein",
+    "allergens": [
+      "fish"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Choose tinned in water rather than brine to keep salt down; mash well, soft bones and all."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.mackerel",
+    "name": "Mackerel",
+    "group": "protein",
+    "allergens": [
+      "fish"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly, flake it and check carefully for bones."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.tuna",
+    "name": "Tuna",
+    "group": "protein",
+    "allergens": [
+      "fish"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Tinned in spring water rather than brine, flaked into pasta or mashed potato."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.prawns",
+    "name": "Prawns",
+    "group": "protein",
+    "aliases": [
+      "prawn",
+      "shrimp"
+    ],
+    "allergens": [
+      "shellfish"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly, never raw or lightly cooked, and chop finely."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.tofu",
+    "name": "Tofu",
+    "group": "protein",
+    "allergens": [
+      "soya"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Use firm tofu cut into finger-sized strips, or crumbled into dishes."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-iron",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.edamame",
+    "name": "Edamame beans",
+    "group": "protein",
+    "aliases": [
+      "edamame"
+    ],
+    "allergens": [
+      "soya"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Out of the pod, cooked until soft and squashed or mashed."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-iron",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.tahini",
+    "name": "Tahini",
+    "group": "protein",
+    "aliases": [
+      "sesame"
+    ],
+    "allergens": [
+      "sesame"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Stir a little into porridge, yoghurt or mashed vegetables, or spread thinly on toast."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.hummus",
+    "name": "Hummus",
+    "group": "protein",
+    "allergens": [
+      "sesame"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Spread thinly on toast fingers or offer as a dip for soft vegetable sticks. Shop-bought hummus can be salty, so homemade without salt is best."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-foods-to-avoid",
+      "nhs-iron",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.ground_almonds",
+    "name": "Ground almonds",
+    "group": "protein",
+    "aliases": [
+      "almonds",
+      "almond butter"
+    ],
+    "allergens": [
+      "tree_nuts"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Give ground, finely chopped or as a smooth nut butter spread thinly on food or stirred into porridge: never whole nuts before 5, and never nut butter on its own."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-foods-to-avoid",
+      "nhs-iron",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.cashew_butter",
+    "name": "Cashew butter",
+    "group": "protein",
+    "aliases": [
+      "cashews"
+    ],
+    "allergens": [
+      "tree_nuts"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Give ground, finely chopped or as a smooth nut butter spread thinly on food or stirred into porridge: never whole nuts before 5, and never nut butter on its own."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-foods-to-avoid",
+      "nhs-iron",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.hazelnuts",
+    "name": "Hazelnuts (ground)",
+    "group": "protein",
+    "aliases": [
+      "hazelnut"
+    ],
+    "allergens": [
+      "tree_nuts"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Give ground, finely chopped or as a smooth nut butter spread thinly on food or stirred into porridge: never whole nuts before 5, and never nut butter on its own."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-foods-to-avoid",
+      "nhs-iron",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.walnuts",
+    "name": "Walnuts (ground)",
+    "group": "protein",
+    "aliases": [
+      "walnut"
+    ],
+    "allergens": [
+      "tree_nuts"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Give ground, finely chopped or as a smooth nut butter spread thinly on food or stirred into porridge: never whole nuts before 5, and never nut butter on its own."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-foods-to-avoid",
+      "nhs-iron",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.sausages",
+    "name": "Sausages",
+    "group": "protein",
+    "aliases": [
+      "sausage"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook thoroughly and cut into short strips, not rounds. Salty, so only now and then."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep",
+      "nhs-foods-to-avoid"
+    ]
+  },
+  {
+    "id": "food.ham",
+    "name": "Ham",
+    "group": "protein",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Torn into small strips. Salty, so only now and then."
+      }
+    ],
+    "sources": [
+      "nhs-foods-to-avoid"
+    ]
+  },
+  {
+    "id": "food.toast",
+    "name": "Toast",
+    "group": "starchy",
+    "aliases": [
+      "bread",
+      "toast fingers"
+    ],
+    "allergens": [
+      "gluten"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Toast or plain, cut into narrow strips. Spreads such as butter, nut butter or hummus make it easier to eat."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.pasta",
+    "name": "Pasta",
+    "group": "starchy",
+    "aliases": [
+      "spaghetti",
+      "penne",
+      "fusilli"
+    ],
+    "allergens": [
+      "gluten"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft. Large shapes such as penne or fusilli are easiest to hold."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.porridge",
+    "name": "Porridge oats",
+    "group": "starchy",
+    "aliases": [
+      "porridge",
+      "oats",
+      "oatmeal"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook with breast milk, formula or (from 6 months) cows' milk, with no sugar. Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it. Oats are often processed with wheat, so check the label if you're avoiding gluten."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-drinks-cups"
+    ]
+  },
+  {
+    "id": "food.baby_cereal",
+    "name": "Iron-fortified baby cereal",
+    "group": "starchy",
+    "aliases": [
+      "baby cereal",
+      "baby rice"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Mix with your baby's usual milk. Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-iron",
+      "cameron-2015-bliss"
+    ]
+  },
+  {
+    "id": "food.wheat_biscuits",
+    "name": "Wheat biscuit cereal",
+    "group": "starchy",
+    "aliases": [
+      "weetabix"
+    ],
+    "allergens": [
+      "gluten"
+    ],
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Soften with milk. Choose a low-sugar, fortified one."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-iron",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.rice",
+    "name": "Rice",
+    "group": "starchy",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft: sticky rice pressed into balls is easier to pick up."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9"
+    ]
+  },
+  {
+    "id": "food.potato",
+    "name": "Potato",
+    "group": "starchy",
+    "aliases": [
+      "potatoes",
+      "mash"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Boil or bake until soft: wedges to hold, or mash."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9"
+    ]
+  },
+  {
+    "id": "food.sweet_potato",
+    "name": "Sweet potato",
+    "group": "starchy",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Roast or steam until soft: wedges to hold, or mash."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9"
+    ]
+  },
+  {
+    "id": "food.couscous",
+    "name": "Couscous",
+    "group": "starchy",
+    "allergens": [
+      "gluten"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Mix with sauce or vegetables so it clumps together."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.quinoa",
+    "name": "Quinoa",
+    "group": "starchy",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and mix into other food so it clumps together."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9"
+    ]
+  },
+  {
+    "id": "food.chapati",
+    "name": "Chapati",
+    "group": "starchy",
+    "aliases": [
+      "roti",
+      "flatbread"
+    ],
+    "allergens": [
+      "gluten"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into narrow strips."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.pitta",
+    "name": "Pitta bread",
+    "group": "starchy",
+    "aliases": [
+      "pitta"
+    ],
+    "allergens": [
+      "gluten"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Warm and cut into narrow strips."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.naan",
+    "name": "Naan bread",
+    "group": "starchy",
+    "allergens": [
+      "gluten",
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into narrow strips."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.noodles",
+    "name": "Noodles",
+    "group": "starchy",
+    "allergens": [
+      "gluten"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft and cut into short lengths."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.pancakes",
+    "name": "Pancakes",
+    "group": "starchy",
+    "aliases": [
+      "pancake"
+    ],
+    "allergens": [
+      "egg",
+      "milk",
+      "gluten"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into strips. Homemade with no added sugar."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.barley",
+    "name": "Barley",
+    "group": "starchy",
+    "allergens": [
+      "gluten"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until very soft and stir into soups or stews."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.polenta",
+    "name": "Polenta",
+    "group": "starchy",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook, let it set, and cut into finger-sized sticks."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9"
+    ]
+  },
+  {
+    "id": "food.banana",
+    "name": "Banana",
+    "group": "fruit",
+    "aliases": [
+      "bananas"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer ripe, with some peel left on the bottom as a handle, or mash it."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-what-to-feed-7-9"
+    ]
+  },
+  {
+    "id": "food.avocado",
+    "name": "Avocado",
+    "group": "fruit",
+    "aliases": [
+      "avocados"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer ripe, in finger-sized slices, or mash it onto toast fingers."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.pear",
+    "name": "Pear",
+    "group": "fruit",
+    "aliases": [
+      "pears"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Ripe and soft: peeled, in finger-sized pieces or mashed. Cook firm pears until soft."
+      },
+      {
+        "from_months": 12,
+        "text": "Ripe in slices, or cooked if it's firm."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-what-to-feed-7-9"
+    ]
+  },
+  {
+    "id": "food.apple",
+    "name": "Apple",
+    "group": "fruit",
+    "aliases": [
+      "apples"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook until soft (stewed or baked), or grate it. Raw hard fruit is a choking risk for babies."
+      },
+      {
+        "from_months": 12,
+        "text": "Cook it, grate it, or cut it into thin slices rather than chunks."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-food-prep",
+      "cameron-2015-bliss"
+    ]
+  },
+  {
+    "id": "food.peach",
+    "name": "Peach",
+    "group": "fruit",
+    "aliases": [
+      "peaches",
+      "nectarine"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer ripe and peeled, in finger-sized pieces to hold, or mash it. Remove any stones, pips and hard skin."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.plum",
+    "name": "Plum",
+    "group": "fruit",
+    "aliases": [
+      "plums"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer ripe and peeled, in finger-sized pieces to hold, or mash it. Remove any stones, pips and hard skin."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.mango",
+    "name": "Mango",
+    "group": "fruit",
+    "aliases": [
+      "mangoes"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer ripe, in finger-sized strips, or mash it."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.melon",
+    "name": "Melon",
+    "group": "fruit",
+    "aliases": [
+      "melons"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into slices rather than small chunks, with seeds and skin removed."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.watermelon",
+    "name": "Watermelon",
+    "group": "fruit",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into slices rather than small chunks, with seeds removed."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.kiwi",
+    "name": "Kiwi",
+    "group": "fruit",
+    "aliases": [
+      "kiwi fruit"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Peel and cut into finger-sized wedges, or mash."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.orange",
+    "name": "Orange",
+    "group": "fruit",
+    "aliases": [
+      "oranges"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Peel and cut segments into small pieces, removing pips."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.clementine",
+    "name": "Clementine",
+    "group": "fruit",
+    "aliases": [
+      "satsuma",
+      "mandarin"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Peel and cut segments into small pieces, removing pips."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.strawberries",
+    "name": "Strawberries",
+    "group": "fruit",
+    "aliases": [
+      "strawberry"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into quarters, and remove any stones or hard pips."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.raspberries",
+    "name": "Raspberries",
+    "group": "fruit",
+    "aliases": [
+      "raspberry"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into quarters or squash flat."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.blueberries",
+    "name": "Blueberries",
+    "group": "fruit",
+    "aliases": [
+      "blueberry"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into quarters or squash flat."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.blackberries",
+    "name": "Blackberries",
+    "group": "fruit",
+    "aliases": [
+      "blackberry"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into quarters or squash flat."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.grapes",
+    "name": "Grapes",
+    "group": "fruit",
+    "aliases": [
+      "grape"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into quarters (lengthways, then in half again) and remove any pips."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep",
+      "nhs-foods-to-avoid"
+    ]
+  },
+  {
+    "id": "food.cherries",
+    "name": "Cherries",
+    "group": "fruit",
+    "aliases": [
+      "cherry"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cut into quarters, and remove any stones or hard pips."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.pineapple",
+    "name": "Pineapple",
+    "group": "fruit",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer ripe, in finger-sized strips without the core."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.papaya",
+    "name": "Papaya",
+    "group": "fruit",
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer ripe, in finger-sized strips without seeds, or mash it."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed"
+    ]
+  },
+  {
+    "id": "food.dried_apricots",
+    "name": "Dried apricots",
+    "group": "fruit",
+    "iron_rich": true,
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Chop finely or cook into porridge: no whole dried fruit before 1."
+      },
+      {
+        "from_months": 12,
+        "text": "Chopped, with meals."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep",
+      "nhs-iron"
+    ]
+  },
+  {
+    "id": "food.raisins",
+    "name": "Raisins",
+    "group": "fruit",
+    "aliases": [
+      "sultanas"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Chop finely or cook into porridge: no whole raisins before 1."
+      },
+      {
+        "from_months": 12,
+        "text": "Whole raisins are fine from 1, with meals."
+      }
+    ],
+    "choking_risk": true,
+    "sources": [
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "food.yoghurt",
+    "name": "Plain full-fat yoghurt",
+    "group": "dairy",
+    "aliases": [
+      "yoghurt",
+      "yogurt",
+      "natural yoghurt"
+    ],
+    "allergens": [
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it. Choose plain and unsweetened."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.greek_yoghurt",
+    "name": "Greek yoghurt",
+    "group": "dairy",
+    "aliases": [
+      "greek yogurt"
+    ],
+    "allergens": [
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it. Choose plain and full-fat."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.cheddar",
+    "name": "Cheddar",
+    "group": "dairy",
+    "aliases": [
+      "cheese"
+    ],
+    "allergens": [
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Grate it, or cut into short, narrow strips. Choose pasteurised full-fat cheese."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.mozzarella",
+    "name": "Mozzarella",
+    "group": "dairy",
+    "allergens": [
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Grate it, or cut into short, narrow strips. Choose pasteurised full-fat cheese."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.cottage_cheese",
+    "name": "Cottage cheese",
+    "group": "dairy",
+    "allergens": [
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it."
+      }
+    ],
+    "sources": [
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.cream_cheese",
+    "name": "Cream cheese",
+    "group": "dairy",
+    "allergens": [
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Spread thinly on toast fingers."
+      }
+    ],
+    "sources": [
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.paneer",
+    "name": "Paneer",
+    "group": "dairy",
+    "allergens": [
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Cook and cut into short, narrow strips."
+      }
+    ],
+    "sources": [
+      "nhs-food-prep",
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.ricotta",
+    "name": "Ricotta",
+    "group": "dairy",
+    "allergens": [
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it. Choose pasteurised."
+      }
+    ],
+    "sources": [
+      "nhs-foods-to-avoid",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.butter",
+    "name": "Butter",
+    "group": "dairy",
+    "allergens": [
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Spread thinly on toast or stir into vegetables."
+      }
+    ],
+    "sources": [
+      "nhs-what-to-feed",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.cows_milk",
+    "name": "Cows' milk",
+    "group": "dairy",
+    "aliases": [
+      "milk"
+    ],
+    "allergens": [
+      "milk"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Use it in cooking or mixed with food, such as porridge or sauces. Not as a main drink until 1 year."
+      },
+      {
+        "from_months": 12,
+        "text": "Whole or semi-skimmed can be the main drink from 1 year, from a cup. Not skimmed or 1% as a main drink under 5."
+      }
+    ],
+    "sources": [
+      "nhs-drinks-cups",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.soya_yoghurt",
+    "name": "Soya yoghurt",
+    "group": "dairy",
+    "allergens": [
+      "soya"
+    ],
+    "serving": [
+      {
+        "from_months": 6,
+        "text": "Offer on a preloaded spoon for your baby to take, or let them dip fingers or soft food into it. Choose unsweetened and calcium-fortified."
+      }
+    ],
+    "sources": [
+      "nhs-drinks-cups",
+      "nhs-food-allergies"
+    ]
+  },
+  {
+    "id": "food.plant_drink",
+    "name": "Oat or other plant drink",
+    "group": "dairy",
+    "aliases": [
+      "oat milk",
+      "oat drink"
+    ],
+    "from_months": 12,
+    "serving": [
+      {
+        "from_months": 12,
+        "text": "From 1 year, unsweetened and calcium-fortified, as part of a balanced diet. Never rice drinks before 5."
+      }
+    ],
+    "sources": [
+      "nhs-drinks-cups",
+      "nhs-foods-to-avoid"
+    ]
+  },
+  {
+    "id": "food.honey",
+    "name": "Honey",
+    "group": "other",
+    "from_months": 12,
+    "serving": [
+      {
+        "from_months": 12,
+        "text": "From 1 year only, and sparingly: it counts as added sugar."
+      }
+    ],
+    "sources": [
+      "nhs-foods-to-avoid"
+    ]
+  }
+]

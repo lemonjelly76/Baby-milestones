@@ -2,6 +2,7 @@ package io.github.lemonjelly76.babymilestones.server.assistant
 
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.content.SignpostCopy
+import io.github.lemonjelly76.babymilestones.core.food.Liking
 import io.github.lemonjelly76.babymilestones.core.safety.SafetyCheck
 import io.github.lemonjelly76.babymilestones.core.safety.SafetyKind
 import io.github.lemonjelly76.babymilestones.core.tracking.LogSource
@@ -65,6 +66,8 @@ class AssistantService(
               ids with search_guidance, then call log_milestone (or mark_not_sure) once per milestone with the date they
               gave. These calls only propose the change: the parent confirms them in the app, so say "tap to confirm",
               never that it is saved.
+            - For food, use get_foods and log_food (one call per food the parent mentions); for everyday questions
+              (weaning, allergens, drinks, teeth, potty training, nursery, school), use get_guides.
             - Use the baby's name. Milestones use corrected age for babies born 3 or more weeks early, until 2 years;
               appointments and vaccinations use chronological age. Say which age you mean.
             - The milestone checklists (CDC/AAP 2022) list what most children (75% or more) do by each age. Not doing
@@ -192,6 +195,18 @@ class AssistantService(
                 "${dose.vaccine} (${dose.dose}) given ${day(args.date("given_on"))}"
             }
             "add_review_note" -> "Question for the health visitor: ${args.string("text")}"
+            "log_food" -> {
+                val text = args.string("food")
+                "Tried ${content.findFood(text)?.name ?: text} — ${day(args.optDate("tasted_on"))}" +
+                    (args.optString("liking")?.let { l -> Liking.entries.firstOrNull { it.name.lowercase() == l }?.let { " (${it.label.lowercase()})" } } ?: "")
+            }
+            "remove_food_tasting" -> "Remove food entry ${args.string("tasting_id")}"
+            "update_checklist" -> {
+                val id = args.string("item_id")
+                val item = content.checklistItem(id)?.second ?: throw ToolInputException("Unknown checklist item $id; use get_guides")
+                (if (args.optBoolean("done") == false) "Untick: " else "Tick: ") + item.text
+            }
+            "save_note" -> "Save note: ${args.string("title")}"
             else -> tool
         }
     }

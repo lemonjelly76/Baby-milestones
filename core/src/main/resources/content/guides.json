@@ -1,0 +1,576 @@
+[
+  {
+    "id": "guide.ready_for_solids",
+    "title": "Is your baby ready for solid food?",
+    "summary": "The three signs to look for, usually at around 6 months.",
+    "topic": "feeding",
+    "from_months": 4,
+    "to_months": 7,
+    "sections": [
+      {
+        "paragraphs": [
+          "The NHS recommends starting solid food at around 6 months, alongside breast milk or first infant formula. Look for three signs together:"
+        ],
+        "bullets": [
+          "They can stay in a sitting position, holding their head steady.",
+          "They can coordinate their eyes, hands and mouth: look at food, pick it up and put it in their mouth.",
+          "They can swallow food rather than spit it back out."
+        ]
+      },
+      {
+        "heading": "Not signs of readiness",
+        "paragraphs": [
+          "Chewing fists, wanting extra milk feeds and waking more at night are normal at this age and don't mean a baby needs solid food."
+        ]
+      },
+      {
+        "heading": "Born early",
+        "paragraphs": [
+          "Ask your health visitor or GP when to start weaning a baby who was born early."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.ready_sits",
+        "text": "Sits up holding their head steady"
+      },
+      {
+        "id": "check.ready_coordinates",
+        "text": "Looks at food, picks it up and puts it in their mouth"
+      },
+      {
+        "id": "check.ready_swallows",
+        "text": "Swallows food rather than pushing it back out"
+      }
+    ],
+    "sources": [
+      "nhs-weaning-start",
+      "sacn-2018-first-year"
+    ]
+  },
+  {
+    "id": "guide.baby_led_weaning",
+    "title": "Baby-led weaning, the safer way",
+    "summary": "Finger foods from the start, following the BLISS trial's advice on iron, energy and choking.",
+    "topic": "feeding",
+    "from_months": 5,
+    "to_months": 18,
+    "sections": [
+      {
+        "heading": "What it is",
+        "paragraphs": [
+          "Baby-led weaning means offering finger foods and letting your baby feed themselves instead of spoon-feeding purées. Some families mix the two. The NHS says there's no right or wrong way, as long as your baby eats a wide variety of food."
+        ]
+      },
+      {
+        "heading": "The BLISS approach",
+        "paragraphs": [
+          "BLISS is a version of baby-led weaning designed by researchers in New Zealand to address worries about iron, growth and choking. At each meal:"
+        ],
+        "bullets": [
+          "Offer food your baby can pick up and feed themselves.",
+          "Offer one high-iron food: red meat, beans, lentils or chickpeas, or iron-fortified cereal.",
+          "Offer one high-energy food, such as avocado, cheese, or nut butter on toast.",
+          "Make it soft enough to squash with the tongue against the roof of the mouth.",
+          "Avoid hard foods, small round foods, coin-shaped slices and foods that crumb in the mouth, such as rice crackers."
+        ]
+      },
+      {
+        "heading": "What the research found",
+        "paragraphs": [
+          "In the BLISS trial of 206 babies, those weaned this way didn't choke more often than spoon-fed babies. About a third of babies in both groups choked at least once between 6 and 8 months, so how food is prepared matters whichever way you wean."
+        ]
+      },
+      {
+        "heading": "Every meal",
+        "bullets": [
+          "Sit your baby upright and alert in a highchair, and always stay with them while they eat.",
+          "Let them decide how much to eat; never force them.",
+          "Breast milk or first infant formula stays the main drink until 12 months.",
+          "Offer sips of water from an open or free-flow cup with meals.",
+          "Babies under 12 months don't need snacks: offer milk if they seem hungry between meals.",
+          "Expect mess, and expect gagging: it's a normal reflex while learning (see Gagging or choking?)."
+        ]
+      },
+      {
+        "heading": "Keep offering",
+        "paragraphs": [
+          "It may take 10 tries or more for a baby to get used to a new food, flavour or texture. In one study, babies' intake of a vegetable they first disliked caught up with a liked one by about the 8th offering. The foods tracker counts tries for you."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.blw_highchair",
+        "text": "A highchair where they sit upright"
+      },
+      {
+        "id": "check.blw_first_aid",
+        "text": "Everyone who feeds them knows the choking steps"
+      },
+      {
+        "id": "check.blw_iron",
+        "text": "An iron-rich food planned for each meal"
+      },
+      {
+        "id": "check.blw_cup",
+        "text": "An open or free-flow cup for water"
+      }
+    ],
+    "feature": "foods",
+    "sources": [
+      "nhs-what-to-feed-7-9",
+      "nhs-what-to-feed",
+      "nhs-weaning-start",
+      "cameron-2015-bliss",
+      "fangupo-2016-choking",
+      "maier-2007",
+      "nhs-food-prep"
+    ]
+  },
+  {
+    "id": "guide.gagging_choking",
+    "title": "Gagging or choking?",
+    "summary": "How to tell them apart, and what to do if your child is choking.",
+    "topic": "safety",
+    "from_months": 5,
+    "to_months": 60,
+    "sections": [
+      {
+        "heading": "Gagging is normal",
+        "paragraphs": [
+          "Gagging is a normal reflex while babies learn to chew and swallow. It's noisy: watery eyes, the tongue pushed forward, retching or being sick, and sometimes a red face. Stay calm and let them work it out."
+        ]
+      },
+      {
+        "heading": "Choking is quiet",
+        "paragraphs": [
+          "A choking child may be unable to cough, cry or breathe, and may start to look blue. On brown or black skin, look for blueness in the gums, inside the lips or in the fingernails."
+        ]
+      },
+      {
+        "heading": "Afterwards",
+        "paragraphs": [
+          "Get medical help even if the object comes out: part of it may still be there, or they may have been hurt."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.choking_steps",
+        "text": "Read the choking steps with everyone who feeds them"
+      }
+    ],
+    "card": {
+      "title": "If your child is choking",
+      "body": "Shout for help and don't leave them. Under 1: lie them face down along your thigh, supporting the head, and give up to 5 sharp back blows between the shoulder blades. If that doesn't work, lie them face up and give up to 5 chest thrusts with 2 fingers in the middle of the chest, just below the nipple line. Over 1: up to 5 back blows, then up to 5 abdominal thrusts. Call 999 if the blockage doesn't come out, and keep repeating until help arrives.",
+      "signpost": "999 if it doesn't clear · get checked even if it does",
+      "urgency": "urgent"
+    },
+    "sources": [
+      "nhs-choking-gagging",
+      "nhs-choking-first-aid",
+      "fangupo-2016-choking"
+    ]
+  },
+  {
+    "id": "guide.foods_to_avoid",
+    "title": "Foods to avoid, and how to cut risky ones",
+    "summary": "What not to give yet, what to keep low, and how to prepare foods to lower the choking risk.",
+    "topic": "safety",
+    "from_months": 5,
+    "to_months": 60,
+    "sections": [
+      {
+        "heading": "Not before 1 year",
+        "bullets": [
+          "Honey.",
+          "Whole raisins or other whole dried fruit.",
+          "Cows' milk as the main drink (it's fine in cooking from 6 months)."
+        ]
+      },
+      {
+        "heading": "Not before 5",
+        "bullets": [
+          "Whole nuts and peanuts: crush or grind them instead.",
+          "Popcorn.",
+          "Rice drinks instead of breast milk, formula or cows' milk."
+        ]
+      },
+      {
+        "heading": "Not for babies and young children",
+        "bullets": [
+          "Raw jelly cubes.",
+          "Raw or lightly cooked shellfish.",
+          "Shark, swordfish and marlin.",
+          "Mould-ripened soft cheeses such as brie, soft blue cheeses, ripened goats' cheese and unpasteurised cheese (unless cooked).",
+          "Raw or lightly cooked eggs without the British Lion stamp.",
+          "Slush ice drinks (age 7 and under)."
+        ]
+      },
+      {
+        "heading": "Keep low",
+        "bullets": [
+          "Salt: don't add it to food or cooking water, avoid stock cubes and gravy, and limit bacon, sausages, crisps, crackers and ready meals.",
+          "Added sugar and sweeteners, including honey, syrup, fruit juice and smoothies, for children 4 and under. Fruit is fine."
+        ]
+      },
+      {
+        "heading": "Cut to size",
+        "bullets": [
+          "Small round fruits such as grapes, cherries, berries and cherry tomatoes: into quarters.",
+          "Melon and apple: slices, not small chunks.",
+          "Carrot, pepper, cucumber and celery: narrow batons.",
+          "Sausages: short strips. Meat: strips as thin as possible, with all bones removed. Fish: no bones.",
+          "Cheese: grated or in short, narrow strips. Bread: narrow strips.",
+          "Nuts and seeds: chopped, flaked or ground. Nut butter spread on food, never on its own."
+        ]
+      }
+    ],
+    "sources": [
+      "nhs-foods-to-avoid",
+      "nhs-food-prep",
+      "nhs-drinks-cups"
+    ]
+  },
+  {
+    "id": "guide.allergens",
+    "title": "Introducing allergens",
+    "summary": "Which foods, when, how, and how to keep them going.",
+    "topic": "feeding",
+    "from_months": 5,
+    "to_months": 24,
+    "sections": [
+      {
+        "heading": "Which foods",
+        "paragraphs": [
+          "The NHS lists foods that can trigger allergic reactions:"
+        ],
+        "bullets": [
+          "Cows' milk, eggs, and foods with gluten (wheat, barley, rye).",
+          "Nuts and peanuts (crushed, ground or as smooth nut butter), and seeds, especially sesame.",
+          "Soya, fish and shellfish.",
+          "Also beans, lentils and peas, celery, mustard, and sulphites in some dried fruit."
+        ]
+      },
+      {
+        "heading": "When",
+        "paragraphs": [
+          "From around 6 months, alongside other foods. The NHS warns that delaying peanut and hen's egg beyond 6 to 12 months may increase the risk of allergy to them; trials such as LEAP and EAT suggest that eating peanut and egg early and regularly lowers the chance of allergy to them."
+        ]
+      },
+      {
+        "heading": "How",
+        "bullets": [
+          "One new allergen at a time, in a very small amount, so you can spot any reaction.",
+          "Reactions usually start within minutes but can take up to 2 hours, or up to 3 days for cows' milk.",
+          "Once a food is tolerated, keep it in the usual diet. The foods tracker reminds you if one hasn't been offered for a week.",
+          "Don't cut out major foods such as milk without advice."
+        ]
+      },
+      {
+        "heading": "Talk to your GP or health visitor first if",
+        "bullets": [
+          "Your baby already has a diagnosed food allergy or eczema.",
+          "There's a family history of food allergies, eczema, asthma or hay fever."
+        ]
+      }
+    ],
+    "card": {
+      "title": "Signs of a serious reaction",
+      "body": "Call 999 straight away if your child has breathing problems, a swollen throat or tongue, or suddenly becomes very unwell after eating. For milder signs, such as an itchy rash, swollen lips, watery eyes or being sick, talk to your GP or health visitor before offering that food again.",
+      "signpost": "999 in an emergency · GP or health visitor",
+      "urgency": "urgent"
+    },
+    "feature": "foods",
+    "sources": [
+      "nhs-food-allergies",
+      "bsaci-early-allergens",
+      "du-toit-2015-leap",
+      "perkin-2016-eat",
+      "sacn-2018-first-year"
+    ]
+  },
+  {
+    "id": "guide.drinks_and_cups",
+    "title": "Drinks and cups",
+    "summary": "Water, cups, and moving to cows' milk at 1.",
+    "topic": "feeding",
+    "from_months": 5,
+    "to_months": 36,
+    "sections": [
+      {
+        "heading": "From around 6 months",
+        "bullets": [
+          "Offer sips of water from a cup or beaker with meals. Tap water doesn't need boiling from 6 months.",
+          "An open or free-flow cup without a valve helps babies learn to sip and is better for their teeth.",
+          "Breast milk or first infant formula stays the main drink.",
+          "Babies don't need fruit juice or smoothies. Squash and fizzy drinks aren't suitable."
+        ]
+      },
+      {
+        "heading": "From 1 year",
+        "bullets": [
+          "Whole or semi-skimmed pasteurised cows' milk can be the main drink. Skimmed and 1% milk aren't suitable as the main drink before 5.",
+          "Unsweetened, calcium-fortified soya, oat or almond drinks can be part of a balanced diet. No rice drinks before 5.",
+          "Formula milks aren't needed, and feeding from a bottle should be discouraged.",
+          "Move from a lidded beaker to an open cup as soon as they're ready."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.cup_water",
+        "text": "Water in an open or free-flow cup with meals"
+      },
+      {
+        "id": "check.cup_milk",
+        "text": "Cows' milk as the main drink (from 1 year)"
+      },
+      {
+        "id": "check.cup_no_bottle",
+        "text": "Moved from bottles to cups (from 1 year)"
+      }
+    ],
+    "sources": [
+      "nhs-drinks-cups",
+      "nhs-foods-to-avoid"
+    ]
+  },
+  {
+    "id": "guide.vitamins",
+    "title": "Vitamins",
+    "summary": "Which vitamins the NHS recommends, from birth to 5.",
+    "topic": "health",
+    "from_months": 0,
+    "to_months": 60,
+    "sections": [
+      {
+        "bullets": [
+          "Breastfed babies: a daily vitamin D supplement from birth, even if the mother takes vitamin D herself.",
+          "From 6 months to 5 years: a daily supplement with vitamins A, C and D.",
+          "Babies having more than 500ml of infant formula a day don't need supplements: formula is already fortified.",
+          "If your family qualifies for Healthy Start, the vitamin drops are free."
+        ]
+      },
+      {
+        "paragraphs": [
+          "A pharmacist or your health visitor can tell you which product to buy."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.vitamins_daily",
+        "text": "Daily vitamins sorted, if they need them"
+      }
+    ],
+    "sources": [
+      "nhs-vitamins-children"
+    ]
+  },
+  {
+    "id": "guide.teeth",
+    "title": "Teeth and brushing",
+    "summary": "Brushing from the first tooth, toothpaste by age, and the first dentist visit.",
+    "topic": "health",
+    "from_months": 4,
+    "to_months": 60,
+    "sections": [
+      {
+        "bullets": [
+          "Start brushing as soon as the first milk tooth comes through, usually at around 6 months.",
+          "Brush twice a day for about 2 minutes, including last thing at night.",
+          "Under 3: a smear of children's fluoride toothpaste with at least 1,000ppm fluoride.",
+          "3 to 6: a pea-sized amount of toothpaste with 1,000 to 1,500ppm fluoride.",
+          "Spit out the toothpaste afterwards, but don't rinse: rinsing washes the fluoride away.",
+          "Take them to the dentist when their first teeth come through, or before they turn 1. NHS dental care is free for children."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.teeth_brushing",
+        "text": "Brushing twice a day"
+      },
+      {
+        "id": "check.teeth_dentist",
+        "text": "First dentist visit"
+      }
+    ],
+    "sources": [
+      "nhs-teeth"
+    ]
+  },
+  {
+    "id": "guide.sun_safety",
+    "title": "Sun safety",
+    "summary": "Shade, hats and sunscreen for babies and young children.",
+    "topic": "safety",
+    "from_months": 0,
+    "to_months": 60,
+    "sections": [
+      {
+        "bullets": [
+          "Keep babies under 6 months out of direct strong sunlight.",
+          "Spend time in the shade, especially from 11am to 3pm.",
+          "Cover up with clothes and a wide-brimmed hat that shades the face, neck and ears, from March to October.",
+          "Use sunscreen of at least SPF 30 with at least 4-star UVA protection, and reapply often, especially after swimming or towel drying."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.sun_hat",
+        "text": "A wide-brimmed sun hat"
+      },
+      {
+        "id": "check.sun_cream",
+        "text": "SPF 30+ sunscreen with 4-star UVA"
+      }
+    ],
+    "sources": [
+      "nhs-sun-safety"
+    ]
+  },
+  {
+    "id": "guide.potty_training",
+    "title": "Potty training",
+    "summary": "When to start, what you need, and what to expect.",
+    "topic": "everyday",
+    "from_months": 18,
+    "to_months": 42,
+    "sections": [
+      {
+        "heading": "When",
+        "paragraphs": [
+          "Almost all children can be potty trained between 18 months and 2 and a half. Signs they're getting aware:"
+        ],
+        "bullets": [
+          "They tell you they need a wee or poo.",
+          "They tell you when they're wet or dirty.",
+          "They fidget, go quiet or make faces."
+        ]
+      },
+      {
+        "paragraphs": [
+          "Some children don't show these signs, and that's okay too: you can still start."
+        ]
+      },
+      {
+        "heading": "Getting started",
+        "bullets": [
+          "Pick a calm time and tell them what's changing.",
+          "Switch to pants in the day, and keep nappies for naps and night.",
+          "Offer the potty at regular times: after waking, after meals and before bed.",
+          "Praise the effort, and let them practise flushing and washing hands.",
+          "Accidents are a normal part of learning: stay calm, clean up together and move on.",
+          "Dry nights usually follow dry days in time, so they don't need teaching."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.potty_kit",
+        "text": "A potty, or a toilet seat with a step"
+      },
+      {
+        "id": "check.potty_pants",
+        "text": "Pants and clothes that are easy to pull down"
+      },
+      {
+        "id": "check.potty_spares",
+        "text": "Spare clothes in the changing bag"
+      },
+      {
+        "id": "check.potty_routine",
+        "text": "Regular potty times"
+      }
+    ],
+    "sources": [
+      "nhs-potty-training"
+    ]
+  },
+  {
+    "id": "guide.childcare",
+    "title": "Childcare and funded hours",
+    "summary": "Help with childcare costs in England, and getting ready for nursery.",
+    "topic": "everyday",
+    "from_months": 6,
+    "to_months": 48,
+    "sections": [
+      {
+        "paragraphs": [
+          "In England, working families and others can get help with childcare costs:"
+        ],
+        "bullets": [
+          "15 and 30 hours support for children aged 9 months to 4 years.",
+          "Tax-Free Childcare: the government adds £2 for every £8 you pay in.",
+          "Universal Credit childcare: working families can claim back up to 85% of eligible costs."
+        ]
+      },
+      {
+        "paragraphs": [
+          "Who qualifies and when to apply depend on your circumstances, so use the Childcare Checker well before you need a place."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.childcare_checker",
+        "text": "Checked what support you can get"
+      },
+      {
+        "id": "check.childcare_visits",
+        "text": "Visited nurseries or childminders"
+      },
+      {
+        "id": "check.childcare_settling",
+        "text": "Planned settling-in sessions"
+      }
+    ],
+    "sources": [
+      "bsil-childcare"
+    ]
+  },
+  {
+    "id": "guide.starting_school",
+    "title": "Starting school",
+    "summary": "When they can start reception in England, and the dates to apply by.",
+    "topic": "everyday",
+    "from_months": 30,
+    "to_months": 60,
+    "sections": [
+      {
+        "paragraphs": [
+          "In England, children can start reception in the September after their 4th birthday. You apply through your local council, even for schools in another council area."
+        ],
+        "bullets": [
+          "Applications open in the autumn before; check your council's dates.",
+          "The national closing date is 15 January.",
+          "Primary offers are made on 16 April, or the next working day."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.school_visits",
+        "text": "Visited schools or open days"
+      },
+      {
+        "id": "check.school_applied",
+        "text": "Applied by 15 January"
+      },
+      {
+        "id": "check.school_offer",
+        "text": "Accepted a place"
+      }
+    ],
+    "feature": "school_dates",
+    "sources": [
+      "gov-primary-school",
+      "national-offer-day"
+    ]
+  }
+]

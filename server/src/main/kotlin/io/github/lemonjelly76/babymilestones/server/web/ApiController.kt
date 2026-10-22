@@ -1,6 +1,7 @@
 package io.github.lemonjelly76.babymilestones.server.web
 
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
+import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
 import io.github.lemonjelly76.babymilestones.core.summary.ReviewNote
@@ -14,6 +15,10 @@ import io.github.lemonjelly76.babymilestones.server.security.currentCarer
 import io.github.lemonjelly76.babymilestones.server.service.BabyInput
 import io.github.lemonjelly76.babymilestones.server.service.BabyService
 import io.github.lemonjelly76.babymilestones.server.service.FamilyService
+import io.github.lemonjelly76.babymilestones.server.service.FoodService
+import io.github.lemonjelly76.babymilestones.server.service.GuideService
+import io.github.lemonjelly76.babymilestones.server.service.TastingChanges
+import io.github.lemonjelly76.babymilestones.server.service.TastingInput
 import io.github.lemonjelly76.babymilestones.server.service.LogChanges
 import io.github.lemonjelly76.babymilestones.server.service.LogInput
 import io.github.lemonjelly76.babymilestones.server.service.RecordService
@@ -23,6 +28,7 @@ import io.github.lemonjelly76.babymilestones.server.store.FamilyStore
 import io.github.lemonjelly76.babymilestones.server.store.Ids
 import io.github.lemonjelly76.babymilestones.server.store.NotFoundException
 import io.github.lemonjelly76.babymilestones.server.store.Photo
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.CacheControl
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -47,11 +53,14 @@ class ApiController(
     private val familyService: FamilyService,
     private val babyService: BabyService,
     private val records: RecordService,
+    private val foods: FoodService,
+    private val guides: GuideService,
     private val assistant: AssistantService,
     private val content: ContentBundle,
     private val babyStore: BabyStore,
     private val familyStore: FamilyStore,
     private val clock: Clock,
+    @param:Value("\${app.mcp-public-url:}") private val mcpPublicUrl: String,
 ) {
     companion object {
         const val MAX_PHOTO_BYTES = 8 * 1024 * 1024
@@ -77,7 +86,7 @@ class ApiController(
         val principal = currentCarer()
         return MeResponse(
             familyService.family(principal), familyService.carer(principal), familyService.carers(principal),
-            babyService.babies(principal.familyId), content.version,
+            babyService.babies(principal.familyId), content.version, mcpPublicUrl.ifBlank { null },
         )
     }
 
@@ -189,6 +198,34 @@ class ApiController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteNote(@PathVariable babyId: String, @PathVariable noteId: String) = records.deleteReviewNote(writer(), babyId, noteId)
 
+    // --- foods, checklists and Claude's notes ---
+
+    @PostMapping("/babies/{babyId}/tastings")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun logFood(@PathVariable babyId: String, @RequestBody request: TastingRequest): FoodTasting =
+        foods.log(writer(), babyId, TastingInput(
+            request.foodId, request.name, request.group, request.tastedOn, request.liking, request.reaction, request.note,
+            request.photoRef,
+        ))
+
+    @PatchMapping("/babies/{babyId}/tastings/{tastingId}")
+    fun updateFood(@PathVariable babyId: String, @PathVariable tastingId: String, @RequestBody request: TastingUpdateRequest): FoodTasting =
+        foods.update(writer(), babyId, tastingId, TastingChanges(
+            request.tastedOn, request.liking, request.reaction, request.note, request.photoRef,
+        ))
+
+    @DeleteMapping("/babies/{babyId}/tastings/{tastingId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun removeFood(@PathVariable babyId: String, @PathVariable tastingId: String) = foods.remove(writer(), babyId, tastingId)
+
+    @PutMapping("/babies/{babyId}/checklist/{itemId}")
+    fun checklist(@PathVariable babyId: String, @PathVariable itemId: String, @RequestBody request: ChecklistRequest): ChecklistResponse =
+        ChecklistResponse(itemId, request.done, guides.setChecklistItem(writer(), babyId, itemId, request.done))
+
+    @DeleteMapping("/babies/{babyId}/notes/{noteId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteAssistantNote(@PathVariable babyId: String, @PathVariable noteId: String) = guides.deleteNote(writer(), babyId, noteId)
+
     // --- photos ---
 
     @PostMapping("/photos", consumes = ["image/*"])
@@ -233,6 +270,7 @@ class ApiController(
         return BabyData(
             baby, familyStore.family(familyId)?.region ?: "england", babyStore.logs(babyId), babyStore.moments(babyId),
             babyStore.appointments(babyId), babyStore.doses(babyId), babyStore.reviewNotes(babyId), content.version,
+            babyStore.tastings(babyId), babyStore.ticks(babyId), babyStore.assistantNotes(babyId),
         )
     }
 

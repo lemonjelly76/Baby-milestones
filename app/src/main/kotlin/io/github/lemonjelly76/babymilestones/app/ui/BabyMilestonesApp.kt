@@ -7,7 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.Chat
+import androidx.compose.material.icons.outlined.AutoAwesome
+import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.Checklist
 import androidx.compose.material.icons.outlined.HealthAndSafety
@@ -47,9 +48,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 enum class Tab(val label: String, val icon: ImageVector) {
     TODAY("Today", Icons.Outlined.WbSunny),
     MILESTONES("Milestones", Icons.Outlined.Checklist),
+    GUIDES("Guides", Icons.Outlined.Lightbulb),
     TIMELINE("Timeline", Icons.Outlined.Timeline),
     HEALTH("Health", Icons.Outlined.HealthAndSafety),
-    ASK("Ask", Icons.AutoMirrored.Outlined.Chat),
 }
 
 /** Screens opened on top of the tabs. */
@@ -60,6 +61,9 @@ sealed interface Overlay {
     data class Backfill(val babyId: String) : Overlay
     data class Summary(val babyId: String) : Overlay
     data object Settings : Overlay
+    data class Guide(val guideId: String) : Overlay
+    data object Foods : Overlay
+    data class Claude(val chat: Boolean = false) : Overlay
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -110,6 +114,9 @@ private fun MainScreens(state: AppState, viewModel: AppViewModel, snackbar: Snac
         is Overlay.EditBaby -> EditBabyScreen(state, overlay.babyId, viewModel, onBack = ::close)
         is Overlay.Backfill -> BackfillScreen(state, overlay.babyId, viewModel, onDone = ::close)
         is Overlay.Summary -> SummaryScreen(state, overlay.babyId, viewModel, onBack = ::close)
+        is Overlay.Guide -> GuideScreen(state, baby.id, overlay.guideId, viewModel, onBack = ::close, onOpenFoods = { open(Overlay.Foods) })
+        Overlay.Foods -> FoodsScreen(state, baby.id, viewModel, onBack = ::close, onOpenGuide = { open(Overlay.Guide(it)) })
+        is Overlay.Claude -> ClaudeScreen(state, baby.id, viewModel, onBack = ::close, startInChat = overlay.chat)
         Overlay.Settings -> SettingsScreen(state, viewModel, onBack = ::close, onAddBaby = { open(Overlay.AddBaby) },
             onEditBaby = { open(Overlay.EditBaby(it)) })
         null -> Scaffold(
@@ -118,6 +125,7 @@ private fun MainScreens(state: AppState, viewModel: AppViewModel, snackbar: Snac
                     TopAppBar(
                         title = { BabySwitcher(state, viewModel, onAdd = { open(Overlay.AddBaby) }) },
                         actions = {
+                            IconButton(onClick = { open(Overlay.Claude()) }) { Icon(Icons.Outlined.AutoAwesome, "Claude") }
                             IconButton(onClick = { open(Overlay.Settings) }) { Icon(Icons.Outlined.Settings, "Settings") }
                         },
                     )
@@ -138,15 +146,17 @@ private fun MainScreens(state: AppState, viewModel: AppViewModel, snackbar: Snac
                 if (view == null) {
                     EmptyState("Loading ${baby.name}'s milestones…")
                 } else when (tab) {
-                    Tab.TODAY -> TodayScreen(view, content, viewModel,
-                        onOpenGuide = { open(Overlay.PeriodGuide(it)) },
+                    Tab.TODAY -> TodayScreen(view, content, viewModel, state.assistantEnabled,
+                        onOpenPeriod = { open(Overlay.PeriodGuide(it)) },
+                        onOpenGuide = { open(Overlay.Guide(it)) },
                         onBackfill = { open(Overlay.Backfill(baby.id)) },
-                        onAsk = { tab = Tab.ASK },
+                        onFoods = { open(Overlay.Foods) },
+                        onClaude = { chat -> open(Overlay.Claude(chat)) },
                         onHealth = { tab = Tab.HEALTH })
                     Tab.MILESTONES -> MilestonesScreen(view, content, viewModel)
                     Tab.TIMELINE -> TimelineScreen(view, content, viewModel, onSummary = { open(Overlay.Summary(baby.id)) })
                     Tab.HEALTH -> HealthScreen(view, content, viewModel, onSummary = { open(Overlay.Summary(baby.id)) })
-                    Tab.ASK -> AskScreen(state, view, viewModel)
+                    Tab.GUIDES -> GuidesScreen(view, content, onOpenGuide = { open(Overlay.Guide(it)) }, onOpenFoods = { open(Overlay.Foods) })
                 }
             }
         }

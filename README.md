@@ -25,18 +25,23 @@ departs from it, is in [`docs/design-document.md`](docs/design-document.md).
   January 2026 changes), booked and done dates, notes and questions for the health visitor.
 - **Health visitor summary:** achievements, anything not seen yet and the parents' questions, shared as a PDF or text.
 - **Concerns:** calm, content-driven signposting to the health visitor or GP; never a diagnosis.
-- **Ask:** an assistant grounded in the app's content and the baby's log. Updates it suggests are confirm chips;
-  urgent symptoms and distress are caught on the phone before anything is sent.
+- **Guides:** cited guides for the child's age, from readiness for solids and baby-led weaning to potty training,
+  childcare and starting school (with England's reception dates), each with a checklist.
+- **Foods tracker:** 109 foods with how to serve them at each age; log each taste in two taps with how it went and any
+  possible reaction; see allergens introduced or due again, foods worth offering again, and what to try next.
+- **Claude:** use Claude mobile or claude.ai with the MCP connector; what Claude saves (check-ins, answers, meal ideas)
+  appears in the app. An in-app assistant (charged per message through the Claude API) is off unless switched on in
+  Settings; urgent symptoms and distress are caught on the phone before anything is sent.
 - **Family:** several carers per family (invite code or link), several babies, offline reading, weekly digest and
   other reminders, export and delete everything.
-- **MCP:** the spec's 19 tools, resources and prompts at `/mcp` for Claude Desktop or claude.ai.
+- **MCP:** 27 tools, resources and 4 prompts at `/mcp` for Claude Desktop, claude.ai and the Claude app.
 
 ## How it's built
 
 | Path | What |
 | --- | --- |
 | `core/` | Pure Kotlin shared by app and server: age engine, status rules, concerns, schedule, pending updates, what's next, search, safety check, timeline, summary. Heavily unit-tested |
-| `core/src/main/resources/content/` | The content bundle: milestones, periods, references, concern and safety copy, UK schedule |
+| `core/src/main/resources/content/` | The content bundle: milestones, periods, guides, foods, references, concern and safety copy, UK schedule |
 | `server/` | Spring Boot 4.1 (Kotlin), PostgreSQL + Flyway, REST API for the app, Spring AI MCP server, Claude API assistant |
 | `app/` | Android, Kotlin, Jetpack Compose, Material 3, Ktor client, WorkManager reminders |
 | `docs/design-document.md` | Decisions (ADRs), sources, requirement coverage, open questions |
@@ -46,7 +51,7 @@ departs from it, is in [`docs/design-document.md`](docs/design-document.md).
 On the home server, next to the other apps:
 
 ```
-cp .env.example .env    # set POSTGRES_PASSWORD, SETUP_CODE and, for the assistant, ANTHROPIC_API_KEY
+cp .env.example .env    # set POSTGRES_PASSWORD, SETUP_CODE, MCP_PUBLIC_URL and, for the optional in-app assistant, ANTHROPIC_API_KEY
 docker compose up -d --build
 ```
 
@@ -79,5 +84,6 @@ Debug builds may use a plain-HTTP server address; release builds need HTTPS.
 1. Open the app, enter the server address, choose **New family**, and give the setup code from `.env`.
 2. Add your baby: name and date of birth (or just their age), and whether they were born early.
 3. Tick what they already do, then land on Today.
-4. Settings → **Invite a carer** shares a one-time code and link; **Create connector token** gives Claude Desktop or
-   claude.ai a bearer token for `https://<server>/mcp`.
+4. Settings → **Invite a carer** shares a one-time code and link; **Create connector token** gives Claude a bearer
+   token for the connector address shown there. Add it on claude.ai (Settings → Connectors → Add custom connector) with
+   the header `Authorization: Bearer <token>`; it then works in the Claude app too.

@@ -4,6 +4,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- To open the Claude app from the check-in card. -->
+    <queries>
+        <package android:name="com.anthropic.claude" />
+    </queries>
+
     <!-- Health data stays on the phone and the family's server: no Android cloud backup. -->
     <application
         android:allowBackup="false"

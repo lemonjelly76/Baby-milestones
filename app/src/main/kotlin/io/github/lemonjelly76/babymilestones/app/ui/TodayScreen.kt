@@ -34,9 +34,12 @@ fun TodayScreen(
     view: BabyView,
     content: ContentBundle,
     viewModel: AppViewModel,
+    assistantEnabled: Boolean,
+    onOpenPeriod: (String) -> Unit,
     onOpenGuide: (String) -> Unit,
     onBackfill: () -> Unit,
-    onAsk: () -> Unit,
+    onFoods: () -> Unit,
+    onClaude: (chat: Boolean) -> Unit,
     onHealth: () -> Unit,
 ) {
     var open by remember { mutableStateOf<String?>(null) }
@@ -54,7 +57,7 @@ fun TodayScreen(
             if (view.baby.dobEstimated) Text("Date of birth is estimated: confirm it in Settings.", style = MaterialTheme.typography.bodySmall)
         }
 
-        InfoCard(onClick = { onOpenGuide(period.id) }) {
+        InfoCard(onClick = { onOpenPeriod(period.id) }) {
             Text("${period.name} · ${period.fromMonths}–${period.toMonths} months", style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary)
             Text(period.typical, modifier = Modifier.padding(top = 4.dp))
@@ -105,14 +108,30 @@ fun TodayScreen(
             InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer) { Text(it) }
         }
 
-        InfoCard {
-            Text("Weekly check-in", fontWeight = FontWeight.SemiBold)
-            Text("Go through what's due with the assistant: it asks, you answer, and it suggests updates for you to confirm.")
-            Row(horizontalArrangement = Gap, modifier = Modifier.padding(top = 8.dp)) {
-                Button(onClick = { viewModel.ask(view.baby.id, "Let's do this week's check-in for $name."); onAsk() }) { Text("Start") }
-                if (view.notYetLogged > 3) OutlinedButton(onClick = onBackfill) { Text("Catch up on earlier ones") }
+        if (view.showFoods) FoodsCard(view, onFoods)
+
+        view.schoolDates?.takeIf { it.applicationOpen(view.today) }?.let { dates ->
+            InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer, onClick = { onOpenGuide("guide.starting_school") }) {
+                Text("School place for September ${dates.startsOn.year}", fontWeight = FontWeight.SemiBold)
+                Text("Apply to your council by ${dates.applyBy.pretty()}.")
             }
         }
+
+        view.data.assistantNotes.firstOrNull()?.takeIf {
+            it.createdAt.atZone(java.time.ZoneId.systemDefault()).toLocalDate().isAfter(view.today.minusDays(7))
+        }?.let { note ->
+            InfoCard(onClick = { onClaude(false) }) {
+                Text("Saved by Claude · ${note.kind.label}", style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary)
+                Text(note.title, fontWeight = FontWeight.SemiBold)
+            }
+        }
+
+        AskClaudeCard(view, assistantEnabled, onOpenClaude = { onClaude(false) }, onAskHere = {
+            viewModel.ask(view.baby.id, "Let's do this week's check-in for $name.")
+            onClaude(true)
+        })
+        if (view.notYetLogged > 3) TextButton(onClick = onBackfill) { Text("Catch up on earlier milestones") }
         Disclaimer(content)
     }
 
@@ -134,5 +153,27 @@ private fun SeenYetCard(t: TrackedMilestone, viewModel: AppViewModel, babyId: St
             TextButton(onClick = { viewModel.notSure(babyId, t.id) }) { Text("Not sure") }
             TextButton(onClick = onOpen) { Text("Not yet") }
         }
+    }
+}
+
+@Composable
+private fun FoodsCard(view: BabyView, onFoods: () -> Unit) {
+    val foods = view.foods
+    SectionTitle("Food")
+    InfoCard(onClick = onFoods) {
+        Text(
+            if (foods.tried == 0) "Starting solids? Log each new food and get ideas for what to try next."
+            else "${foods.tried} ${if (foods.tried == 1) "food" else "foods"} tried so far",
+            fontWeight = FontWeight.SemiBold,
+        )
+        foods.allergensDue.take(2).forEach {
+            Text("${it.allergen.label}: not offered for ${it.daysSinceLast} days. Keep it in the usual diet.",
+                style = MaterialTheme.typography.bodySmall)
+        }
+        foods.suggestions.take(3).takeIf { it.isNotEmpty() }?.let { next ->
+            Text("Try next: " + next.joinToString { it.name }, style = MaterialTheme.typography.bodyMedium)
+        }
+        Text("Log a food ›", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(top = 8.dp))
     }
 }

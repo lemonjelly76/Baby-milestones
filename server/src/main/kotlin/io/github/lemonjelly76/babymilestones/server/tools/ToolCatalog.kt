@@ -17,7 +17,17 @@ import io.github.lemonjelly76.babymilestones.core.timeline.Timeline
 import io.github.lemonjelly76.babymilestones.core.timeline.TimelineEntry
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneLog
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
+import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
+import io.github.lemonjelly76.babymilestones.core.food.FoodReport
+import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
+import io.github.lemonjelly76.babymilestones.core.food.Liking
+import io.github.lemonjelly76.babymilestones.core.guides.Guides
+import io.github.lemonjelly76.babymilestones.core.notes.AssistantNote
+import io.github.lemonjelly76.babymilestones.core.notes.NoteKind
 import io.github.lemonjelly76.babymilestones.server.service.BabyService
+import io.github.lemonjelly76.babymilestones.server.service.FoodService
+import io.github.lemonjelly76.babymilestones.server.service.GuideService
+import io.github.lemonjelly76.babymilestones.server.service.TastingInput
 import io.github.lemonjelly76.babymilestones.server.service.LogChanges
 import io.github.lemonjelly76.babymilestones.server.service.LogInput
 import io.github.lemonjelly76.babymilestones.server.service.RecordService
@@ -36,10 +46,12 @@ import org.springframework.stereotype.Component
 class ToolCatalog(
     private val babies: BabyService,
     private val records: RecordService,
+    private val foods: FoodService,
+    private val guides: GuideService,
     private val content: ContentBundle,
     private val search: GuidanceSearch,
 ) {
-    val tools: List<BabyTool> = readTools() + writeTools()
+    val tools: List<BabyTool> = readTools() + everydayReadTools() + writeTools() + everydayWriteTools()
 
     fun find(name: String): BabyTool? = tools.firstOrNull { it.name == name }
 
@@ -222,6 +234,171 @@ class ToolCatalog(
             }
             val results = search.search(args.string("query"), ageMonths)
             json(ListSerializer(GuidancePassage.serializer()), results)
+        },
+    )
+
+    private fun <E : Enum<E>> enumValue(serializer: KSerializer<E>, values: Array<E>, name: String, text: String?): E? =
+        text?.let { t -> values.firstOrNull { serialName(serializer, it) == t } ?: throw ToolInputException("Unknown $name '$t'") }
+
+    private fun names(serializer: KSerializer<out Enum<*>>) = (0 until serializer.descriptor.elementsCount).map(serializer.descriptor::getElementName)
+
+    private fun everydayReadTools() = listOf(
+        BabyTool(
+            "get_foods", "Foods tried",
+            "The baby's foods tracker: how many foods tried, by group; each food with times offered, last offered and " +
+                "whether they liked it; allergens introduced or due again; foods worth offering again; possible reactions the " +
+                "parents noted; and suggestions for what to try next, worked out by the app's rules. Give query to look up " +
+                "catalogue foods (with how to serve them at this age) instead.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                string("query", "Optional: search the food catalogue by name, e.g. 'salmon' or 'berries'")
+                string("group", "Optional: only catalogue foods in this group", enum = names(FoodGroup.serializer()))
+            }, write = false,
+        ) { caller, args ->
+            val ctx = ctx(caller, args)
+            val months = ctx.snapshot.ages.chronological.months
+            val query = args.optString("query")?.lowercase()
+            val group = enumValue(FoodGroup.serializer(), FoodGroup.entries.toTypedArray(), "group", args.optString("group"))
+            if (query != null || group != null) {
+                val matches = content.foods.filter { f ->
+                    (group == null || f.group == group) &&
+                        (query == null || (listOf(f.name) + f.aliases).any { query in it.lowercase() || it.lowercase() in query })
+                }
+                json(ListSerializer(FoodView.serializer()), matches.map { FoodAndGuideViews.briefFood(it, months) })
+            } else {
+                json(FoodReport.serializer(), ctx.foods, mapOf(
+                    "baby_name" to JsonPrimitive(ctx.baby.name),
+                    "age_months" to JsonPrimitive(months),
+                    "recent" to BabyJson.encodeToJsonElement(ListSerializer(FoodTasting.serializer()), ctx.tastings.takeLast(20).reversed()),
+                ))
+            }
+        },
+
+        BabyTool(
+            "get_food", "Food details",
+            "One catalogue food: how to serve it at the baby's age, choking-risk preparation, allergens, whether it's " +
+                "iron-rich, the earliest age to offer it, and sources.",
+            schema {
+                string("food_id", "e.g. food.salmon, from get_foods", required = true)
+                string("baby_id", "Id from list_babies, to tailor the serving advice to their age")
+            }, write = false,
+        ) { caller, args ->
+            val id = args.string("food_id")
+            val food = content.findFood(id) ?: throw ToolInputException("Unknown food $id; search with get_foods and a query")
+            val months = args.optString("baby_id")?.let { babies.context(caller.familyId, it).snapshot.ages.chronological.months }
+            json(FoodView.serializer(), FoodAndGuideViews.food(content, food, months))
+        },
+
+        BabyTool(
+            "get_guides", "Guides and checklists",
+            "Practical guides for the baby's age (weaning, allergens, choking, foods to avoid, drinks, vitamins, teeth, " +
+                "sun safety, potty training, childcare, starting school) with this baby's checklist ticks. Without guide_id: " +
+                "the guides for now and coming up. With guide_id: the full guide, its checklist and sources.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                string("guide_id", "e.g. guide.baby_led_weaning")
+            }, write = false,
+        ) { caller, args ->
+            val ctx = ctx(caller, args)
+            val id = args.optString("guide_id")
+            if (id != null) {
+                val guide = content.guide(id) ?: throw ToolInputException("Unknown guide $id; call get_guides without guide_id")
+                json(GuideView.serializer(), FoodAndGuideViews.guide(content, guide, ctx.ticks))
+            } else {
+                val months = ctx.snapshot.ages.chronological.months
+                val forAge = Guides.forAge(content.guides, months)
+                json(GuidesView.serializer(), GuidesView(
+                    months,
+                    forAge.now.map { FoodAndGuideViews.summary(it, ctx.ticks) },
+                    forAge.comingUp.map { FoodAndGuideViews.summary(it, ctx.ticks) },
+                ))
+            }
+        },
+
+        BabyTool(
+            "list_notes", "Saved notes",
+            "Notes saved with save_note: earlier check-in summaries, answers, plans and meal ideas, newest first.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                integer("limit", "How many; default 10")
+            }, write = false,
+        ) { caller, args ->
+            val ctx = ctx(caller, args)
+            json(ListSerializer(AssistantNote.serializer()), ctx.notes.take((args.optInt("limit") ?: 10).coerceIn(1, 50)))
+        },
+    )
+
+    private fun everydayWriteTools() = listOf(
+        BabyTool(
+            "log_food", "Log a food",
+            "Records that the baby was offered a food. Give the food's id or name: names are matched to the catalogue " +
+                "('eggs' finds food.egg); anything else is saved as the family's own food, with group if you know it. " +
+                "Log each food separately. reaction is only for a possible reaction the parent describes, in their words.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                string("food", "Catalogue food id or a food name", required = true)
+                date("tasted_on", "When; default today")
+                string("liking", "How it went", enum = names(Liking.serializer()))
+                string("reaction", "A possible reaction the parent noticed, in their words")
+                string("note", "Anything else, e.g. how it was served")
+                string("group", "For a food not in the catalogue", enum = names(FoodGroup.serializer()))
+            }, write = true,
+        ) { caller, args ->
+            val text = args.string("food")
+            val food = content.findFood(text)
+            val tasting = foods.log(writer(caller), args.string("baby_id"), TastingInput(
+                foodId = food?.id,
+                name = if (food == null) text else null,
+                group = enumValue(FoodGroup.serializer(), FoodGroup.entries.toTypedArray(), "group", args.optString("group")),
+                tastedOn = args.optDate("tasted_on"),
+                liking = enumValue(Liking.serializer(), Liking.entries.toTypedArray(), "liking", args.optString("liking")),
+                reaction = args.optString("reaction"),
+                note = args.optString("note"),
+            ))
+            json(FoodTasting.serializer(), tasting, mapOf("in_catalogue" to JsonPrimitive(food != null)))
+        },
+
+        BabyTool(
+            "remove_food_tasting", "Remove a food entry",
+            "Deletes one food entry logged by mistake. Ids are in get_foods' recent list.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                string("tasting_id", "Id of the food entry", required = true)
+            }, write = true, destructive = true,
+        ) { caller, args ->
+            foods.remove(writer(caller), args.string("baby_id"), args.string("tasting_id"))
+            buildJsonObject { put("removed", args.string("tasting_id")); put("content_version", content.version) }
+        },
+
+        BabyTool(
+            "update_checklist", "Tick a checklist item",
+            "Ticks or unticks an item on a guide's checklist, such as check.ready_sits. Item ids come from get_guides.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                string("item_id", "Checklist item id from get_guides", required = true)
+                boolean("done", "True to tick, false to untick", required = true)
+            }, write = true,
+        ) { caller, args ->
+            val done = args.optBoolean("done") ?: throw ToolInputException("Missing 'done'")
+            guides.setChecklistItem(writer(caller), args.string("baby_id"), args.string("item_id"), done)
+            buildJsonObject { put("item_id", args.string("item_id")); put("done", done); put("content_version", content.version) }
+        },
+
+        BabyTool(
+            "save_note", "Save a note for the family",
+            "Saves something you wrote so the family can read it later in the app's Claude notes: a check-in summary, an " +
+                "answer worth keeping, a plan or meal ideas. Write it for the parent, in plain words, with sources named. " +
+                "Short Markdown is fine: headings with #, bullets with -, bold with **. Never include a diagnosis.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                string("kind", "What it is", required = true, enum = names(NoteKind.serializer()))
+                string("title", "A short title, e.g. 'Check-in, 22 October'", required = true)
+                string("body", "The note", required = true)
+            }, write = true,
+        ) { caller, args ->
+            val kind = enumValue(NoteKind.serializer(), NoteKind.entries.toTypedArray(), "kind", args.string("kind"))!!
+            val note = guides.saveNote(writer(caller), args.string("baby_id"), kind, args.string("title"), args.string("body"))
+            json(AssistantNote.serializer(), note)
         },
     )
 

@@ -1,6 +1,7 @@
 package io.github.lemonjelly76.babymilestones.app.data
 
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
+import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
 import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
@@ -149,6 +150,25 @@ class ApiClient(
         call(HttpMethod.Patch, "/api/babies/$babyId/review-notes/$noteId", ReviewNote.serializer(), ResolveRequest.serializer(), ResolveRequest(resolved))
 
     suspend fun deleteReviewNote(babyId: String, noteId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/review-notes/$noteId")
+
+    // --- foods, checklists and Claude's notes ---
+
+    suspend fun logFood(babyId: String, request: TastingRequest) =
+        call(HttpMethod.Post, "/api/babies/$babyId/tastings", FoodTasting.serializer(), TastingRequest.serializer(), request)
+
+    suspend fun updateFood(babyId: String, tastingId: String, request: TastingUpdateRequest) =
+        call(HttpMethod.Patch, "/api/babies/$babyId/tastings/$tastingId", FoodTasting.serializer(), TastingUpdateRequest.serializer(), request)
+
+    suspend fun removeFood(babyId: String, tastingId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/tastings/$tastingId")
+
+    suspend fun setChecklistItem(babyId: String, itemId: String, done: Boolean) {
+        send(HttpMethod.Put, "/api/babies/$babyId/checklist/$itemId") {
+            contentType(ContentType.Application.Json)
+            setBody(BabyJson.encodeToString(ChecklistRequest.serializer(), ChecklistRequest(done)))
+        }
+    }
+
+    suspend fun deleteNote(babyId: String, noteId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/notes/$noteId")
 
     // --- photos ---
 

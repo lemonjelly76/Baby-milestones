@@ -106,19 +106,24 @@ fun SettingsScreen(state: AppState, viewModel: AppViewModel, onBack: () -> Unit,
             Toggle("When an appointment window opens", n.appointmentWindows) { set(n.copy(appointmentWindows = it)) }
             Toggle("A nudge if nothing's been logged for 3 weeks", n.quietNudge) { set(n.copy(quietNudge = it)) }
 
-            SectionTitle("Claude on your computer")
-            Text("Connect Claude Desktop or claude.ai to the same data with a separate token. Add the server's /mcp address as a " +
-                "custom connector and use this token as the bearer token.", style = MaterialTheme.typography.bodySmall)
+            SectionTitle("Claude")
+            Text("Use Claude on your phone or computer with the Baby Milestones connector: add this server's MCP address as a " +
+                "custom connector in claude.ai (Settings, Connectors) with this token as the bearer token. It then works in the " +
+                "Claude app too, on your Claude plan.", style = MaterialTheme.typography.bodySmall)
             OutlinedButton(onClick = {
                 scope.launch { viewModel.connectorToken()?.let { connector = it.token; copy(context, it.token) } }
             }, modifier = Modifier.padding(top = 4.dp)) { Text("Create connector token") }
+            val endpoint = state.me?.mcpUrl ?: "${state.serverUrl}/mcp"
             connector?.let {
-                Text("Copied to the clipboard. Making a new token replaces this one.\nEndpoint: ${state.serverUrl}/mcp",
-                    style = MaterialTheme.typography.bodySmall)
+                Text("Copied to the clipboard. Making a new token replaces this one.", style = MaterialTheme.typography.bodySmall)
             }
+            Text("Connector address: $endpoint", style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
+            Toggle("In-app assistant (Ask here)", state.assistantEnabled) { viewModel.setAssistantEnabled(it) }
+            Text("Off by default. When on, each message is answered by the Claude API on your server, which is charged per use. " +
+                "Only the text of your questions is sent, never photos.", style = MaterialTheme.typography.bodySmall)
 
             SectionTitle("Your data")
-            Text("Everything is stored on your family's server and this phone. Photos are never sent to the AI.", style = MaterialTheme.typography.bodySmall)
+            Text("Everything is stored on your family's server and this phone. Photos are never sent to Claude.", style = MaterialTheme.typography.bodySmall)
             OutlinedButton(onClick = { scope.launch { viewModel.exportJson()?.let { Export.shareJson(context, it) } } },
                 modifier = Modifier.padding(top = 4.dp)) { Text("Export everything (JSON)") }
             TextButton(onClick = { confirmSignOut = true }) { Text("Sign out of this phone") }
@@ -127,7 +132,8 @@ fun SettingsScreen(state: AppState, viewModel: AppViewModel, onBack: () -> Unit,
             SectionTitle("About the guidance")
             Text("Milestones come from the CDC and AAP 2022 checklists, which list what most children (75% or more) do by each age. " +
                 "Movement windows come from the WHO Motor Development Study; sleep, activity and screen advice from WHO 2019 guidelines; " +
-                "UK appointments and vaccinations from the NHS and UKHSA. Content version ${state.content?.version}.",
+                "UK appointments and vaccinations from the NHS and UKHSA; weaning, allergen and food safety advice from the NHS, BSACI " +
+                "and the BLISS trial. Content version ${state.content?.version}.",
                 style = MaterialTheme.typography.bodySmall)
             state.content?.let { Sources(it, it.references.map { r -> r.id }) }
             Text("Server: ${state.serverUrl}", style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 16.dp))

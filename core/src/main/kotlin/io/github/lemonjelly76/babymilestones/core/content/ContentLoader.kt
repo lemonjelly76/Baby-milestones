@@ -1,5 +1,7 @@
 package io.github.lemonjelly76.babymilestones.core.content
 
+import io.github.lemonjelly76.babymilestones.core.food.Food
+import io.github.lemonjelly76.babymilestones.core.guides.Guide
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
@@ -29,6 +31,8 @@ object ContentLoader {
             concerns = json.decodeFromString(read("concerns.json")),
             safety = json.decodeFromString(read("safety.json")),
             schedules = json.decodeFromString(ListSerializer(RegionSchedule.serializer()), read("schedules.json")),
+            foods = json.decodeFromString(ListSerializer(Food.serializer()), read("foods.json")),
+            guides = json.decodeFromString(ListSerializer(Guide.serializer()), read("guides.json")),
         ).also { bundle ->
             val problems = ContentValidator.problems(bundle)
             require(problems.isEmpty()) { "Content bundle ${bundle.version} is invalid:\n" + problems.joinToString("\n") }
@@ -73,6 +77,8 @@ object ContentValidator {
         }
         bundle.periods.forEach { checkSources(it.id, it.sources) }
         checkSources("concerns", bundle.concerns.sources)
+        checkFoods(bundle, ::checkSources)
+        checkGuides(bundle, ::checkSources)
         bundle.schedules.forEach { s ->
             val appointmentIds = s.appointments.map { it.id }.toSet()
             s.appointments.forEach { checkSources("${s.region}/${it.id}", it.sources) }
@@ -81,6 +87,35 @@ object ContentValidator {
                 if (d.appointment !in appointmentIds) add("${d.code} names unknown appointment ${d.appointment}")
             }
         }
+    }
+}
+
+private fun MutableList<String>.checkFoods(bundle: ContentBundle, checkSources: (String, List<String>) -> Unit) {
+    bundle.foods.map { it.id }.groupingBy { it }.eachCount().filterValues { it > 1 }.keys.forEach { add("Duplicate food id $it") }
+    bundle.foods.map { it.name.lowercase() }.groupingBy { it }.eachCount().filterValues { it > 1 }.keys
+        .forEach { add("Duplicate food name $it") }
+    bundle.foods.flatMap { f -> (listOf(f.name) + f.aliases).map { it.lowercase() to f.id }.distinct() }
+        .groupBy({ it.first }, { it.second }).filterValues { it.size > 1 }
+        .forEach { (name, ids) -> add("'$name' names more than one food: ${ids.joinToString()}") }
+    bundle.foods.forEach { f ->
+        if (!f.id.startsWith("food.")) add("${f.id} should start with food.")
+        if (f.serving.isEmpty()) add("${f.id} has no serving advice")
+        if (f.serving.zipWithNext().any { (a, b) -> a.fromMonths >= b.fromMonths }) add("${f.id} serving advice is out of age order")
+        f.serving.firstOrNull()?.let { if (it.fromMonths > f.fromMonths) add("${f.id} has no serving advice from ${f.fromMonths} months") }
+        checkSources(f.id, f.sources)
+    }
+}
+
+private fun MutableList<String>.checkGuides(bundle: ContentBundle, checkSources: (String, List<String>) -> Unit) {
+    bundle.guides.map { it.id }.groupingBy { it }.eachCount().filterValues { it > 1 }.keys.forEach { add("Duplicate guide id $it") }
+    val itemIds = bundle.guides.flatMap { g -> g.checklist.map { it.id } }
+    itemIds.groupingBy { it }.eachCount().filterValues { it > 1 }.keys.forEach { add("Duplicate checklist item $it") }
+    bundle.guides.forEach { g ->
+        if (!g.id.startsWith("guide.")) add("${g.id} should start with guide.")
+        if (g.fromMonths < 0 || g.fromMonths >= g.toMonths) add("${g.id} must start before it ends")
+        if (g.sections.isEmpty()) add("${g.id} has no text")
+        g.checklist.filterNot { it.id.startsWith("check.") }.forEach { add("${it.id} should start with check.") }
+        checkSources(g.id, g.sources)
     }
 }
 

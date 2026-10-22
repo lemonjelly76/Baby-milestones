@@ -127,4 +127,57 @@ class ApiTest : IntegrationTest() {
         val left = jdbc.sql("select count(*) from milestone_log where baby_id = :id").param("id", babyId).query(Int::class.java).single()
         assertEquals(0, left)
     }
+
+    @Test
+    fun `foods are logged from the catalogue or as the family's own, and feed the summary`() {
+        val token = newFamily()
+        val babyId = newBaby(token)
+
+        val egg = post("/api/babies/$babyId/tastings", """{"food_id":"food.egg","tasted_on":"2026-10-20","liking":"liked"}""", token)
+        assertEquals(201, egg.status, egg.body)
+        assertEquals("Egg", egg["name"])
+        assertEquals("protein", egg["group"])
+        val own = post("/api/babies/$babyId/tastings", """{"name":"Gran's lentil soup","group":"protein"}""", token)
+        assertEquals(201, own.status, own.body)
+        assertEquals(404, post("/api/babies/$babyId/tastings", """{"food_id":"food.unicorn"}""", token).status)
+        assertEquals(400, post("/api/babies/$babyId/tastings", """{"food_id":"food.egg","tasted_on":"2099-01-01"}""", token).status)
+        assertEquals(400, post("/api/babies/$babyId/tastings", """{}""", token).status)
+
+        val updated = request("PATCH", "/api/babies/$babyId/tastings/${egg["id"]}", """{"reaction":"red blotches round her mouth"}""", token)
+        assertEquals(200, updated.status, updated.body)
+        assertEquals("liked", updated["liking"])
+
+        val data = get("/api/babies/$babyId/data", token)
+        assertEquals(2, data.json.jsonObject["tastings"]!!.jsonArray.size)
+        val summary = get("/api/babies/$babyId/summary", token)["text"]
+        assertTrue("Foods tried: 2" in summary, summary)
+        assertTrue("red blotches round her mouth" in summary)
+
+        assertEquals(204, request("DELETE", "/api/babies/$babyId/tastings/${own["id"]}", token = token).status)
+        assertEquals(1, get("/api/babies/$babyId/data", token).json.jsonObject["tastings"]!!.jsonArray.size)
+    }
+
+    @Test
+    fun `checklist ticks are kept per baby and can be unticked`() {
+        val token = newFamily()
+        val babyId = newBaby(token)
+        val tick = request("PUT", "/api/babies/$babyId/checklist/check.ready_sits", """{"done":true}""", token)
+        assertEquals(200, tick.status, tick.body)
+        assertEquals(1, get("/api/babies/$babyId/data", token).json.jsonObject["checklist"]!!.jsonArray.size)
+
+        assertEquals(200, request("PUT", "/api/babies/$babyId/checklist/check.ready_sits", """{"done":false}""", token).status)
+        assertEquals(0, get("/api/babies/$babyId/data", token).json.jsonObject["checklist"]!!.jsonArray.size)
+        assertEquals(404, request("PUT", "/api/babies/$babyId/checklist/check.nope", """{"done":true}""", token).status)
+    }
+
+    @Test
+    fun `another family can't log or delete foods for a baby`() {
+        val token = newFamily("A")
+        val babyId = newBaby(token)
+        val tasting = post("/api/babies/$babyId/tastings", """{"food_id":"food.banana"}""", token)["id"]
+        val other = newFamily("B")
+        assertEquals(404, post("/api/babies/$babyId/tastings", """{"food_id":"food.banana"}""", other).status)
+        assertEquals(404, request("DELETE", "/api/babies/$babyId/tastings/$tasting", token = other).status)
+        assertEquals(404, request("PUT", "/api/babies/$babyId/checklist/check.ready_sits", """{"done":true}""", other).status)
+    }
 }

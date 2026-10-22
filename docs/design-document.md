@@ -1,6 +1,6 @@
 # Baby Milestones — Design Document
 
-Last updated: 21 October 2026
+Last updated: 22 October 2026
 
 Status key: Accepted · Proposed · Deferred · Rejected
 
@@ -74,6 +74,11 @@ returned by the tools):
   al. 2015); home safety from the NHS.
 - **UK schedule:** NHS vaccination schedule and the UKHSA notice of the July 2025 and January 2026 changes;
   health visitor contacts from England's Healthy Child Programme.
+- **Weaning and foods:** NHS Best Start in Life weaning pages (readiness, what to feed, preparing food safely,
+  choking and gagging), NHS foods to avoid, food allergies, drinks and cups, iron and vitamins; BSACI early allergen
+  guidance with the LEAP and EAT trials; the BLISS trial (Cameron 2015; Fangupo 2016 on choking); repeated exposure
+  (Maier 2007) and vegetables first (Barends 2013). Toddler and pre-school guides cite NHS, GOV.UK and Best Start in
+  Life pages.
 - **Concern thresholds:** the spec's, signposting only. Losing a skill always prompts a check (in line with CDC
   "act early" guidance and NICE CG128, which is not shown in the app because it names a condition).
 
@@ -138,9 +143,9 @@ yet).
 
 ### ADR-011 MCP surface — Accepted
 
-All 11 read tools and 8 write tools from the spec, defined once (`ToolCatalog`) and served both over MCP and to the
-assistant. Resources `content://version`, `baby://{id}/summary`, `content://milestones/{id}`, `content://periods/{id}`;
-prompts `weekly_checkin`, `prepare_for_review`, `explain_milestone`. Every result carries `content_version`; content
+All 11 read tools and 8 write tools from the spec, plus 8 for foods, guides and saved notes (ADR-014, ADR-016), defined
+once (`ToolCatalog`) and served both over MCP and to the assistant. Resources `content://version`, `baby://{id}/summary`, `content://milestones/{id}`, `content://periods/{id}`;
+prompts `weekly_checkin`, `prepare_for_review`, `explain_milestone`, `meal_ideas`. Every result carries `content_version`; content
 results carry their sources.
 
 ### ADR-012 UK schedule — Accepted
@@ -152,9 +157,55 @@ England's Healthy Child Programme; the other nations use the same vaccinations a
 note (spec open question 4). The transitional date boundaries need checking against the current NHS schedule before
 release (spec section "Age engine and developmental periods").
 
+### ADR-014 Guides tab and foods tracker — Accepted
+
+The user asked for more than milestones as the child grows, starting with a list of foods tried during baby-led
+weaning. Of three options (a weaning add-on; a Guides tab; a full feeding app like Solid Starts with 400 foods, meal logs
+and recipes) the user chose the Guides tab, built so the full feeding app can follow without a rewrite.
+
+- **Guides tab:** cited guides shown by chronological age ("for now", "coming up", all): ready for solids, baby-led
+  weaning (BLISS), gagging or choking, foods to avoid, allergens, drinks and cups, vitamins, teeth, sun safety, potty
+  training, childcare, starting school. Guides can carry an urgent card (the NHS choking steps, signs of a serious
+  reaction), a checklist ticked per baby (`checklist_tick`), and a feature the app works out: the foods tracker, or
+  England's reception dates (`SchoolStart`: the September after the 4th birthday, apply by 15 January, offers 16 April).
+- **Foods tracker:** a catalogue of 109 foods in `foods.json` (group, allergens, iron-rich, earliest age, how to serve
+  by age, choking-risk preparation, sources) and one `food_tasting` row each time a food is offered, with how it went
+  and any possible reaction in the parent's words. The family's own foods are kept by name.
+- **Rules in `core` (`FoodTracker`):** keep offering a food not yet liked until 10 tries (NHS; Maier 2007); allergens
+  one at a time, no new one within 3 days of the last, and due again after 7 days without (NHS: keep them in the usual
+  diet; BSACI; EAT); a noted reaction stops nudges for that allergen and is listed for the health visitor; suggestions
+  put a due allergen first, then one new allergen, foods to offer again, untried vegetables (less sweet first: NHS;
+  Barends 2013) and an iron-rich food (BLISS). Nothing is suggested before 6 months or that the child is too young for.
+- **No "100 foods before 1":** no study supports the number, so the tracker shows variety by group and repetition.
+- **Ask moved:** the bottom bar keeps five tabs (Today, Milestones, Guides, Timeline, Health); Claude is a button on
+  every screen (ADR-016).
+- **Towards the full feeding app:** more foods are content only; a meal log groups tastings; an allergen plan builds on
+  the allergen statuses; recipes would be a new content file. The cost is writing and reviewing content, not code.
+
+### ADR-015 Allergen wording names conditions — Accepted
+
+The no-condition-names rule (ADR-010) has one narrow exception: the allergens guide repeats the NHS's own list of who
+should talk to a GP or health visitor before introducing allergens (a diagnosed food allergy or eczema, or a family
+history of food allergies, eczema, asthma or hay fever). It's eligibility for advice, not a diagnosis; leaving it out
+would make the guide less safe. Reactions are recorded only in the parent's words, and the app never names one.
+
+### ADR-016 Claude through MCP first; the in-app assistant is opt-in — Accepted
+
+The user wants to avoid paying per API call and uses Claude mobile with the MCP connector for almost everything.
+
+- **In-app assistant off by default:** a per-phone setting ("In-app assistant", Settings) turns on the Ask here chat.
+  Off, the app makes no Claude API calls. The server still needs `ANTHROPIC_API_KEY` for it to work at all.
+- **Outputs saved on the server:** `save_note` keeps what Claude writes (check-in summaries, answers, review
+  preparation, plans and meal ideas) in `assistant_note`; `list_notes` reads them back. The app shows them under the
+  Claude button and the newest on Today for a week, rendering headings, bullets and bold. The prompts and the server
+  instructions ask Claude to offer to save its results.
+- **Check-in from the app:** Today's check-in card copies a prompt and opens the Claude app (or claude.ai).
+- **Connector address:** `MCP_PUBLIC_URL` (for example the Tailscale Funnel path) is shown in Settings next to the
+  connector token.
+
 ### ADR-013 Out of this build — Deferred
 
-Growth charts (UK-WHO), feed/nappy/sleep logging, iOS, Room and an offline write queue, OAuth, Scotland/Wales/NI
+Growth charts (UK-WHO), feed/nappy/sleep logging, a meal log, recipes and a step-by-step allergen plan (ADR-014), iOS, Room and an offline write queue, OAuth, Scotland/Wales/NI
 review schedules.
 
 ## 5. Requirements coverage
@@ -166,7 +217,7 @@ review schedules.
 | Periods, milestone content 0–60 months with sources | Built (12 periods, 160 milestones) |
 | Status rules, not sure re-check, edits with history, delete | Built |
 | Custom moments, appointments, vaccinations by DOB and region | Built |
-| Today, Period guide, Milestones, Timeline, Health, Ask screens | Built |
+| Today, Period guide, Milestones, Timeline, Health, Ask screens | Built (Ask behind the Claude button, ADR-016) |
 | Health visitor summary export (PDF and share sheet) | Built |
 | Multiple babies, several carers, invite by link | Built |
 | Concerns and safety rules, disclaimer footer | Built (ADR-007 departure) |
@@ -174,6 +225,9 @@ review schedules.
 | MCP read and write tools, resources, prompts | Built |
 | Assistant flows: weekly check-in, free-text logging, questions, review prep | Built; needs `ANTHROPIC_API_KEY` |
 | Privacy: UK hosting, family scoping, no backups, export and delete | Built |
+| Guides by age with checklists (user request, ADR-014) | Built (12 guides) |
+| Foods tracker for baby-led weaning (user request, ADR-014) | Built (109 foods, allergen tracker, suggestions) |
+| Claude's outputs saved on the server; in-app assistant opt-in (user request, ADR-016) | Built |
 | Growth charts | Deferred (phase 3) |
 
 ## 6. Open questions

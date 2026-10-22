@@ -1,6 +1,10 @@
 package io.github.lemonjelly76.babymilestones.core.content
 
 import io.github.lemonjelly76.babymilestones.core.Fixtures
+import io.github.lemonjelly76.babymilestones.core.food.Allergen
+import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
+import io.github.lemonjelly76.babymilestones.core.guides.ChecklistItem
+import io.github.lemonjelly76.babymilestones.core.guides.GuideFeature
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -60,6 +64,40 @@ class ContentBundleTest {
         val problems = ContentValidator.problems(broken)
         assertTrue(problems.any { "unknown milestone nope" in it })
         assertTrue(problems.any { "cites no source" in it })
+    }
+
+    @Test
+    fun `the foods catalogue covers every group and has a simple first food for each allergen`() {
+        assertTrue(content.foods.size >= 100, "${content.foods.size} foods")
+        FoodGroup.entries.filter { it != FoodGroup.OTHER }.forEach { g -> assertTrue(content.foods.count { it.group == g } >= 8, "$g") }
+        Allergen.entries.forEach { a ->
+            assertTrue(content.foods.any { it.allergens == listOf(a) && it.fromMonths <= 6 }, "starter food for $a")
+        }
+        assertTrue(content.foods.count { it.ironRich } >= 10)
+    }
+
+    @Test
+    fun `guides run from birth to 5 with ticks that have unique ids`() {
+        assertTrue(content.guides.size >= 10)
+        assertTrue(content.guides.any { it.feature == GuideFeature.FOODS })
+        val itemIds = content.guides.flatMap { g -> g.checklist.map { it.id } }
+        assertEquals(itemIds.size, itemIds.toSet().size)
+    }
+
+    @Test
+    fun `validator reports foods and guides that break the rules`() {
+        val food = content.foods.first()
+        val guide = content.guides.first()
+        val broken = content.copy(
+            foods = listOf(food.copy(id = "broccoli", sources = emptyList()), food.copy(serving = emptyList())),
+            guides = listOf(guide.copy(fromMonths = 12, toMonths = 6, checklist = listOf(ChecklistItem("tick", "x")))),
+        )
+        val problems = ContentValidator.problems(broken)
+        assertTrue(problems.any { "broccoli should start with food." in it })
+        assertTrue(problems.any { "broccoli cites no source" in it })
+        assertTrue(problems.any { "has no serving advice" in it })
+        assertTrue(problems.any { "must start before it ends" in it })
+        assertTrue(problems.any { "tick should start with check." in it })
     }
 
     @Test

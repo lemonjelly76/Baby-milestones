@@ -1,6 +1,11 @@
 package io.github.lemonjelly76.babymilestones.server.web
 
+import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
+import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
+import io.github.lemonjelly76.babymilestones.core.food.Liking
+import io.github.lemonjelly76.babymilestones.core.guides.ChecklistTick
 import io.github.lemonjelly76.babymilestones.core.json.Date
+import io.github.lemonjelly76.babymilestones.core.notes.AssistantNote
 import io.github.lemonjelly76.babymilestones.core.json.Timestamp
 import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
@@ -31,7 +36,14 @@ data class JoinRequest(val code: String, val name: String, val email: String? = 
 data class SignInResponse(val family: Family, val carer: Carer, val token: String)
 
 @Serializable
-data class MeResponse(val family: Family, val carer: Carer, val carers: List<Carer>, val babies: List<Baby>, val contentVersion: String)
+data class MeResponse(
+    val family: Family,
+    val carer: Carer,
+    val carers: List<Carer>,
+    val babies: List<Baby>,
+    val contentVersion: String,
+    val mcpUrl: String? = null,
+)
 
 @Serializable
 data class UpdateFamilyRequest(val name: String? = null, val region: String? = null)
@@ -65,6 +77,9 @@ data class BabyData(
     val vaccinations: List<DoseRecord>,
     val reviewNotes: List<ReviewNote>,
     val contentVersion: String,
+    val tastings: List<FoodTasting> = emptyList(),
+    val checklist: List<ChecklistTick> = emptyList(),
+    val assistantNotes: List<AssistantNote> = emptyList(),
 )
 
 @Serializable
@@ -103,6 +118,33 @@ data class VaccinationRequest(val givenOn: Date, val note: String? = null)
 
 @Serializable
 data class ReviewNoteRequest(val text: String)
+
+@Serializable
+data class TastingRequest(
+    val foodId: String? = null,
+    val name: String? = null,
+    val group: FoodGroup? = null,
+    val tastedOn: Date? = null,
+    val liking: Liking? = null,
+    val reaction: String? = null,
+    val note: String? = null,
+    val photoRef: String? = null,
+)
+
+@Serializable
+data class TastingUpdateRequest(
+    val tastedOn: Date? = null,
+    val liking: Liking? = null,
+    val reaction: String? = null,
+    val note: String? = null,
+    val photoRef: String? = null,
+)
+
+@Serializable
+data class ChecklistRequest(val done: Boolean)
+
+@Serializable
+data class ChecklistResponse(val itemId: String, val done: Boolean, val tick: ChecklistTick? = null)
 
 @Serializable
 data class ResolveRequest(val resolved: Boolean)

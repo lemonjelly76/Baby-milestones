@@ -129,7 +129,9 @@ class McpConfiguration {
             "Run a weekly check-in for baby ${args["baby_id"]}. Call get_pending_updates. Ask me about each Due now item " +
                 "in plain words using the baby's name, one or two at a time. When I answer yes, log it with log_milestone " +
                 "(after I confirm); 'not sure' becomes mark_not_sure. Then ask about any Not sure re-checks and appointments " +
-                "to mark. Finish with get_whats_next: two or three things to watch for and one activity."
+                "to mark. If they're eating solid food, ask what new foods they tried this week and log each with log_food, then " +
+                "mention anything get_foods says is due again. Finish with get_whats_next: two or three things to watch for " +
+                "and one activity. Then save a short summary of the check-in with save_note (kind check_in) so it's in the app."
         },
         prompt(
             "prepare_for_review", "Build the health visitor summary before a review",
@@ -137,7 +139,8 @@ class McpConfiguration {
         ) { args ->
             "Help me prepare for a health visitor review for baby ${args["baby_id"]}. Read the baby://${args["baby_id"]}/summary " +
                 "resource, then get_concerns. Summarise what's been achieved and anything not seen yet, ask whether I have " +
-                "questions to add, and add each with add_review_note once I confirm."
+                "questions to add, and add each with add_review_note once I confirm. Finally save the summary you wrote with " +
+                "save_note (kind review_prep)."
         },
         prompt(
             "explain_milestone", "What a milestone is, why it matters and how to encourage it",
@@ -149,6 +152,19 @@ class McpConfiguration {
             "Explain milestone ${args["milestone_id"]} using get_milestone" +
                 (args["baby_id"]?.let { " and relate it to baby $it with list_milestones" } ?: "") +
                 ": what it looks like, why it matters, the typical age range, and two activities to encourage it. Cite the sources."
+        },
+        prompt(
+            "meal_ideas", "Meal ideas for the next few days from the foods tracker",
+            listOf(
+                McpSchema.PromptArgument("baby_id", "Id from list_babies", true),
+                McpSchema.PromptArgument("days", "How many days to plan; default 3", false),
+            ),
+        ) { args ->
+            "Suggest simple family meals for baby ${args["baby_id"]} for the next ${args["days"] ?: 3} days. Start with " +
+                "get_foods and get_guides (guide.baby_led_weaning and guide.foods_to_avoid). Follow the app's rules: an " +
+                "iron-rich food at each meal, at most one new allergen at a time, foods worth offering again, nothing on the " +
+                "foods-to-avoid list and nothing the baby is too young for, prepared as get_food says for their age. Keep it " +
+                "short and practical, then offer to save it with save_note (kind plan)."
         },
     )
 

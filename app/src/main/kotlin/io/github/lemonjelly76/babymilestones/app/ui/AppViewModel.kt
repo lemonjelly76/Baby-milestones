@@ -20,6 +20,8 @@ import io.github.lemonjelly76.babymilestones.app.data.NotificationSettings
 import io.github.lemonjelly76.babymilestones.app.data.Proposal
 import io.github.lemonjelly76.babymilestones.app.data.Repository
 import io.github.lemonjelly76.babymilestones.app.data.SafetyCard
+import io.github.lemonjelly76.babymilestones.app.data.TastingRequest
+import io.github.lemonjelly76.babymilestones.app.data.TastingUpdateRequest
 import io.github.lemonjelly76.babymilestones.app.data.UpdateFamilyRequest
 import io.github.lemonjelly76.babymilestones.app.data.VaccinationRequest
 import io.github.lemonjelly76.babymilestones.app.notify.Reminders
@@ -58,6 +60,7 @@ data class AppState(
     val today: LocalDate = LocalDate.now(),
     val notifications: NotificationSettings = NotificationSettings(),
     val serverUrl: String = "",
+    val assistantEnabled: Boolean = false,
 ) {
     val babies: List<Baby> get() = me?.babies.orEmpty()
     val selectedBaby: Baby? get() = babies.firstOrNull { it.id == selectedBabyId } ?: babies.firstOrNull()
@@ -95,6 +98,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 selectedBabyId = store.selectedBabyId,
                 notifications = store.notifications,
                 serverUrl = store.serverUrl,
+                assistantEnabled = store.assistantEnabled,
             )
         }
         if (store.token != null) refresh()
@@ -189,6 +193,11 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         _state.update { it.copy(notifications = settings) }
     }
 
+    fun setAssistantEnabled(enabled: Boolean) {
+        store.assistantEnabled = enabled
+        _state.update { it.copy(assistantEnabled = enabled) }
+    }
+
     // --- babies ---
 
     fun selectBaby(id: String) {
@@ -276,6 +285,28 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     fun deleteReviewNote(babyId: String, noteId: String) = action(refreshBaby = babyId) {
         repository.api.deleteReviewNote(babyId, noteId)
+    }
+
+    // --- foods, checklists and Claude's notes ---
+
+    fun logFood(babyId: String, request: TastingRequest, message: String = "Logged") = action(message, refreshBaby = babyId) {
+        repository.api.logFood(babyId, request)
+    }
+
+    fun updateFood(babyId: String, tastingId: String, request: TastingUpdateRequest) = action("Saved", refreshBaby = babyId) {
+        repository.api.updateFood(babyId, tastingId, request)
+    }
+
+    fun removeFood(babyId: String, tastingId: String) = action("Removed", refreshBaby = babyId) {
+        repository.api.removeFood(babyId, tastingId)
+    }
+
+    fun setChecklistItem(babyId: String, itemId: String, done: Boolean) = action(refreshBaby = babyId) {
+        repository.api.setChecklistItem(babyId, itemId, done)
+    }
+
+    fun deleteNote(babyId: String, noteId: String) = action("Deleted", refreshBaby = babyId) {
+        repository.api.deleteNote(babyId, noteId)
     }
 
     // --- assistant ---

@@ -6,8 +6,10 @@ import io.github.lemonjelly76.babymilestones.app.data.BabyData
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
 import io.github.lemonjelly76.babymilestones.app.data.LogRequest
 import io.github.lemonjelly76.babymilestones.app.data.NotificationSettings
+import io.github.lemonjelly76.babymilestones.app.data.TastingRequest
 import io.github.lemonjelly76.babymilestones.app.notify.ReminderPlanner
 import io.github.lemonjelly76.babymilestones.core.content.ContentLoader
+import io.github.lemonjelly76.babymilestones.core.food.Liking
 import io.github.lemonjelly76.babymilestones.core.tracking.Baby
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
@@ -71,5 +73,27 @@ class AppLogicTest {
         assertEquals("Bearer token", request.headers["Authorization"])
         assertEquals("""{"milestone_id":"move.flies","approximate":false}""", String(request.body.toByteArray()))
         assertEquals("application/json", request.body.contentType?.withoutParameters().toString())
+    }
+
+    @Test
+    fun `a 6 month old sees the foods tracker, weaning guides and suggestions`() {
+        val v = view("2026-10-22")
+        assertTrue(v.showFoods)
+        assertTrue(v.guides.now.any { it.id == "guide.baby_led_weaning" })
+        assertTrue(v.foods.suggestions.isNotEmpty())
+        assertEquals(LocalDate.parse("2030-01-15"), v.schoolDates?.applyBy)
+    }
+
+    @Test
+    fun `logging a food sends the catalogue id and the parent's words`() = runTest {
+        val engine = MockEngine {
+            respond("""{"id":"t_1","baby_id":"b_1","food_id":"food.egg","name":"Egg","group":"protein","tasted_on":"2026-10-22"}""",
+                HttpStatusCode.Created, headersOf(HttpHeaders.ContentType, "application/json"))
+        }
+        val api = ApiClient({ "https://example.test" }, { "token" }, HttpClient(engine) { expectSuccess = false })
+        val tasting = api.logFood("b_1", TastingRequest(foodId = "food.egg", liking = Liking.LIKED, reaction = "rash on chin"))
+        assertEquals("Egg", tasting.name)
+        assertEquals("""{"food_id":"food.egg","liking":"liked","reaction":"rash on chin"}""",
+            String(engine.requestHistory.single().body.toByteArray()))
     }
 }

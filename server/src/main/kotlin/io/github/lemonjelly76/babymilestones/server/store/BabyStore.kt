@@ -1,6 +1,12 @@
 package io.github.lemonjelly76.babymilestones.server.store
 
+import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
+import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
+import io.github.lemonjelly76.babymilestones.core.food.Liking
+import io.github.lemonjelly76.babymilestones.core.guides.ChecklistTick
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
+import io.github.lemonjelly76.babymilestones.core.notes.AssistantNote
+import io.github.lemonjelly76.babymilestones.core.notes.NoteKind
 import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
 import io.github.lemonjelly76.babymilestones.core.summary.ReviewNote
@@ -179,6 +185,92 @@ class BabyStore(private val jdbc: JdbcClient) {
 
     fun deleteReviewNote(babyId: String, id: String): Boolean =
         jdbc.sql("delete from review_note where id = :id and baby_id = :babyId").param("id", id).param("babyId", babyId).update() > 0
+
+    // --- foods ---
+
+    fun tastings(babyId: String): List<FoodTasting> =
+        jdbc.sql("select * from food_tasting where baby_id = :babyId order by tasted_on, created_at").param("babyId", babyId)
+            .query { rs, _ -> tasting(rs) }.list()
+
+    fun tasting(babyId: String, id: String): FoodTasting? =
+        jdbc.sql("select * from food_tasting where id = :id and baby_id = :babyId").param("id", id).param("babyId", babyId)
+            .query { rs, _ -> tasting(rs) }.optional().orElse(null)
+
+    fun saveTasting(t: FoodTasting) {
+        jdbc.sql(
+            """
+            insert into food_tasting (id, baby_id, food_id, name, food_group, tasted_on, liking, reaction, note, photo_ref, logged_by)
+            values (:id, :babyId, :foodId, :name, :group, :tastedOn, :liking, :reaction, :note, :photoRef, :loggedBy)
+            on conflict (id) do update set tasted_on = excluded.tasted_on, liking = excluded.liking,
+                reaction = excluded.reaction, note = excluded.note, photo_ref = excluded.photo_ref
+            """,
+        ).param("id", t.id).param("babyId", t.babyId).param("foodId", t.foodId).param("name", t.name)
+            .param("group", enumName(t.group)).param("tastedOn", t.tastedOn).param("liking", t.liking?.let(::enumName))
+            .param("reaction", t.reaction).param("note", t.note).param("photoRef", t.photoRef).param("loggedBy", t.loggedBy)
+            .update()
+    }
+
+    fun deleteTasting(babyId: String, id: String): Boolean =
+        jdbc.sql("delete from food_tasting where id = :id and baby_id = :babyId").param("id", id).param("babyId", babyId).update() > 0
+
+    // --- checklist ticks ---
+
+    fun ticks(babyId: String): List<ChecklistTick> =
+        jdbc.sql("select * from checklist_tick where baby_id = :babyId order by ticked_on").param("babyId", babyId)
+            .query { rs, _ -> ChecklistTick(rs.getString("baby_id"), rs.getString("item_id"), date(rs, "ticked_on")!!, rs.getString("ticked_by")) }
+            .list()
+
+    fun saveTick(tick: ChecklistTick) {
+        jdbc.sql(
+            """
+            insert into checklist_tick (baby_id, item_id, ticked_on, ticked_by) values (:babyId, :itemId, :tickedOn, :tickedBy)
+            on conflict (baby_id, item_id) do nothing
+            """,
+        ).param("babyId", tick.babyId).param("itemId", tick.itemId).param("tickedOn", tick.tickedOn)
+            .param("tickedBy", tick.tickedBy).update()
+    }
+
+    fun deleteTick(babyId: String, itemId: String) {
+        jdbc.sql("delete from checklist_tick where baby_id = :babyId and item_id = :itemId").param("babyId", babyId)
+            .param("itemId", itemId).update()
+    }
+
+    // --- notes saved by Claude ---
+
+    fun assistantNotes(babyId: String): List<AssistantNote> =
+        jdbc.sql("select * from assistant_note where baby_id = :babyId order by created_at desc").param("babyId", babyId)
+            .query { rs, _ ->
+                AssistantNote(rs.getString("id"), rs.getString("baby_id"), enumOf<NoteKind>(rs.getString("kind")),
+                    rs.getString("title"), rs.getString("body"), rs.getString("created_by"), rs.getTimestamp("created_at").toInstant())
+            }.list()
+
+    fun saveAssistantNote(note: AssistantNote) {
+        jdbc.sql(
+            """
+            insert into assistant_note (id, baby_id, kind, title, body, created_by, created_at)
+            values (:id, :babyId, :kind, :title, :body, :createdBy, :createdAt)
+            """,
+        ).param("id", note.id).param("babyId", note.babyId).param("kind", enumName(note.kind)).param("title", note.title)
+            .param("body", note.body).param("createdBy", note.createdBy).param("createdAt", java.sql.Timestamp.from(note.createdAt))
+            .update()
+    }
+
+    fun deleteAssistantNote(babyId: String, id: String): Boolean =
+        jdbc.sql("delete from assistant_note where id = :id and baby_id = :babyId").param("id", id).param("babyId", babyId).update() > 0
+
+    private fun tasting(rs: ResultSet) = FoodTasting(
+        id = rs.getString("id"),
+        babyId = rs.getString("baby_id"),
+        foodId = rs.getString("food_id"),
+        name = rs.getString("name"),
+        group = enumOf<FoodGroup>(rs.getString("food_group")),
+        tastedOn = date(rs, "tasted_on")!!,
+        liking = rs.getString("liking")?.let { enumOf<Liking>(it) },
+        reaction = rs.getString("reaction"),
+        note = rs.getString("note"),
+        photoRef = rs.getString("photo_ref"),
+        loggedBy = rs.getString("logged_by"),
+    )
 
     private fun baby(rs: ResultSet) = Baby(
         id = rs.getString("id"),

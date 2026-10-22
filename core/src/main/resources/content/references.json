@@ -106,10 +106,10 @@
   },
   {
     "id": "nhs-weaning",
-    "title": "Weaning (Start for Life)",
+    "title": "Weaning (Best Start in Life)",
     "publisher": "NHS",
     "year": 2025,
-    "url": "https://www.nhs.uk/start-for-life/baby/weaning/",
+    "url": "https://www.nhs.uk/best-start-in-life/baby/weaning/",
     "kind": "public_health"
   },
   {
@@ -240,5 +240,196 @@
     "year": 2025,
     "url": "https://www.nhs.uk/start-for-life/toddler/",
     "kind": "public_health"
+  },
+  {
+    "id": "nhs-weaning-start",
+    "title": "How to start weaning your baby (Best Start in Life)",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/best-start-in-life/baby/weaning/how-to-start-weaning-your-baby/",
+    "kind": "public_health",
+    "note": "Start at around 6 months; the three signs of readiness; it may take 10 tries or more to get used to a new food."
+  },
+  {
+    "id": "nhs-what-to-feed",
+    "title": "What to feed your baby: from around 6 months (Best Start in Life)",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/best-start-in-life/baby/weaning/what-to-feed-your-baby/from-around-6-months/",
+    "kind": "public_health",
+    "note": "First foods, starting with less sweet vegetables such as broccoli, cauliflower and spinach."
+  },
+  {
+    "id": "nhs-what-to-feed-7-9",
+    "title": "What to feed your baby: 7 to 9 months (Best Start in Life)",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/best-start-in-life/baby/weaning/what-to-feed-your-baby/7-to-9-months/",
+    "kind": "public_health",
+    "note": "Three meals a day, finger foods, protein foods with iron and zinc, and baby-led weaning."
+  },
+  {
+    "id": "nhs-food-prep",
+    "title": "Preparing food safely (Best Start in Life)",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/best-start-in-life/baby/weaning/safe-weaning/preparing-food-safely/",
+    "kind": "public_health",
+    "note": "How to cut and prepare foods to lower the choking risk."
+  },
+  {
+    "id": "nhs-choking-gagging",
+    "title": "Choking and gagging on food (Best Start in Life)",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/best-start-in-life/baby/weaning/safe-weaning/choking-and-gagging-on-food/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-choking-first-aid",
+    "title": "How to stop a child from choking",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/first-aid-and-safety/first-aid/how-to-stop-a-child-from-choking/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-foods-to-avoid",
+    "title": "Foods to avoid giving babies and young children",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/weaning-and-feeding/foods-to-avoid-giving-babies-and-young-children/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-food-allergies",
+    "title": "Food allergies in babies and young children",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/weaning-and-feeding/food-allergies-in-babies-and-young-children/",
+    "kind": "public_health",
+    "note": "Introduce foods that can trigger allergic reactions one at a time from around 6 months, and once tolerated keep them in the usual diet."
+  },
+  {
+    "id": "nhs-drinks-cups",
+    "title": "Drinks and cups for babies and young children",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/weaning-and-feeding/drinks-and-cups-for-babies-and-young-children/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-iron",
+    "title": "Iron",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/conditions/vitamins-and-minerals/iron/",
+    "kind": "public_health",
+    "note": "Good sources of iron include red meat, beans such as kidney beans, edamame and chickpeas, nuts, dried fruit and fortified breakfast cereals."
+  },
+  {
+    "id": "nhs-vitamins-children",
+    "title": "Vitamins for children",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/weaning-and-feeding/vitamins-for-children/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-sun-safety",
+    "title": "Sunscreen and sun safety",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/live-well/seasonal-health/sunscreen-and-sun-safety/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-potty-training",
+    "title": "Potty training your child (Best Start in Life)",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/best-start-in-life/toddler/potty-training-your-child/",
+    "kind": "public_health"
+  },
+  {
+    "id": "bsaci-early-allergens",
+    "title": "Early introduction of food allergens",
+    "publisher": "British Society for Allergy and Clinical Immunology",
+    "year": 2020,
+    "url": "https://www.bsaci.org/resources/allergy-management/food-allergy/allergy-prevention/early-introduction-of-food-allergens/",
+    "kind": "guideline",
+    "note": "Introduce egg and peanut in age-appropriate forms from around 6 months, and before 1 year. Babies with a food allergy or severe eczema need professional advice first."
+  },
+  {
+    "id": "perkin-2016-eat",
+    "title": "Randomized trial of introduction of allergenic foods in breast-fed infants (EAT; Perkin MR, et al.)",
+    "publisher": "New England Journal of Medicine 374:1733-1743",
+    "year": 2016,
+    "url": "https://doi.org/10.1056/NEJMoa1514210",
+    "kind": "study",
+    "note": "No significant difference overall, but among infants who ate enough of the six allergenic foods regularly, egg and peanut allergy were less common."
+  },
+  {
+    "id": "cameron-2015-bliss",
+    "title": "Development and pilot testing of Baby-Led Introduction to SolidS (Cameron SL, Taylor RW, Heath AM)",
+    "publisher": "BMC Pediatrics 15:99",
+    "year": 2015,
+    "url": "https://doi.org/10.1186/s12887-015-0422-8",
+    "kind": "study",
+    "note": "The BLISS version of baby-led weaning: food babies can feed themselves, a high-iron and a high-energy food at each meal, food soft enough to squash with the tongue, and a list of high-choking-risk foods to avoid."
+  },
+  {
+    "id": "fangupo-2016-choking",
+    "title": "A baby-led approach to eating solids and risk of choking (Fangupo LJ, et al.)",
+    "publisher": "Pediatrics 138(4):e20160772",
+    "year": 2016,
+    "url": "https://doi.org/10.1542/peds.2016-0772",
+    "kind": "study",
+    "note": "Randomised trial of 206 babies: those following BLISS did not choke more often than spoon-fed babies; about a third of babies in both groups choked at least once between 6 and 8 months."
+  },
+  {
+    "id": "maier-2007",
+    "title": "Effects of repeated exposure on acceptance of initially disliked vegetables in 7-month old infants (Maier A, et al.)",
+    "publisher": "Food Quality and Preference 18(8):1023-1032",
+    "year": 2007,
+    "url": "https://doi.org/10.1016/j.foodqual.2007.04.005",
+    "kind": "study",
+    "note": "Intake of a disliked vegetable rose to match a liked one by about the 8th offering, and most infants still ate it 9 months later."
+  },
+  {
+    "id": "barends-2013",
+    "title": "Effects of repeated exposure to either vegetables or fruits on infant's vegetable and fruit acceptance at the beginning of weaning (Barends C, et al.)",
+    "publisher": "Food Quality and Preference 29(2):157-165",
+    "year": 2013,
+    "url": "https://doi.org/10.1016/j.foodqual.2013.03.008",
+    "kind": "study",
+    "note": "Starting weaning with vegetables, not fruit, increased vegetable acceptance."
+  },
+  {
+    "id": "bsil-childcare",
+    "title": "Childcare and early years education (Best Start in Life)",
+    "publisher": "Department for Education",
+    "year": 2025,
+    "url": "https://beststartinlife.gov.uk/childcare-early-years-education/",
+    "kind": "public_health",
+    "note": "15 and 30 hours support for children aged 9 months to 4 years, Tax-Free Childcare and the Childcare Checker."
+  },
+  {
+    "id": "gov-primary-school",
+    "title": "Apply for a primary school place",
+    "publisher": "GOV.UK",
+    "year": 2025,
+    "url": "https://www.gov.uk/apply-for-primary-school-place",
+    "kind": "public_health",
+    "note": "Apply through your local council, even for schools in another council area."
+  },
+  {
+    "id": "national-offer-day",
+    "title": "National Offer Day (primary)",
+    "publisher": "Nottingham City Council",
+    "year": 2025,
+    "url": "https://nottinghamcity.gov.uk/information-for-residents/education-and-schools/school-admissions/apply-for-a-school-place/national-offer-day",
+    "kind": "public_health",
+    "note": "England's national timetable: applications close on 15 January and primary offers are made on 16 April, or the next working day."
   }
 ]

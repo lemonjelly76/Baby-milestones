@@ -43,6 +43,11 @@ class LocalStore(context: Context) {
             .putBoolean("notify_appointments", value.appointmentWindows).putBoolean("notify_nudge", value.quietNudge)
             .apply()
 
+    /** The in-app assistant calls the Claude API on the server, which costs money per message, so it's off until chosen. */
+    var assistantEnabled: Boolean
+        get() = prefs.getBoolean("assistant_enabled", false)
+        set(value) = prefs.edit().putBoolean("assistant_enabled", value).apply()
+
     /** Keys of one-off reminders (Due now, appointment windows) this phone has already sent. */
     var notifiedOnce: Set<String>
         get() = prefs.getStringSet("notified_once", emptySet()) ?: emptySet()

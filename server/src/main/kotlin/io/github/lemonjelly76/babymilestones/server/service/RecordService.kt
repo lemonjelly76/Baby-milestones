@@ -42,18 +42,15 @@ data class LogChanges(
 class RecordService(
     private val babies: BabyStore,
     private val families: FamilyStore,
+    private val access: BabyAccess,
     private val content: ContentBundle,
     private val clock: Clock,
 ) {
     private fun today() = LocalDate.now(clock)
 
-    private fun checkBaby(writer: Writer, babyId: String) {
-        babies.baby(writer.familyId, babyId) ?: throw NotFoundException("No baby $babyId in this family")
-    }
+    private fun checkBaby(writer: Writer, babyId: String) = access.checkBaby(writer, babyId)
 
-    private fun checkPhoto(writer: Writer, photoRef: String?) {
-        if (photoRef != null && families.photo(writer.familyId, photoRef) == null) throw NotFoundException("No photo $photoRef")
-    }
+    private fun checkPhoto(writer: Writer, photoRef: String?) = access.checkPhoto(writer, photoRef)
 
     // --- milestone log ---
 
