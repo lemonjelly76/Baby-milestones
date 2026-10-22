@@ -50,9 +50,16 @@ cp .env.example .env    # set POSTGRES_PASSWORD, SETUP_CODE and, for the assista
 docker compose up -d --build
 ```
 
-The server listens on port 8083. Publish it to the tailnet over HTTPS (for example
-`tailscale serve --bg --https=8445 http://localhost:8083`) and, if claude.ai should reach `/mcp`, publish that path
-with Tailscale Funnel as for music-player and garmin-ai.
+The server listens on port 8083. Publish it to the tailnet over HTTPS for the app, and publish only `/mcp` to the
+internet with Tailscale Funnel so claude.ai can reach it, as for music-player and garmin-ai:
+
+```
+tailscale serve --bg --https=8445 http://127.0.0.1:8083
+tailscale funnel --bg --set-path=/baby-mcp http://127.0.0.1:8083/mcp
+```
+
+The app then uses `https://<pc>.<tailnet>.ts.net:8445`, and the claude.ai connector
+`https://<pc>.<tailnet>.ts.net/baby-mcp` with a token from Settings → **Create connector token**.
 
 ## Building and testing
 
