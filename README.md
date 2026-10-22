@@ -28,8 +28,9 @@ departs from it, is in [`docs/design-document.md`](docs/design-document.md).
   family's contacts.
 - **Health visitor summary:** achievements, anything not seen yet and the parents' questions, shared as a PDF or text.
 - **Concerns:** calm, content-driven signposting to the health visitor or GP; never a diagnosis.
-- **Guides:** cited guides for the child's age, from readiness for solids and baby-led weaning to potty training,
-  childcare and starting school (with England's reception dates), each with a checklist.
+- **Guides:** 18 cited guides for the child's age, from readiness for solids, safer sleep and when to get urgent help to
+  potty training, childcare and starting school (with England's reception dates). Each has key points, a checklist,
+  and links to trusted videos, tools and support from the NHS, GOV.UK and UK charities.
 - **Foods tracker:** 109 foods with how to serve them at each age; log each taste in two taps with how it went and any
   possible reaction; see allergens introduced or due again, foods worth offering again, and what to try next; make a
   day-by-day food plan (in the app, or with Claude) that ticks itself off as you log each food.

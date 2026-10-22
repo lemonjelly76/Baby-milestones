@@ -11,6 +11,7 @@ import io.github.lemonjelly76.babymilestones.core.guides.ChecklistProgress
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistTick
 import io.github.lemonjelly76.babymilestones.core.guides.Guide
 import io.github.lemonjelly76.babymilestones.core.guides.GuideFeature
+import io.github.lemonjelly76.babymilestones.core.guides.GuideLink
 import io.github.lemonjelly76.babymilestones.core.guides.SchoolDates
 import io.github.lemonjelly76.babymilestones.core.guides.SchoolStart
 import io.github.lemonjelly76.babymilestones.core.guides.GuideSection
@@ -57,11 +58,17 @@ data class GuideView(
     val topic: GuideTopic,
     val ages: String,
     val card: SignpostCopy? = null,
+    val keyPoints: List<String>,
     val sections: List<GuideSection>,
     val checklist: List<ChecklistItemView>,
     val sources: List<SourceRef>,
     val schoolDates: SchoolDates? = null,
+    val links: List<GuideLink> = emptyList(),
+    val related: List<GuideRef> = emptyList(),
 )
+
+@Serializable
+data class GuideRef(val id: String, val title: String)
 
 @Serializable
 data class GuidesView(val ageMonths: Int, val now: List<GuideSummaryView>, val comingUp: List<GuideSummaryView>)
@@ -94,10 +101,12 @@ object FoodAndGuideViews {
     fun guide(content: ContentBundle, g: Guide, ticks: List<ChecklistTick>, region: String, dateOfBirth: LocalDate): GuideView {
         val byItem = ticks.associateBy { it.itemId }
         return GuideView(
-            g.id, g.title, g.summary, g.topic, ages(g), g.card, g.sections,
+            g.id, g.title, g.summary, g.topic, ages(g), g.card, g.keyPoints, g.sections,
             g.checklist.map { ChecklistItemView(it.id, it.text, it.id in byItem, byItem[it.id]?.tickedOn) },
             ToolViews.sources(content, g.sources),
             if (g.feature == GuideFeature.SCHOOL_DATES) SchoolStart.forRegion(region, dateOfBirth) else null,
+            g.links,
+            g.related.mapNotNull { id -> content.guide(id)?.let { GuideRef(it.id, it.title) } },
         )
     }
 }

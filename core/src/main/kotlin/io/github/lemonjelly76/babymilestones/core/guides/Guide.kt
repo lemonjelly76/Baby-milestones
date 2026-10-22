@@ -30,6 +30,18 @@ data class GuideSection(
 @Serializable
 data class ChecklistItem(val id: String, val text: String, val detail: String? = null)
 
+@Serializable
+enum class LinkKind(val label: String) {
+    @SerialName("video") VIDEO("Video"),
+    @SerialName("article") ARTICLE("Read"),
+    @SerialName("tool") TOOL("Tool"),
+    @SerialName("service") SERVICE("Support"),
+}
+
+/** Somewhere trustworthy to read, watch or get help: the NHS, charities and GOV.UK only. Not a source the guide cites. */
+@Serializable
+data class GuideLink(val title: String, val url: String, val publisher: String, val kind: LinkKind, val note: String? = null)
+
 /** A short practical guide that the Guides tab shows while the child's age is in [fromMonths, toMonths). */
 @Serializable
 data class Guide(
@@ -39,11 +51,17 @@ data class Guide(
     val topic: GuideTopic,
     val fromMonths: Int,
     val toMonths: Int,
+    /** Two to four lines a parent can take in at a glance, shown before the detail. */
+    val keyPoints: List<String> = emptyList(),
     val sections: List<GuideSection>,
     val checklist: List<ChecklistItem> = emptyList(),
     /** A card shown above the text, such as the 999 steps for choking. */
     val card: SignpostCopy? = null,
     val feature: GuideFeature? = null,
+    val links: List<GuideLink> = emptyList(),
+    val related: List<String> = emptyList(),
+    /** When the guide was last checked against its sources. */
+    val checkedOn: Date? = null,
     val sources: List<String>,
 ) {
     fun coversAge(months: Int) = months in fromMonths until toMonths

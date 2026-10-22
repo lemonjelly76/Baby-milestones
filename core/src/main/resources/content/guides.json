@@ -47,7 +47,32 @@
     "sources": [
       "nhs-weaning-start",
       "sacn-2018-first-year"
-    ]
+    ],
+    "key_points": [
+      "Most babies are ready at around 6 months.",
+      "Look for all three signs together: sitting steadily, picking food up to their mouth, and swallowing it.",
+      "Born early? Ask your health visitor when to start."
+    ],
+    "links": [
+      {
+        "title": "Ready or not? weaning quiz",
+        "url": "https://www.nhs.uk/best-start-in-life/baby/weaning/ready-or-not-weaning-quiz/",
+        "publisher": "NHS",
+        "kind": "tool"
+      },
+      {
+        "title": "Introducing solid foods (leaflet)",
+        "url": "https://www.unicef.org.uk/babyfriendly/baby-friendly-resources/breastfeeding-resources/introducing-solid-foods/",
+        "publisher": "Unicef UK Baby Friendly",
+        "kind": "article"
+      }
+    ],
+    "related": [
+      "guide.baby_led_weaning",
+      "guide.foods_to_avoid",
+      "guide.allergens"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.baby_led_weaning",
@@ -127,7 +152,46 @@
       "fangupo-2016-choking",
       "maier-2007",
       "nhs-food-prep"
-    ]
+    ],
+    "key_points": [
+      "Finger foods from the start, or mixed with spoon-feeding: both are fine.",
+      "At each meal: an iron-rich food, an energy-rich food, and nothing hard, round or crumbly.",
+      "Always sit them upright and stay with them while they eat.",
+      "Keep offering: it can take 10 tries or more."
+    ],
+    "links": [
+      {
+        "title": "Weaning videos, tips and recipes",
+        "url": "https://www.nhs.uk/best-start-in-life/baby/weaning/",
+        "publisher": "NHS Best Start in Life",
+        "kind": "video"
+      },
+      {
+        "title": "Baby-led weaning basics (video)",
+        "url": "https://www.nhsgrampian.org/your-health/weaning/baby-led-weaning/",
+        "publisher": "NHS Grampian",
+        "kind": "video"
+      },
+      {
+        "title": "Recipes and meal ideas",
+        "url": "https://www.nhs.uk/best-start-in-life/baby/recipes-and-meal-ideas/",
+        "publisher": "NHS",
+        "kind": "tool"
+      },
+      {
+        "title": "Eating well: the first year",
+        "url": "https://www.firststepsnutrition.org/eating-well-infants-new-mums",
+        "publisher": "First Steps Nutrition Trust",
+        "kind": "article",
+        "note": "Photo guides to foods and portion sizes"
+      }
+    ],
+    "related": [
+      "guide.gagging_choking",
+      "guide.foods_to_avoid",
+      "guide.allergens"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.gagging_choking",
@@ -172,7 +236,45 @@
       "nhs-choking-gagging",
       "nhs-choking-first-aid",
       "fangupo-2016-choking"
-    ]
+    ],
+    "key_points": [
+      "Gagging is noisy and normal while learning to eat.",
+      "Choking is quiet: they can't cough, cry or breathe.",
+      "Under 1: up to 5 back blows, then up to 5 chest thrusts; call 999 if it doesn't clear.",
+      "A short baby first aid course lets you practise."
+    ],
+    "links": [
+      {
+        "title": "First aid for a choking baby",
+        "url": "https://www.redcross.org.uk/first-aid/learn-first-aid-for-babies-and-children/choking-baby",
+        "publisher": "British Red Cross",
+        "kind": "video"
+      },
+      {
+        "title": "First aid for a choking child",
+        "url": "https://www.redcross.org.uk/first-aid/learn-first-aid-for-babies-and-children/choking-child",
+        "publisher": "British Red Cross",
+        "kind": "article"
+      },
+      {
+        "title": "Baby choking",
+        "url": "https://www.sja.org.uk/first-aid-advice/baby-choking/",
+        "publisher": "St John Ambulance",
+        "kind": "article"
+      },
+      {
+        "title": "Choking and gagging on food",
+        "url": "https://www.nhs.uk/best-start-in-life/baby/weaning/safe-weaning/choking-and-gagging-on-food/",
+        "publisher": "NHS",
+        "kind": "article"
+      }
+    ],
+    "related": [
+      "guide.baby_led_weaning",
+      "guide.foods_to_avoid",
+      "guide.urgent_help"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.foods_to_avoid",
@@ -232,7 +334,26 @@
       "nhs-foods-to-avoid",
       "nhs-food-prep",
       "nhs-drinks-cups"
-    ]
+    ],
+    "key_points": [
+      "No honey before 1, no whole nuts or popcorn before 5.",
+      "Quarter small round foods like grapes and cherry tomatoes.",
+      "No added salt or sugar."
+    ],
+    "links": [
+      {
+        "title": "Preparing food safely",
+        "url": "https://www.nhs.uk/best-start-in-life/baby/weaning/safe-weaning/preparing-food-safely/",
+        "publisher": "NHS",
+        "kind": "article"
+      }
+    ],
+    "related": [
+      "guide.gagging_choking",
+      "guide.allergens",
+      "guide.toddler_meals"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.allergens",
@@ -290,7 +411,35 @@
       "du-toit-2015-leap",
       "perkin-2016-eat",
       "sacn-2018-first-year"
-    ]
+    ],
+    "key_points": [
+      "Introduce egg, peanut and the other allergens from around 6 months.",
+      "One new allergen at a time, on a day without other allergens, in a small amount.",
+      "Once it's tolerated, keep it in their usual diet.",
+      "Swollen throat or tongue, or breathing problems: call 999."
+    ],
+    "links": [
+      {
+        "title": "Anaphylaxis UK",
+        "url": "https://www.anaphylaxis.org.uk/",
+        "publisher": "Anaphylaxis UK",
+        "kind": "service",
+        "note": "Information and a helpline"
+      },
+      {
+        "title": "Allergy UK",
+        "url": "https://www.allergyuk.org/",
+        "publisher": "Allergy UK",
+        "kind": "service",
+        "note": "Information and a helpline"
+      }
+    ],
+    "related": [
+      "guide.foods_to_avoid",
+      "guide.baby_led_weaning",
+      "guide.urgent_help"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.drinks_and_cups",
@@ -336,7 +485,18 @@
     "sources": [
       "nhs-drinks-cups",
       "nhs-foods-to-avoid"
-    ]
+    ],
+    "key_points": [
+      "Water in an open or free-flow cup with meals from around 6 months.",
+      "Breast milk or formula is the main drink until 1; then whole cows' milk.",
+      "No juice, squash or rice drinks."
+    ],
+    "related": [
+      "guide.vitamins",
+      "guide.teeth",
+      "guide.toddler_meals"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.vitamins",
@@ -368,7 +528,25 @@
     ],
     "sources": [
       "nhs-vitamins-children"
-    ]
+    ],
+    "key_points": [
+      "Breastfed babies: vitamin D every day from birth.",
+      "From 6 months to 5 years: vitamins A, C and D daily, unless they have more than 500ml of formula a day."
+    ],
+    "links": [
+      {
+        "title": "Healthy Start",
+        "url": "https://www.healthystart.nhs.uk/",
+        "publisher": "NHS",
+        "kind": "service",
+        "note": "Free vitamins and help buying food, if you qualify"
+      }
+    ],
+    "related": [
+      "guide.drinks_and_cups",
+      "guide.toddler_meals"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.teeth",
@@ -401,7 +579,30 @@
     ],
     "sources": [
       "nhs-teeth"
-    ]
+    ],
+    "key_points": [
+      "Brush twice a day from the first tooth.",
+      "A smear of fluoride toothpaste under 3, pea-sized from 3; spit, don't rinse.",
+      "First dentist visit when teeth come through, or before 1. It's free on the NHS."
+    ],
+    "links": [
+      {
+        "title": "Caring for your baby or toddler's teeth",
+        "url": "https://www.nhs.uk/best-start-in-life/how-to-take-care-of-your-baby-or-toddlers-teeth/",
+        "publisher": "NHS Best Start in Life",
+        "kind": "article"
+      },
+      {
+        "title": "Find an NHS dentist",
+        "url": "https://www.nhs.uk/service-search/find-a-dentist",
+        "publisher": "NHS",
+        "kind": "tool"
+      }
+    ],
+    "related": [
+      "guide.drinks_and_cups"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.sun_safety",
@@ -432,7 +633,15 @@
     ],
     "sources": [
       "nhs-sun-safety"
-    ]
+    ],
+    "key_points": [
+      "Keep babies under 6 months out of strong direct sun.",
+      "Shade, a wide-brimmed hat, and SPF 30+ with 4-star UVA."
+    ],
+    "related": [
+      "guide.childproofing"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.potty_training",
@@ -490,7 +699,31 @@
     ],
     "sources": [
       "nhs-potty-training"
-    ]
+    ],
+    "key_points": [
+      "Most children are ready between 18 months and 2 and a half.",
+      "Pants in the day, nappies for naps and nights at first.",
+      "Accidents are normal: stay calm."
+    ],
+    "links": [
+      {
+        "title": "Potty training your child",
+        "url": "https://www.nhs.uk/best-start-in-life/toddler/potty-training-your-child/",
+        "publisher": "NHS Best Start in Life",
+        "kind": "article"
+      },
+      {
+        "title": "ERIC, The Children's Bowel & Bladder Charity",
+        "url": "https://eric.org.uk/",
+        "publisher": "ERIC",
+        "kind": "service",
+        "note": "Guides and a helpline"
+      }
+    ],
+    "related": [
+      "guide.childcare"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.childcare",
@@ -532,7 +765,31 @@
     ],
     "sources": [
       "bsil-childcare"
-    ]
+    ],
+    "key_points": [
+      "Funded hours can start from 9 months in England.",
+      "Check what you can get well before you need a place."
+    ],
+    "links": [
+      {
+        "title": "Childcare Checker",
+        "url": "https://childcare.beststartinlife.gov.uk/",
+        "publisher": "Department for Education",
+        "kind": "tool",
+        "note": "What support you could get, and providers near you"
+      },
+      {
+        "title": "15 and 30 hours support",
+        "url": "https://beststartinlife.gov.uk/childcare-early-years-education/15-and-30-hours-support/",
+        "publisher": "Department for Education",
+        "kind": "article"
+      }
+    ],
+    "related": [
+      "guide.starting_school",
+      "guide.potty_training"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.starting_school",
@@ -571,7 +828,30 @@
     "sources": [
       "gov-primary-school",
       "national-offer-day"
-    ]
+    ],
+    "key_points": [
+      "Reception starts the September after their 4th birthday.",
+      "Apply to your council by 15 January.",
+      "Offers come on 16 April (or the next working day)."
+    ],
+    "links": [
+      {
+        "title": "Apply for a primary school place",
+        "url": "https://www.gov.uk/apply-for-primary-school-place",
+        "publisher": "GOV.UK",
+        "kind": "tool"
+      },
+      {
+        "title": "Find your local council",
+        "url": "https://www.gov.uk/find-local-council",
+        "publisher": "GOV.UK",
+        "kind": "tool"
+      }
+    ],
+    "related": [
+      "guide.childcare"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.childproofing",
@@ -644,7 +924,33 @@
     ],
     "sources": [
       "nhs-baby-toddler-safety"
-    ]
+    ],
+    "key_points": [
+      "Stair gates top and bottom, window locks, cords tied up.",
+      "Button batteries, magnets, medicines and cleaning products out of reach.",
+      "Babies can drown in 5cm of water: stay within reach at bath time."
+    ],
+    "links": [
+      {
+        "title": "Child Accident Prevention Trust",
+        "url": "https://capt.org.uk/",
+        "publisher": "CAPT",
+        "kind": "article",
+        "note": "Practical safety advice by age"
+      },
+      {
+        "title": "Button batteries",
+        "url": "https://capt.org.uk/button-batteries/",
+        "publisher": "CAPT",
+        "kind": "article"
+      }
+    ],
+    "related": [
+      "guide.safer_sleep",
+      "guide.urgent_help",
+      "guide.car_seats"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.car_seats",
@@ -699,7 +1005,16 @@
     ],
     "sources": [
       "gov-car-seats"
-    ]
+    ],
+    "key_points": [
+      "A child car seat until 12 years or 135cm.",
+      "i-Size seats: rear-facing until over 15 months.",
+      "Front airbag off if a rear-facing seat is in the front."
+    ],
+    "related": [
+      "guide.childproofing"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.toddler_meals",
@@ -737,7 +1052,33 @@
     "sources": [
       "nhs-young-children-food",
       "nhs-drinks-cups"
-    ]
+    ],
+    "key_points": [
+      "Fruit and vegetables at every meal.",
+      "About 350ml of milk a day, full-fat until 2.",
+      "Sugary foods only with meals; no added salt."
+    ],
+    "links": [
+      {
+        "title": "Recipes and meal ideas",
+        "url": "https://www.nhs.uk/best-start-in-life/baby/recipes-and-meal-ideas/",
+        "publisher": "NHS",
+        "kind": "tool"
+      },
+      {
+        "title": "Eating well in the early years",
+        "url": "https://www.firststepsnutrition.org/eating-well-early-years",
+        "publisher": "First Steps Nutrition Trust",
+        "kind": "article",
+        "note": "Photo guides to meals and portion sizes for 1 to 4 year olds"
+      }
+    ],
+    "related": [
+      "guide.drinks_and_cups",
+      "guide.vitamins",
+      "guide.teeth"
+    ],
+    "checked_on": "2026-10-22"
   },
   {
     "id": "guide.sharing_books",
@@ -784,6 +1125,166 @@
       "nhs-talk",
       "aap-2024-literacy",
       "romeo-2018-conversation"
-    ]
+    ],
+    "key_points": [
+      "Chat through everyday routines from birth.",
+      "Look at books together from 6 months: talk about the pictures.",
+      "Switch off background TV and radio when you're talking."
+    ],
+    "links": [
+      {
+        "title": "CBeebies Parenting",
+        "url": "https://www.bbc.co.uk/cbeebies/parenting",
+        "publisher": "BBC",
+        "kind": "video",
+        "note": "Short activity videos by age (formerly Tiny Happy People)"
+      },
+      {
+        "title": "Bookstart: free book packs",
+        "url": "https://www.booktrust.org.uk/what-we-do/programmes-and-campaigns/bookstart/",
+        "publisher": "BookTrust",
+        "kind": "service"
+      },
+      {
+        "title": "First words and little sentences",
+        "url": "https://www.nhs.uk/best-start-in-life/toddler/learning-to-talk/first-words-and-little-sentences-1-to-2-years/",
+        "publisher": "NHS Best Start in Life",
+        "kind": "article"
+      }
+    ],
+    "related": [
+      "guide.childcare"
+    ],
+    "checked_on": "2026-10-22"
+  },
+  {
+    "id": "guide.safer_sleep",
+    "title": "Safer sleep",
+    "summary": "How to lower the risk of sudden infant death syndrome (SIDS) at every sleep.",
+    "topic": "safety",
+    "from_months": 0,
+    "to_months": 12,
+    "sections": [
+      {
+        "heading": "Every sleep",
+        "bullets": [
+          "Lie your baby on their back to sleep, in the feet-to-foot position (feet touching the end of the cot).",
+          "Use their own clear, flat, firm sleep space, such as a cot or Moses basket, with a firm, flat mattress.",
+          "Keep them in the same room as you for every sleep for at least the first 6 months.",
+          "Keep the room between 16 and 20°C: babies are at higher risk if they get too hot.",
+          "Keep your baby smoke-free, in pregnancy and after birth.",
+          "Any amount of breastfeeding lowers the risk."
+        ]
+      },
+      {
+        "heading": "Avoid",
+        "bullets": [
+          "Sleeping on a sofa or in an armchair with your baby.",
+          "Pillows, duvets, cot bumpers, loose blankets or soft toys in the cot.",
+          "Products that keep a baby in one position, such as wedges, straps, pods or nests.",
+          "Sharing a bed if your baby was born before 37 weeks, or if you or your partner smoke, have drunk alcohol or taken drugs.",
+          "Letting your baby sleep in a car seat for long."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.sleep_space",
+        "text": "A clear, flat, firm cot or Moses basket"
+      },
+      {
+        "id": "check.sleep_room",
+        "text": "Sleeping in the same room as you"
+      },
+      {
+        "id": "check.sleep_temperature",
+        "text": "Room thermometer (16 to 20°C)"
+      }
+    ],
+    "sources": [
+      "lullaby-safer-sleep",
+      "nhs-sids"
+    ],
+    "key_points": [
+      "On their back, feet to foot, in a clear cot.",
+      "Same room as you for at least 6 months.",
+      "Never sleep with your baby on a sofa or armchair."
+    ],
+    "links": [
+      {
+        "title": "Safer sleep advice",
+        "url": "https://www.lullabytrust.org.uk/baby-safety/safer-sleep-information/safer-sleep-overview/",
+        "publisher": "The Lullaby Trust",
+        "kind": "article"
+      }
+    ],
+    "related": [
+      "guide.childproofing",
+      "guide.urgent_help"
+    ],
+    "checked_on": "2026-10-22"
+  },
+  {
+    "id": "guide.urgent_help",
+    "title": "When to get urgent help",
+    "summary": "The signs that mean 999 or A&E, and when to call NHS 111.",
+    "topic": "health",
+    "from_months": 0,
+    "to_months": 60,
+    "sections": [
+      {
+        "heading": "Call 999 or go to A&E if your child",
+        "bullets": [
+          "Has swollen lips, tongue or throat with difficulty swallowing or talking.",
+          "Has skin, lips or tongue that look blue, grey, pale or mottled.",
+          "Has a rash that does not fade when you press it.",
+          "Is very cold (a temperature below 36°C), has fainted, is hard to wake or can't be woken.",
+          "Has had no pee for 12 hours or more, or is having a seizure (fit)."
+        ]
+      },
+      {
+        "heading": "Get urgent advice from NHS 111 if",
+        "bullets": [
+          "They're under 3 months old with a temperature of 38°C or higher.",
+          "They're 3 to 6 months old with a temperature of 39°C or higher (and haven't had a vaccine in the past 2 days).",
+          "A temperature of 38°C or higher has lasted more than 5 days.",
+          "You're worried about any of their symptoms or don't know what to do."
+        ]
+      },
+      {
+        "paragraphs": [
+          "Trust your instincts: if you think something is seriously wrong, get medical help straight away."
+        ]
+      }
+    ],
+    "card": {
+      "title": "In an emergency",
+      "body": "Call 999 if your child has stopped breathing, is struggling to breathe, can't be woken, has a fit, or has a rash that doesn't fade when you press a glass on it.",
+      "signpost": "999 in an emergency · NHS 111 for urgent advice",
+      "urgency": "urgent"
+    },
+    "sources": [
+      "nhs-seriously-ill"
+    ],
+    "key_points": [
+      "999 for breathing problems, blue or grey skin, a fit, can't be woken, or a rash that doesn't fade.",
+      "NHS 111 for a high temperature in a young baby, or whenever you're worried.",
+      "Trust your instincts."
+    ],
+    "links": [
+      {
+        "title": "NHS 111 online",
+        "url": "https://111.nhs.uk/",
+        "publisher": "NHS",
+        "kind": "service",
+        "note": "Urgent advice, any time"
+      }
+    ],
+    "related": [
+      "guide.gagging_choking",
+      "guide.allergens",
+      "guide.safer_sleep"
+    ],
+    "checked_on": "2026-10-22"
   }
 ]

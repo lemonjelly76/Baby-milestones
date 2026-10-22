@@ -118,7 +118,8 @@ private fun MainScreens(state: AppState, viewModel: AppViewModel, snackbar: Snac
         is Overlay.EditBaby -> EditBabyScreen(state, overlay.babyId, viewModel, onBack = ::close)
         is Overlay.Backfill -> BackfillScreen(state, overlay.babyId, viewModel, onDone = ::close)
         is Overlay.Summary -> SummaryScreen(state, overlay.babyId, viewModel, onBack = ::close)
-        is Overlay.Guide -> GuideScreen(state, baby.id, overlay.guideId, viewModel, onBack = ::close, onOpenFoods = { open(Overlay.Foods) })
+        is Overlay.Guide -> GuideScreen(state, baby.id, overlay.guideId, viewModel, onBack = ::close, onOpenFoods = { open(Overlay.Foods) },
+            onOpenGuide = { open(Overlay.Guide(it)) })
         Overlay.Foods -> FoodsScreen(state, baby.id, viewModel, onBack = ::close, onOpenGuide = { open(Overlay.Guide(it)) })
         is Overlay.Claude -> ClaudeScreen(state, baby.id, viewModel, onBack = ::close, startInChat = overlay.chat)
         Overlay.Growth -> GrowthScreen(state, baby.id, viewModel, onBack = ::close)

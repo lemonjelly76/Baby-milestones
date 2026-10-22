@@ -5,6 +5,8 @@ import io.github.lemonjelly76.babymilestones.core.food.Allergen
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistItem
 import io.github.lemonjelly76.babymilestones.core.guides.GuideFeature
+import io.github.lemonjelly76.babymilestones.core.guides.GuideLink
+import io.github.lemonjelly76.babymilestones.core.guides.LinkKind
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -98,6 +100,29 @@ class ContentBundleTest {
         assertTrue(problems.any { "has no serving advice" in it })
         assertTrue(problems.any { "must start before it ends" in it })
         assertTrue(problems.any { "tick should start with check." in it })
+    }
+
+    @Test
+    fun `every guide has an at-a-glance summary, a checked date and working cross-links`() {
+        content.guides.forEach { g ->
+            assertTrue(g.keyPoints.isNotEmpty(), "${g.id} key points")
+            assertTrue(g.checkedOn != null, "${g.id} checked date")
+        }
+        assertTrue(content.guides.sumOf { it.links.size } >= 25)
+        assertTrue(content.guides.flatMap { it.links }.any { it.kind == LinkKind.VIDEO })
+        assertTrue(content.guide("guide.safer_sleep") != null && content.guide("guide.urgent_help") != null)
+    }
+
+    @Test
+    fun `validator reports insecure links and unknown related guides`() {
+        val g = content.guides.first()
+        val broken = content.copy(guides = listOf(g.copy(
+            links = listOf(GuideLink("Old page", "http://example.org", "Example", LinkKind.ARTICLE)),
+            related = listOf("guide.nope"),
+        )))
+        val problems = ContentValidator.problems(broken)
+        assertTrue(problems.any { "isn't https" in it }, problems.toString())
+        assertTrue(problems.any { "unknown guide guide.nope" in it }, problems.toString())
     }
 
     @Test

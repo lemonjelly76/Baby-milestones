@@ -133,6 +133,8 @@ private fun MutableList<String>.checkGuides(bundle: ContentBundle, checkSources:
         if (g.fromMonths < 0 || g.fromMonths >= g.toMonths) add("${g.id} must start before it ends")
         if (g.sections.isEmpty()) add("${g.id} has no text")
         g.checklist.filterNot { it.id.startsWith("check.") }.forEach { add("${it.id} should start with check.") }
+        g.links.filterNot { it.url.startsWith("https://") }.forEach { add("${g.id} link ${it.url} isn't https") }
+        g.related.filter { bundle.guide(it) == null }.forEach { add("${g.id} relates to unknown guide $it") }
         checkSources(g.id, g.sources)
     }
 }

@@ -28,8 +28,10 @@ class GuideTools(
         BabyTool(
             "get_guides", "Guides and checklists",
             "Practical guides for the baby's age (weaning, allergens, choking, foods to avoid, drinks, vitamins, teeth, " +
-                "sun safety, potty training, childcare, starting school) with this baby's checklist ticks. Without guide_id: " +
-                "the guides for now and coming up. With guide_id: the full guide, its checklist and sources.",
+                "sun safety, safer sleep, when to get urgent help, potty training, childcare, starting school and more) with this " +
+                "baby's checklist ticks. Without guide_id: the guides for now and coming up. With guide_id: the full guide with " +
+                "its key points, checklist, sources, and links to trusted videos, tools and support (NHS, charities, GOV.UK) " +
+                "to pass on to the parent.",
             schema {
                 string("baby_id", "Id from list_babies", required = true)
                 string("guide_id", "e.g. guide.baby_led_weaning")

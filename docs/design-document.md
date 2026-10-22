@@ -291,6 +291,25 @@ A review for maintainability found code that had grown as features were added. C
   memory with camera photos.
 - View-only carers don't see edit controls on the foods tracker, growth, teeth, words or timeline.
 
+### ADR-024 How guides are presented — Accepted
+
+Asked for more links and videos, more useful information and best-practice presentation. The layout follows the NHS
+standard for creating health content and what NHS Best Start in Life, Solid Starts and Kinedu do: a short summary first,
+detail after, trusted onward links, visible sources and a review date.
+
+- **Order on a guide:** emergency steps (when there are any), then "In short" (two to four key points), then the
+  detail, the checklist, "Watch and read", related guides, sources (folded) and "Checked against these sources on …".
+  It also says the guide is not yet reviewed by a health professional, which is true until one is (open question).
+- **Watch and read:** links only to the NHS, GOV.UK, NHS boards and established charities (British Red Cross, St John
+  Ambulance, Lullaby Trust, CAPT, ERIC, BookTrust, CBeebies Parenting, First Steps Nutrition Trust, Anaphylaxis UK,
+  Allergy UK, Unicef UK Baby Friendly), each labelled video, read, tool or support. Every link was checked on 22 October
+  2026 and must be https (`ContentValidator`). No commercial brands. RoSPA's car seat site was left out because its
+  certificate had expired.
+- **New guides:** safer sleep (Lullaby Trust, NHS) and when to get urgent help (NHS), both signposting only.
+- **Guides tab:** search across all guides; guides for now grouped by topic in compact rows rather than large cards,
+  since around 15 apply at 6 months.
+- **Claude:** `get_guides` returns the key points, links and related guides, so Claude can pass them on.
+
 ### ADR-013 Out of this build — Deferred
 
 Feed/nappy/sleep logging, a medicine and temperature log (needs a decision: it would be a record only, ADR-010), a meal log, recipes and a step-by-step allergen plan (ADR-014), iOS, Room and an offline write queue, OAuth, Scotland/Wales/NI
@@ -320,7 +339,7 @@ review schedules.
 | First words, teeth, contacts, newborn checks (comparison with other apps) | Built (ADR-018) |
 | View-only carers, memory book, weekly play ideas | Built (ADR-019, ADR-020) |
 | Food plan as a checklist, made by the app or Claude (user request) | Built (ADR-021) |
-| Guides: childproofing, car seats, toddler meals, talking and books | Built (16 guides) |
+| Guides: childproofing, car seats, toddler meals, talking and books, safer sleep, urgent help | Built (18 guides, ADR-024) |
 
 ## 6. Open questions
 
