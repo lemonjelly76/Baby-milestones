@@ -8,6 +8,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.doubleOrNull
 import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
@@ -17,7 +18,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeParseException
 
 /** Who called a tool. Tools only ever see this family's data. */
-data class ToolCaller(val familyId: String, val carerId: String?, val source: LogSource)
+data class ToolCaller(val familyId: String, val carerId: String?, val source: LogSource, val canEdit: Boolean = true)
 
 /**
  * One tool, defined once and served both over MCP and to the in-app assistant.
@@ -41,6 +42,9 @@ class Args(val raw: JsonObject) {
     fun optString(name: String): String? = (raw[name] as? JsonPrimitive)?.contentOrNull?.trim()?.ifEmpty { null }
     fun optInt(name: String): Int? = (raw[name] as? JsonPrimitive)?.let { it.intOrNull ?: throw ToolInputException("'$name' must be a whole number") }
     fun optBoolean(name: String): Boolean? = (raw[name] as? JsonPrimitive)?.booleanOrNull
+    fun optDouble(name: String): Double? = (raw[name] as? JsonPrimitive)?.let {
+        it.doubleOrNull ?: throw ToolInputException("'$name' must be a number")
+    }
     fun date(name: String): LocalDate = optDate(name) ?: throw ToolInputException("Missing '$name'")
     fun optDate(name: String): LocalDate? = optString(name)?.let {
         try {
@@ -74,6 +78,9 @@ class SchemaBuilder {
 
     fun integer(name: String, description: String, required: Boolean = false) =
         add(name, required, buildJsonObject { put("type", "integer"); put("description", description) })
+
+    fun number(name: String, description: String, required: Boolean = false) =
+        add(name, required, buildJsonObject { put("type", "number"); put("description", description) })
 
     fun boolean(name: String, description: String, required: Boolean = false) =
         add(name, required, buildJsonObject { put("type", "boolean"); put("description", description) })

@@ -59,7 +59,8 @@ class McpTest : IntegrationTest() {
             "get_whats_next", "get_concerns", "get_timeline", "get_schedule", "search_guidance", "log_milestone",
             "update_milestone_log", "remove_milestone_log", "mark_not_sure", "add_moment", "update_appointment",
             "record_vaccination", "add_review_note", "get_foods", "get_food", "get_guides", "list_notes", "log_food",
-            "remove_food_tasting", "update_checklist", "save_note",
+            "remove_food_tasting", "update_checklist", "save_note", "get_growth", "log_growth", "get_firsts", "log_word",
+            "log_tooth", "get_contacts",
         )), tools.toString())
 
         val pending = callTool(token, session, "get_pending_updates", """{"baby_id":"$babyId"}""")
@@ -170,5 +171,34 @@ class McpTest : IntegrationTest() {
         val guide = BabyJson.parseToJsonElement(text(callTool(token, session, "get_guides",
             """{"baby_id":"$babyId","guide_id":"guide.starting_school"}"""))).jsonObject
         assertEquals("2030-01-15", guide.getValue("school_dates").jsonObject.getValue("apply_by").jsonPrimitive.content)
+    }
+
+    @Test
+    fun `claude logs growth, words and teeth and reads them back with centiles`() {
+        val token = newFamily()
+        val babyId = post("/api/babies", """{"name":"Ava","date_of_birth":"2026-04-21","sex":"female"}""", token)["id"]
+        val session = connect(token)
+        callTool(token, session, "log_growth", """{"baby_id":"$babyId","measured_on":"2026-10-01","weight_kg":7.6}""")
+        callTool(token, session, "log_word", """{"baby_id":"$babyId","word":"dada"}""")
+        callTool(token, session, "log_tooth", """{"baby_id":"$babyId","tooth":"71","came_on":"2026-10-05"}""")
+
+        val growth = BabyJson.parseToJsonElement(text(callTool(token, session, "get_growth", """{"baby_id":"$babyId"}"""))).jsonObject
+        val point = growth.getValue("points").jsonArray.single().jsonObject
+        assertTrue(point.getValue("centile").jsonPrimitive.content.toDouble() in 1.0..99.0)
+        val firsts = text(callTool(token, session, "get_firsts", """{"baby_id":"$babyId"}"""))
+        assertTrue("dada" in firsts && "Lower left central incisor" in firsts, firsts)
+    }
+
+    @Test
+    fun `a view-only carer's tools can read but not write`() {
+        val token = newFamily()
+        val babyId = newBaby(token)
+        val code = post("/api/invites", """{"access":"view"}""", token)["code"]
+        val viewer = post("/api/join", """{"code":"$code","name":"Grandad"}""")["token"]
+        val session = connect(viewer)
+        val read = callTool(viewer, session, "get_baby_status", """{"baby_id":"$babyId"}""")
+        assertEquals("false", read["isError"]?.jsonPrimitive?.content ?: "false")
+        val write = callTool(viewer, session, "log_word", """{"baby_id":"$babyId","word":"ball"}""")
+        assertEquals("true", write.getValue("isError").jsonPrimitive.content)
     }
 }

@@ -3,7 +3,9 @@ package io.github.lemonjelly76.babymilestones.core.content
 import io.github.lemonjelly76.babymilestones.core.food.Food
 import io.github.lemonjelly76.babymilestones.core.food.FoodGroup
 import io.github.lemonjelly76.babymilestones.core.food.FoodNames
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthReference
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistItem
+import io.github.lemonjelly76.babymilestones.core.records.Tooth
 import io.github.lemonjelly76.babymilestones.core.guides.Guide
 import io.github.lemonjelly76.babymilestones.core.json.Date
 import kotlinx.serialization.SerialName
@@ -175,6 +177,8 @@ data class ContentBundle(
     val schedules: List<RegionSchedule>,
     val foods: List<Food> = emptyList(),
     val guides: List<Guide> = emptyList(),
+    val growth: GrowthReference? = null,
+    val teeth: List<Tooth> = emptyList(),
 ) {
     private val milestonesById by lazy { milestones.associateBy { it.id } }
     private val referencesById by lazy { references.associateBy { it.id } }
@@ -187,6 +191,7 @@ data class ContentBundle(
     fun reference(id: String): Reference? = referencesById[id]
     fun period(id: String): PeriodGuide? = periods.firstOrNull { it.id == id }
     fun food(id: String): Food? = foodsById[id]
+    fun tooth(id: String): Tooth? = teeth.firstOrNull { it.id == id }
     fun guide(id: String): Guide? = guides.firstOrNull { it.id == id }
     fun checklistItem(id: String): Pair<Guide, ChecklistItem>? =
         guides.firstNotNullOfOrNull { g -> g.checklist.firstOrNull { it.id == id }?.let { g to it } }

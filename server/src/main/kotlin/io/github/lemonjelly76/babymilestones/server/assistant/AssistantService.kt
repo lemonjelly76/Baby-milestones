@@ -207,6 +207,15 @@ class AssistantService(
                 (if (args.optBoolean("done") == false) "Untick: " else "Tick: ") + item.text
             }
             "save_note" -> "Save note: ${args.string("title")}"
+            "log_growth" -> "Measurement ${day(args.optDate("measured_on"))}: " + listOfNotNull(
+                args.optDouble("weight_kg")?.let { "$it kg" }, args.optDouble("length_cm")?.let { "$it cm long" },
+                args.optDouble("head_cm")?.let { "head $it cm" },
+            ).joinToString()
+            "log_word" -> "New word: \u201c${args.string("word")}\u201d — ${day(args.optDate("said_on"))}"
+            "log_tooth" -> {
+                val id = args.string("tooth")
+                "Tooth: ${content.tooth(id)?.name ?: throw ToolInputException("Unknown tooth $id; use get_firsts")} — ${day(args.optDate("came_on"))}"
+            }
             else -> tool
         }
     }

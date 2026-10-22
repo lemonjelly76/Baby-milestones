@@ -8,7 +8,15 @@ import java.security.SecureRandom
 data class Family(val id: String, val name: String, val region: String)
 
 @Serializable
-data class Carer(val id: String, val familyId: String, val name: String, val email: String? = null, val role: String)
+data class Carer(
+    val id: String,
+    val familyId: String,
+    val name: String,
+    val email: String? = null,
+    val role: String,
+    /** "edit", or "view" for carers who can see everything but change nothing. */
+    val access: String = "edit",
+)
 
 @Serializable
 data class Photo(val id: String, val familyId: String, val contentType: String, val createdAt: Timestamp)

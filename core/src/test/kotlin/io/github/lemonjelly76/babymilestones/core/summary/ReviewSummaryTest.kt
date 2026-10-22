@@ -7,6 +7,10 @@ import io.github.lemonjelly76.babymilestones.core.Fixtures.date
 import io.github.lemonjelly76.babymilestones.core.concerns.ConcernEngine
 import io.github.lemonjelly76.babymilestones.core.content.Domain
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthEngine
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
+import io.github.lemonjelly76.babymilestones.core.records.FirstWord
+import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
 import io.github.lemonjelly76.babymilestones.core.food.FoodTracker
 import io.github.lemonjelly76.babymilestones.core.tracking.Tracker
 import org.junit.Test
@@ -58,5 +62,22 @@ class ReviewSummaryTest {
         assertTrue("Foods tried: 2" in text)
         assertTrue("Possible reactions noted" in text)
         assertTrue("blotchy cheeks" in text)
+    }
+
+    @Test
+    fun `summary includes the latest growth with its centile, words and teeth`() {
+        val content = Fixtures.content
+        val baby = baby("2026-01-01").copy(sex = "female")
+        val snapshot = Tracker(content).snapshot(baby, emptyList(), date("2026-10-22"))
+        val growth = GrowthEngine(content.growth!!).report(baby,
+            listOf(GrowthMeasurement("g1", "b_01", date("2026-10-01"), weightKg = 8.0, lengthCm = 69.5)), date("2026-10-22"))
+        val summary = ReviewSummary.build(snapshot, emptyList(), emptyList(), growth = growth,
+            words = listOf(FirstWord("w1", "b_01", "dada", date("2026-10-10"))),
+            teeth = listOf(ToothRecord("b_01", "71", date("2026-08-01"))))
+        val text = summary.toPlainText()
+        assertTrue("Weight 8.00 kg on 1 Oct 2026 (about the" in text, text)
+        assertTrue("Length or height 69.5 cm" in text)
+        assertTrue("Words: 1, first \u201cdada\u201d" in text)
+        assertTrue("Teeth: 1, first on 1 Aug 2026" in text)
     }
 }

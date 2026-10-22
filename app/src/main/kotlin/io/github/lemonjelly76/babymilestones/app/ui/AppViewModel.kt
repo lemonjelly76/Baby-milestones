@@ -9,7 +9,9 @@ import io.github.lemonjelly76.babymilestones.app.data.BabyData
 import io.github.lemonjelly76.babymilestones.app.data.BabyRequest
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
 import io.github.lemonjelly76.babymilestones.app.data.ChatMessage
+import io.github.lemonjelly76.babymilestones.app.data.ContactRequest
 import io.github.lemonjelly76.babymilestones.app.data.CreateFamilyRequest
+import io.github.lemonjelly76.babymilestones.app.data.GrowthRequest
 import io.github.lemonjelly76.babymilestones.app.data.JoinRequest
 import io.github.lemonjelly76.babymilestones.app.data.LocalStore
 import io.github.lemonjelly76.babymilestones.app.data.LogRequest
@@ -22,8 +24,10 @@ import io.github.lemonjelly76.babymilestones.app.data.Repository
 import io.github.lemonjelly76.babymilestones.app.data.SafetyCard
 import io.github.lemonjelly76.babymilestones.app.data.TastingRequest
 import io.github.lemonjelly76.babymilestones.app.data.TastingUpdateRequest
+import io.github.lemonjelly76.babymilestones.app.data.ToothRequest
 import io.github.lemonjelly76.babymilestones.app.data.UpdateFamilyRequest
 import io.github.lemonjelly76.babymilestones.app.data.VaccinationRequest
+import io.github.lemonjelly76.babymilestones.app.data.WordRequest
 import io.github.lemonjelly76.babymilestones.app.notify.Reminders
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.safety.SafetyCheck
@@ -63,6 +67,7 @@ data class AppState(
     val assistantEnabled: Boolean = false,
 ) {
     val babies: List<Baby> get() = me?.babies.orEmpty()
+    val canEdit: Boolean get() = me?.carer?.access != "view"
     val selectedBaby: Baby? get() = babies.firstOrNull { it.id == selectedBabyId } ?: babies.firstOrNull()
 
     fun view(babyId: String? = selectedBaby?.id): BabyView? {
@@ -182,7 +187,17 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         signOut("Your family and everything in it has been deleted.")
     }
 
-    suspend fun invite() = runCatching { repository.api.invite() }.onFailure(::fail).getOrNull()
+    suspend fun invite(access: String = "edit") = runCatching { repository.api.invite(access) }.onFailure(::fail).getOrNull()
+
+    fun saveContact(id: String?, request: ContactRequest) = action("Saved") {
+        repository.api.saveContact(id, request)
+        _state.update { it.copy(me = repository.refreshMe()) }
+    }
+
+    fun deleteContact(id: String) = action("Deleted") {
+        repository.api.deleteContact(id)
+        _state.update { it.copy(me = repository.refreshMe()) }
+    }
 
     suspend fun connectorToken() = runCatching { repository.api.newToken("claude") }.onFailure(::fail).getOrNull()
 
@@ -307,6 +322,32 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     fun deleteNote(babyId: String, noteId: String) = action("Deleted", refreshBaby = babyId) {
         repository.api.deleteNote(babyId, noteId)
+    }
+
+    // --- growth, first words and teeth ---
+
+    fun logGrowth(babyId: String, request: GrowthRequest) = action("Saved", refreshBaby = babyId) {
+        repository.api.logGrowth(babyId, request)
+    }
+
+    fun deleteGrowth(babyId: String, id: String) = action("Removed", refreshBaby = babyId) {
+        repository.api.deleteGrowth(babyId, id)
+    }
+
+    fun logWord(babyId: String, request: WordRequest) = action("Added \u201c${request.word.trim()}\u201d", refreshBaby = babyId) {
+        repository.api.logWord(babyId, request)
+    }
+
+    fun deleteWord(babyId: String, id: String) = action("Removed", refreshBaby = babyId) {
+        repository.api.deleteWord(babyId, id)
+    }
+
+    fun logTooth(babyId: String, toothId: String, cameOn: LocalDate) = action("Saved", refreshBaby = babyId) {
+        repository.api.logTooth(babyId, toothId, ToothRequest(cameOn))
+    }
+
+    fun deleteTooth(babyId: String, toothId: String) = action("Removed", refreshBaby = babyId) {
+        repository.api.deleteTooth(babyId, toothId)
     }
 
     // --- assistant ---

@@ -64,6 +64,9 @@ sealed interface Overlay {
     data class Guide(val guideId: String) : Overlay
     data object Foods : Overlay
     data class Claude(val chat: Boolean = false) : Overlay
+    data object Growth : Overlay
+    data object Teeth : Overlay
+    data object Words : Overlay
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -117,6 +120,9 @@ private fun MainScreens(state: AppState, viewModel: AppViewModel, snackbar: Snac
         is Overlay.Guide -> GuideScreen(state, baby.id, overlay.guideId, viewModel, onBack = ::close, onOpenFoods = { open(Overlay.Foods) })
         Overlay.Foods -> FoodsScreen(state, baby.id, viewModel, onBack = ::close, onOpenGuide = { open(Overlay.Guide(it)) })
         is Overlay.Claude -> ClaudeScreen(state, baby.id, viewModel, onBack = ::close, startInChat = overlay.chat)
+        Overlay.Growth -> GrowthScreen(state, baby.id, viewModel, onBack = ::close)
+        Overlay.Teeth -> TeethScreen(state, baby.id, viewModel, onBack = ::close, onOpenGuide = { open(Overlay.Guide(it)) })
+        Overlay.Words -> WordsScreen(state, baby.id, viewModel, onBack = ::close)
         Overlay.Settings -> SettingsScreen(state, viewModel, onBack = ::close, onAddBaby = { open(Overlay.AddBaby) },
             onEditBaby = { open(Overlay.EditBaby(it)) })
         null -> Scaffold(
@@ -131,6 +137,10 @@ private fun MainScreens(state: AppState, viewModel: AppViewModel, snackbar: Snac
                     )
                     if (state.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
                     if (state.offline) OfflineBanner(onRetry = { viewModel.refresh() })
+                    if (!state.canEdit) Surface(color = MaterialTheme.colorScheme.tertiaryContainer, modifier = Modifier.fillMaxWidth()) {
+                        Text("View only: you can see everything but not change it.", style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp))
+                    }
                 }
             },
             bottomBar = {
@@ -153,9 +163,10 @@ private fun MainScreens(state: AppState, viewModel: AppViewModel, snackbar: Snac
                         onFoods = { open(Overlay.Foods) },
                         onClaude = { chat -> open(Overlay.Claude(chat)) },
                         onHealth = { tab = Tab.HEALTH })
-                    Tab.MILESTONES -> MilestonesScreen(view, content, viewModel)
-                    Tab.TIMELINE -> TimelineScreen(view, content, viewModel, onSummary = { open(Overlay.Summary(baby.id)) })
-                    Tab.HEALTH -> HealthScreen(view, content, viewModel, onSummary = { open(Overlay.Summary(baby.id)) })
+                    Tab.MILESTONES -> MilestonesScreen(view, content, viewModel, onWords = { open(Overlay.Words) })
+                    Tab.TIMELINE -> TimelineScreen(view, content, viewModel, state.canEdit, onSummary = { open(Overlay.Summary(baby.id)) })
+                    Tab.HEALTH -> HealthScreen(state, view, content, viewModel, onSummary = { open(Overlay.Summary(baby.id)) },
+                        onGrowth = { open(Overlay.Growth) }, onTeeth = { open(Overlay.Teeth) })
                     Tab.GUIDES -> GuidesScreen(view, content, onOpenGuide = { open(Overlay.Guide(it)) }, onOpenFoods = { open(Overlay.Foods) })
                 }
             }

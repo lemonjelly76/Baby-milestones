@@ -7,6 +7,7 @@ import io.github.lemonjelly76.babymilestones.server.store.Family
 import io.github.lemonjelly76.babymilestones.server.store.FamilyStore
 import io.github.lemonjelly76.babymilestones.server.store.Ids
 import io.github.lemonjelly76.babymilestones.server.store.NotFoundException
+import io.github.lemonjelly76.babymilestones.core.records.Contact
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -32,6 +33,8 @@ class FamilyService(
         val ROLES = setOf("parent", "grandparent", "nanny", "carer")
         val INVITE_LIFETIME: Duration = Duration.ofDays(7)
         const val APP_TOKEN = "app"
+        const val EDIT = "edit"
+        val ACCESS = setOf(EDIT, "view")
     }
 
     /**
@@ -49,19 +52,20 @@ class FamilyService(
     }
 
     @Transactional
-    fun createInvite(principal: CarerPrincipal): Invite {
+    fun createInvite(principal: CarerPrincipal, access: String = EDIT): Invite {
+        require(access in ACCESS) { "Access must be one of $ACCESS" }
         val code = Tokens.inviteCode()
         val expiresAt = clock.instant().plus(INVITE_LIFETIME)
-        families.storeInvite(Tokens.hash(code), principal.familyId, principal.carerId, expiresAt)
+        families.storeInvite(Tokens.hash(code), principal.familyId, principal.carerId, expiresAt, access)
         return Invite(code, expiresAt)
     }
 
     @Transactional
     fun join(code: String, name: String, email: String?, role: String): SignedIn {
-        val familyId = families.redeemInvite(Tokens.hash(code.trim().uppercase()), clock.instant())
+        val (familyId, access) = families.redeemInvite(Tokens.hash(code.trim().uppercase()), clock.instant())
             ?: throw ForbiddenException("That invite code has expired or has already been used")
         val family = families.family(familyId) ?: throw NotFoundException("Family not found")
-        return addCarer(family, name, email, role.takeIf { it in ROLES } ?: "carer")
+        return addCarer(family, name, email, role.takeIf { it in ROLES } ?: "carer", access)
     }
 
     /** A separate token, e.g. for Claude Desktop's MCP connector, so it can be revoked without signing the phone out. */
@@ -93,12 +97,36 @@ class FamilyService(
     @Transactional
     fun deleteFamily(principal: CarerPrincipal) = families.deleteFamily(principal.familyId)
 
-    private fun addCarer(family: Family, name: String, email: String?, role: String): SignedIn {
-        val carer = Carer(Ids.new("c"), family.id, name.trim().ifEmpty { "Parent" }, email?.trim()?.ifEmpty { null }, role)
+    private fun addCarer(family: Family, name: String, email: String?, role: String, access: String = EDIT): SignedIn {
+        val carer = Carer(Ids.new("c"), family.id, name.trim().ifEmpty { "Parent" }, email?.trim()?.ifEmpty { null }, role, access)
         families.createCarer(carer)
         val token = Tokens.generate()
         families.storeToken(Tokens.hash(token), carer.id, APP_TOKEN, null)
         return SignedIn(family, carer, token)
+    }
+
+    // --- contacts ---
+
+    fun contacts(principal: CarerPrincipal): List<Contact> = families.contacts(principal.familyId)
+
+    @Transactional
+    fun saveContact(principal: CarerPrincipal, id: String?, input: Contact): Contact {
+        require(input.name.isNotBlank()) { "A name is needed" }
+        if (id != null && !families.contactExists(principal.familyId, id)) throw NotFoundException("No contact $id")
+        val contact = input.copy(
+            id = id ?: Ids.new("ct"),
+            name = input.name.trim().take(100),
+            phone = input.phone?.trim()?.ifEmpty { null }?.take(40),
+            email = input.email?.trim()?.ifEmpty { null }?.take(200),
+            note = input.note?.trim()?.ifEmpty { null }?.take(500),
+        )
+        families.saveContact(principal.familyId, contact)
+        return contact
+    }
+
+    @Transactional
+    fun deleteContact(principal: CarerPrincipal, id: String) {
+        if (!families.deleteContact(principal.familyId, id)) throw NotFoundException("No contact $id")
     }
 
     private fun constantTimeEquals(a: String, b: String) = MessageDigest.isEqual(a.toByteArray(), b.toByteArray())

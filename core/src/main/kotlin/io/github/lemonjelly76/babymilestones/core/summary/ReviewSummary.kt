@@ -3,6 +3,10 @@ package io.github.lemonjelly76.babymilestones.core.summary
 import io.github.lemonjelly76.babymilestones.core.concerns.Concern
 import io.github.lemonjelly76.babymilestones.core.content.Domain
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthReport
+import io.github.lemonjelly76.babymilestones.core.growth.Measure
+import io.github.lemonjelly76.babymilestones.core.records.FirstWord
+import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
 import io.github.lemonjelly76.babymilestones.core.json.Date
 import io.github.lemonjelly76.babymilestones.core.json.Timestamp
 import io.github.lemonjelly76.babymilestones.core.tracking.BabySnapshot
@@ -10,6 +14,7 @@ import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
 import kotlinx.serialization.Serializable
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import kotlin.math.roundToInt
 
 @Serializable
 data class ReviewNote(
@@ -49,6 +54,8 @@ data class ReviewSummary(
     val questions: List<String>,
     val contentVersion: String,
     val foods: FoodSummary? = null,
+    val growth: List<String> = emptyList(),
+    val firsts: List<String> = emptyList(),
 ) {
     fun toPlainText(): String = buildString {
         val format = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.UK)
@@ -73,6 +80,10 @@ data class ReviewSummary(
             notSeenYet.forEach { appendLine(line(it)) }
             notSure.forEach { appendLine(line(it.copy(title = "${it.title} (not sure)"))) }
         }
+        if (growth.isNotEmpty() || firsts.isNotEmpty()) {
+            appendLine().appendLine("Growth and firsts")
+            (growth + firsts).forEach { appendLine("• $it") }
+        }
         foods?.let { f ->
             appendLine().appendLine("Food")
             appendLine("Foods tried: ${f.tried}")
@@ -92,7 +103,16 @@ data class ReviewSummary(
     }
 
     companion object {
-        fun build(snapshot: BabySnapshot, concerns: List<Concern>, notes: List<ReviewNote>, foods: FoodReport? = null): ReviewSummary {
+        fun build(
+            snapshot: BabySnapshot,
+            concerns: List<Concern>,
+            notes: List<ReviewNote>,
+            foods: FoodReport? = null,
+            growth: GrowthReport? = null,
+            words: List<FirstWord> = emptyList(),
+            teeth: List<ToothRecord> = emptyList(),
+        ): ReviewSummary {
+            val day = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.UK)
             fun titles(status: MilestoneStatus) =
                 snapshot.withStatus(status).map { SummaryLine(it.milestone.title, note = it.log?.note) }
             val achieved = snapshot.withStatus(MilestoneStatus.ACHIEVED)
@@ -115,6 +135,16 @@ data class ReviewSummary(
                 concerns = concerns,
                 questions = notes.filterNot { it.resolved }.map { it.text },
                 contentVersion = snapshot.contentVersion,
+                growth = Measure.entries.mapNotNull { m ->
+                    growth?.latest(m)?.let { p ->
+                        "${m.label} ${"%.${if (m == Measure.WEIGHT) 2 else 1}f".format(Locale.UK, p.value)} ${m.unit} on ${p.date.format(day)}" +
+                            (p.centile?.let { c -> " (${centileText(c)})" } ?: "")
+                    }
+                },
+                firsts = listOfNotNull(
+                    words.takeIf { it.isNotEmpty() }?.let { w -> "Words: ${w.size}, first \u201c${w.minBy { it.saidOn }.word}\u201d" },
+                    teeth.takeIf { it.isNotEmpty() }?.let { t -> "Teeth: ${t.size}, first on ${t.minOf { it.cameOn }.format(day)}" },
+                ),
                 foods = foods?.takeIf { it.tried > 0 }?.let { f ->
                     FoodSummary(
                         f.tried,
@@ -123,6 +153,15 @@ data class ReviewSummary(
                     )
                 },
             )
+        }
+
+        /** A centile as people say it: "about the 45th centile", or "below the 1st centile" at the extremes. */
+        private fun centileText(centile: Double): String {
+            if (centile < 1) return "below the 1st centile"
+            if (centile > 99) return "above the 99th centile"
+            val n = centile.roundToInt()
+            val suffix = if (n % 100 in 11..13) "th" else when (n % 10) { 1 -> "st"; 2 -> "nd"; 3 -> "rd"; else -> "th" }
+            return "about the $n$suffix centile"
         }
     }
 }

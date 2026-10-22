@@ -81,18 +81,22 @@ fun SettingsScreen(state: AppState, viewModel: AppViewModel, onBack: () -> Unit,
                     }
                 }
             }
-            OutlinedButton(onClick = {
-                scope.launch {
-                    viewModel.invite()?.let {
-                        val link = "babymilestones://join?code=${it.code}&server=${state.serverUrl}"
-                        val expires = it.expiresAt.atZone(ZoneId.systemDefault()).toLocalDate().pretty()
-                        inviteText = "Invite code ${it.code} (works once, until $expires).\n\nLink: $link"
-                        val send = Intent(Intent.ACTION_SEND).setType("text/plain")
-                            .putExtra(Intent.EXTRA_TEXT, "Join our family in Baby Milestones: $link\n\nOr enter code ${it.code} with server ${state.serverUrl}")
-                        context.startActivity(Intent.createChooser(send, "Invite a carer"))
-                    }
+            fun invite(access: String) = scope.launch {
+                viewModel.invite(access)?.let {
+                    val link = "babymilestones://join?code=${it.code}&server=${state.serverUrl}"
+                    val expires = it.expiresAt.atZone(ZoneId.systemDefault()).toLocalDate().pretty()
+                    val kind = if (access == "view") "view-only " else ""
+                    inviteText = "Invite code ${it.code} (${kind}works once, until $expires).\n\nLink: $link"
+                    val send = Intent(Intent.ACTION_SEND).setType("text/plain")
+                        .putExtra(Intent.EXTRA_TEXT, "Join our family in Baby Milestones: $link\n\nOr enter code ${it.code} with server ${state.serverUrl}")
+                    context.startActivity(Intent.createChooser(send, "Invite a carer"))
                 }
-            }, modifier = Modifier.padding(top = 8.dp)) { Text("Invite a carer") }
+            }
+            if (state.canEdit) Row(horizontalArrangement = Gap, modifier = Modifier.padding(top = 8.dp)) {
+                OutlinedButton(onClick = { invite("edit") }) { Text("Invite a carer") }
+                OutlinedButton(onClick = { invite("view") }) { Text("Invite to view only") }
+            }
+            Text("View-only carers, such as grandparents, see everything but can't change it.", style = MaterialTheme.typography.bodySmall)
             inviteText?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
 
             SectionTitle("Notifications")

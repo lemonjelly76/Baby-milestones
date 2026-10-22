@@ -21,6 +21,8 @@ import androidx.compose.material.icons.outlined.Cake
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Event
+import androidx.compose.material.icons.outlined.Mood
+import androidx.compose.material.icons.outlined.RecordVoiceOver
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.Vaccines
 import androidx.compose.material3.AlertDialog
@@ -55,13 +57,28 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 @Composable
-fun TimelineScreen(view: BabyView, content: ContentBundle, viewModel: AppViewModel, onSummary: () -> Unit) {
+fun TimelineScreen(view: BabyView, content: ContentBundle, viewModel: AppViewModel, canEdit: Boolean, onSummary: () -> Unit) {
     var adding by remember { mutableStateOf(false) }
     var deleting by remember { mutableStateOf<String?>(null) }
+    var making by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     Box(Modifier.fillMaxSize()) {
         LazyColumn(contentPadding = PaddingValues(16.dp)) {
             item {
                 OutlinedButton(onClick = onSummary, modifier = Modifier.fillMaxWidth()) { Text("Health visitor summary and export") }
+                OutlinedButton(
+                    enabled = !making,
+                    onClick = {
+                        making = true
+                        scope.launch {
+                            runCatching { Export.memoryBook(context, view, viewModel::photo) }
+                                .onSuccess { Export.shareFile(context, it, "application/pdf") }
+                            making = false
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                ) { Text(if (making) "Making the memory book…" else "Memory book (PDF with photos)") }
             }
             items(view.timeline, key = { "${it.kind}_${it.refId}_${it.date}" }) { e ->
                 Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.Top) {
@@ -72,6 +89,8 @@ fun TimelineScreen(view: BabyView, content: ContentBundle, viewModel: AppViewMod
                             TimelineKind.MOMENT -> Icons.Outlined.Star
                             TimelineKind.APPOINTMENT -> Icons.Outlined.Event
                             TimelineKind.VACCINATION -> Icons.Outlined.Vaccines
+                            TimelineKind.WORD -> Icons.Outlined.RecordVoiceOver
+                            TimelineKind.TOOTH -> Icons.Outlined.Mood
                         },
                         null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(end = 12.dp, top = 2.dp),
                     )
@@ -81,14 +100,14 @@ fun TimelineScreen(view: BabyView, content: ContentBundle, viewModel: AppViewMod
                         e.note?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
                         e.photoRef?.let { PhotoImage(it, viewModel::photo) }
                     }
-                    if (e.kind == TimelineKind.MOMENT) {
+                    if (e.kind == TimelineKind.MOMENT && canEdit) {
                         IconButton(onClick = { deleting = e.refId }) { Icon(Icons.Outlined.Delete, "Delete moment") }
                     }
                 }
             }
             item { Box(Modifier.padding(bottom = 72.dp)) }
         }
-        ExtendedFloatingActionButton(
+        if (canEdit) ExtendedFloatingActionButton(
             onClick = { adding = true }, icon = { Icon(Icons.Outlined.Add, null) }, text = { Text("Add a moment") },
             modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
         )
@@ -141,7 +160,15 @@ private fun MomentDialog(viewModel: AppViewModel, onSave: (MomentRequest) -> Uni
 }
 
 @Composable
-fun HealthScreen(view: BabyView, content: ContentBundle, viewModel: AppViewModel, onSummary: () -> Unit) {
+fun HealthScreen(
+    state: AppState,
+    view: BabyView,
+    content: ContentBundle,
+    viewModel: AppViewModel,
+    onSummary: () -> Unit,
+    onGrowth: () -> Unit,
+    onTeeth: () -> Unit,
+) {
     var editing by remember { mutableStateOf<ScheduledAppointment?>(null) }
     var vaccine by remember { mutableStateOf<String?>(null) }
     var question by remember { mutableStateOf("") }
@@ -149,6 +176,10 @@ fun HealthScreen(view: BabyView, content: ContentBundle, viewModel: AppViewModel
     val rules = content.schedule(view.data.region)
 
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).then(ScreenPadding)) {
+        SectionTitle("Growth and teeth")
+        GrowthCard(view, onGrowth)
+        TeethCard(view, onTeeth)
+
         SectionTitle("Reviews and checks")
         view.schedule.appointments.forEach { a ->
             InfoCard(onClick = { editing = a }) {
@@ -203,8 +234,7 @@ fun HealthScreen(view: BabyView, content: ContentBundle, viewModel: AppViewModel
         }
         OutlinedButton(onClick = onSummary, modifier = Modifier.fillMaxWidth().padding(top = 12.dp)) { Text("Health visitor summary and export") }
 
-        SectionTitle("Growth")
-        Text("Weight, length and head size charts from the Red Book are coming in a later version.", style = MaterialTheme.typography.bodySmall)
+        ContactsSection(state.me?.contacts.orEmpty(), state.canEdit, viewModel)
         Sources(content, (rules.appointments.flatMap { it.sources } + rules.doses.flatMap { it.sources }).distinct())
         Disclaimer(content)
     }

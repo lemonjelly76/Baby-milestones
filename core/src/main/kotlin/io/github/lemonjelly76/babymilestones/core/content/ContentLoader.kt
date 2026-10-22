@@ -2,7 +2,10 @@ package io.github.lemonjelly76.babymilestones.core.content
 
 import io.github.lemonjelly76.babymilestones.core.food.Food
 import io.github.lemonjelly76.babymilestones.core.food.FoodNames
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthReference
+import io.github.lemonjelly76.babymilestones.core.growth.Measure
 import io.github.lemonjelly76.babymilestones.core.guides.Guide
+import io.github.lemonjelly76.babymilestones.core.records.Tooth
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
@@ -34,6 +37,8 @@ object ContentLoader {
             schedules = json.decodeFromString(ListSerializer(RegionSchedule.serializer()), read("schedules.json")),
             foods = json.decodeFromString(ListSerializer(Food.serializer()), read("foods.json")),
             guides = json.decodeFromString(ListSerializer(Guide.serializer()), read("guides.json")),
+            growth = json.decodeFromString(GrowthReference.serializer(), read("growth.json")),
+            teeth = json.decodeFromString(ListSerializer(Tooth.serializer()), read("teeth.json")),
         ).also { bundle ->
             val problems = ContentValidator.problems(bundle)
             require(problems.isEmpty()) { "Content bundle ${bundle.version} is invalid:\n" + problems.joinToString("\n") }
@@ -80,6 +85,18 @@ object ContentValidator {
         checkSources("concerns", bundle.concerns.sources)
         checkFoods(bundle, ::checkSources)
         checkGuides(bundle, ::checkSources)
+        bundle.growth?.let { g ->
+            checkSources("growth", g.sources)
+            Measure.entries.forEach { m ->
+                listOf("female", "male").forEach { sex ->
+                    val t = g.table(m, sex)
+                    if (t == null) add("No growth table for $m $sex")
+                    else if (t.l.size != t.m.size || t.m.size != t.s.size || t.m.size < 2) add("Growth table $m $sex is incomplete")
+                }
+            }
+        }
+        if (bundle.teeth.map { it.id }.toSet().size != bundle.teeth.size) add("Duplicate tooth id")
+        bundle.teeth.forEach { checkSources("tooth ${it.id}", it.sources) }
         bundle.schedules.forEach { s ->
             val appointmentIds = s.appointments.map { it.id }.toSet()
             s.appointments.forEach { checkSources("${s.region}/${it.id}", it.sources) }

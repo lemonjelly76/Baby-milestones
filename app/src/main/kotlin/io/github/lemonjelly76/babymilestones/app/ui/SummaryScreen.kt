@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
+import io.github.lemonjelly76.babymilestones.app.data.BabyView
 import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,6 +105,69 @@ object Export {
         }
         doc.finishPage(page)
         val file = File(File(context.cacheDir, "exports").apply { mkdirs() }, "development-summary.pdf")
+        file.outputStream().use { doc.writeTo(it) }
+        doc.close()
+        return file
+    }
+
+    /**
+     * A keepsake PDF: a cover, then each month of age with its milestones, moments, words and teeth, and the moments'
+     * photos scaled to fit. Photos are fetched with the carer's token, one at a time.
+     */
+    suspend fun memoryBook(context: Context, view: BabyView, load: suspend (String) -> ByteArray?): File {
+        val doc = PdfDocument()
+        val width = 595
+        val height = 842
+        val margin = 48f
+        val maxWidth = width - 2 * margin
+        val title = Paint().apply { textSize = 28f; isFakeBoldText = true; isAntiAlias = true }
+        val heading = Paint().apply { textSize = 18f; isFakeBoldText = true; isAntiAlias = true }
+        val item = Paint().apply { textSize = 12f; isFakeBoldText = true; isAntiAlias = true }
+        val body = Paint().apply { textSize = 11f; isAntiAlias = true }
+        var pageNumber = 0
+        var page = doc.startPage(PdfDocument.PageInfo.Builder(width, height, ++pageNumber).create())
+        var y = height / 3f
+
+        fun newPage() {
+            doc.finishPage(page)
+            page = doc.startPage(PdfDocument.PageInfo.Builder(width, height, ++pageNumber).create())
+            y = margin + 12
+        }
+        fun ensure(space: Float) { if (y + space > height - margin) newPage() }
+        fun text(line: String, paint: Paint, gap: Float) = wrap(line, paint, maxWidth).forEach {
+            ensure(gap)
+            page.canvas.drawText(it.trim(), margin, y, paint)
+            y += gap
+        }
+
+        page.canvas.drawText("${view.baby.name}'s memory book", margin, y, title)
+        y += 32
+        page.canvas.drawText("Born ${view.baby.dateOfBirth.pretty()}", margin, y, body)
+        newPage()
+        for (chapter in view.memories) {
+            ensure(60f)
+            y += 8
+            text(chapter.title, heading, 26f)
+            for (entry in chapter.entries) {
+                text(entry.title, item, 16f)
+                text(loggedDate(entry.before, entry.approximate, entry.date), body, 15f)
+                entry.note?.let { text(it, body, 15f) }
+                entry.photoRef?.let { ref ->
+                    load(ref)?.let { bytes -> android.graphics.BitmapFactory.decodeByteArray(bytes, 0, bytes.size) }?.let { bitmap ->
+                        val scale = minOf(maxWidth / bitmap.width, 220f / bitmap.height)
+                        val w = bitmap.width * scale
+                        val h = bitmap.height * scale
+                        ensure(h + 8)
+                        page.canvas.drawBitmap(bitmap, null, android.graphics.RectF(margin, y, margin + w, y + h), null)
+                        y += h + 8
+                        bitmap.recycle()
+                    }
+                }
+                y += 8
+            }
+        }
+        doc.finishPage(page)
+        val file = File(File(context.cacheDir, "exports").apply { mkdirs() }, "memory-book.pdf")
         file.outputStream().use { doc.writeTo(it) }
         doc.close()
         return file

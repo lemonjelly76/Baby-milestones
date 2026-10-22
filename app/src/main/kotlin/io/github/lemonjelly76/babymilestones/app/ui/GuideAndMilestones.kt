@@ -110,7 +110,7 @@ private fun PeriodPage(view: BabyView, content: ContentBundle, period: PeriodGui
 private enum class Grouping { DOMAIN, AGE }
 
 @Composable
-fun MilestonesScreen(view: BabyView, content: ContentBundle, viewModel: AppViewModel) {
+fun MilestonesScreen(view: BabyView, content: ContentBundle, viewModel: AppViewModel, onWords: () -> Unit) {
     var grouping by rememberSaveable { mutableStateOf(Grouping.AGE) }
     var filter by rememberSaveable { mutableStateOf<MilestoneStatus?>(null) }
     var open by remember { mutableStateOf<String?>(null) }
@@ -133,6 +133,7 @@ fun MilestonesScreen(view: BabyView, content: ContentBundle, viewModel: AppViewM
             }
         }
         LazyColumn(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
+            if (filter == null && view.ageMonths >= 6) item { WordsCard(view, onWords) }
             val groups = when (grouping) {
                 Grouping.AGE -> shown.groupBy { "By ${monthsLabel(it.milestone.expectedBy)}" }
                 Grouping.DOMAIN -> Domain.entries.associate { d -> d.label to shown.filter { it.milestone.domain == d } }.filterValues { it.isNotEmpty() }

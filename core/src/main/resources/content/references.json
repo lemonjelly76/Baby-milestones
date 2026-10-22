@@ -431,5 +431,89 @@
     "url": "https://nottinghamcity.gov.uk/information-for-residents/education-and-schools/school-admissions/apply-for-a-school-place/national-offer-day",
     "kind": "public_health",
     "note": "England's national timetable: applications close on 15 January and primary offers are made on 16 April, or the next working day."
+  },
+  {
+    "id": "who-growth-standards-2006",
+    "title": "WHO Child Growth Standards: weight-for-age, length/height-for-age and head circumference-for-age (expanded tables)",
+    "publisher": "World Health Organization",
+    "year": 2006,
+    "url": "https://www.who.int/tools/child-growth-standards/standards",
+    "kind": "guideline",
+    "note": "How healthy breastfed children grow from birth to 5 years in good conditions, measured in six countries. Used here under CC BY-NC-SA 3.0 IGO."
+  },
+  {
+    "id": "rcpch-uk-who-charts",
+    "title": "UK-WHO growth charts, 0-4 years",
+    "publisher": "Royal College of Paediatrics and Child Health",
+    "year": 2013,
+    "url": "https://www.rcpch.ac.uk/resources/uk-who-growth-charts-0-4-years",
+    "kind": "guideline",
+    "note": "The UK charts in the red book use the WHO standards from 2 weeks to 4 years, with nine centile lines two thirds of a standard deviation apart, and correct for gestation when babies are born before 37 weeks."
+  },
+  {
+    "id": "nice-ng75",
+    "title": "Faltering growth: recognition and management (NG75)",
+    "publisher": "National Institute for Health and Care Excellence",
+    "year": 2017,
+    "url": "https://www.nice.org.uk/guidance/ng75",
+    "kind": "guideline",
+    "note": "Concern thresholds: weight falling across 1 or more centile spaces if birthweight was below the 9th centile, 2 or more if between the 9th and 91st, 3 or more if above the 91st, or current weight below the 2nd centile."
+  },
+  {
+    "id": "nhs-teething",
+    "title": "Baby teething symptoms",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/babys-development/teething/baby-teething-symptoms/",
+    "kind": "public_health",
+    "note": "Front teeth around 6 months, then lateral incisors (8), first molars (12), canines (18) and second molars (24); bottom teeth usually first; all milk teeth by 2 to 3 years."
+  },
+  {
+    "id": "nhs-newborn-physical-exam",
+    "title": "Newborn physical examination",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/newborn-screening/physical-examination/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-newborn-blood-spot",
+    "title": "Newborn blood spot test",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/newborn-screening/blood-spot-test/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-newborn-hearing",
+    "title": "Newborn hearing test",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/newborn-screening/hearing-test/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-baby-toddler-safety",
+    "title": "Baby and toddler safety",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/first-aid-and-safety/safety/baby-and-toddler-safety/",
+    "kind": "public_health"
+  },
+  {
+    "id": "gov-car-seats",
+    "title": "Child car seats: the rules",
+    "publisher": "GOV.UK",
+    "year": 2025,
+    "url": "https://www.gov.uk/child-car-seats-the-rules",
+    "kind": "guideline"
+  },
+  {
+    "id": "nhs-young-children-food",
+    "title": "What to feed young children",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/weaning-and-feeding/what-to-feed-young-children/",
+    "kind": "public_health"
   }
 ]

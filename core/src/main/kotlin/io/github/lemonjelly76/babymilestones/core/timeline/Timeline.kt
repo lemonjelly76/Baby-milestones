@@ -1,6 +1,8 @@
 package io.github.lemonjelly76.babymilestones.core.timeline
 
 import io.github.lemonjelly76.babymilestones.core.json.Date
+import io.github.lemonjelly76.babymilestones.core.records.FirstWord
+import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.BabySchedule
 import io.github.lemonjelly76.babymilestones.core.tracking.BabySnapshot
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
@@ -26,6 +28,8 @@ enum class TimelineKind {
     @SerialName("moment") MOMENT,
     @SerialName("appointment") APPOINTMENT,
     @SerialName("vaccination") VACCINATION,
+    @SerialName("word") WORD,
+    @SerialName("tooth") TOOTH,
 }
 
 @Serializable
@@ -50,6 +54,9 @@ object Timeline {
         schedule: BabySchedule?,
         from: LocalDate? = null,
         to: LocalDate? = null,
+        words: List<FirstWord> = emptyList(),
+        teeth: List<ToothRecord> = emptyList(),
+        toothName: (String) -> String = { it },
     ): List<TimelineEntry> {
         val baby = snapshot.baby
         val entries = buildList {
@@ -64,6 +71,17 @@ object Timeline {
                 )
             }
             moments.forEach { add(TimelineEntry(TimelineKind.MOMENT, it.date, it.title, it.id, note = it.note, photoRef = it.photoRef)) }
+            // Added newest first, so on the same day the first word or tooth still sits below the later ones.
+            val firstWord = words.minByOrNull { it.saidOn }
+            words.sortedByDescending { it.saidOn }.forEach { w ->
+                add(TimelineEntry(TimelineKind.WORD, w.saidOn,
+                    if (w == firstWord) "First word: \u201c${w.word}\u201d" else "Said \u201c${w.word}\u201d", w.id, note = w.note))
+            }
+            val firstTooth = teeth.minByOrNull { it.cameOn }
+            teeth.sortedByDescending { it.cameOn }.forEach { t ->
+                add(TimelineEntry(TimelineKind.TOOTH, t.cameOn, (if (t == firstTooth) "First tooth: " else "New tooth: ") +
+                    toothName(t.toothId).replaceFirstChar { it.lowercase() }, t.toothId))
+            }
             schedule?.appointments?.forEach { a ->
                 a.record?.doneOn?.let { add(TimelineEntry(TimelineKind.APPOINTMENT, it, a.rule.title, a.rule.id, note = a.record.note)) }
             }

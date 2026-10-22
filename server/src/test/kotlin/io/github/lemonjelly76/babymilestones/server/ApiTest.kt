@@ -192,4 +192,61 @@ class ApiTest : IntegrationTest() {
         assertEquals(200, cleared.status, cleared.body)
         assertTrue("liking" !in cleared.json.jsonObject, cleared.body)
     }
+
+    @Test
+    fun `growth, first words and teeth are recorded and feed the summary`() {
+        val token = newFamily()
+        val babyId = post("/api/babies", """{"name":"Ava","date_of_birth":"2026-04-21","sex":"female"}""", token)["id"]
+
+        val weighed = post("/api/babies/$babyId/growth",
+            """{"measured_on":"2026-10-01","weight_kg":7.6,"length_cm":67.5,"measured_by":"Health visitor"}""", token)
+        assertEquals(201, weighed.status, weighed.body)
+        assertEquals(400, post("/api/babies/$babyId/growth", """{"weight_kg":76}""", token).status, "76 kg is a typo")
+        assertEquals(400, post("/api/babies/$babyId/growth", """{"measured_on":"2026-10-01"}""", token).status)
+
+        assertEquals(201, post("/api/babies/$babyId/words", """{"word":"dada","said_on":"2026-10-10"}""", token).status)
+        assertEquals(400, post("/api/babies/$babyId/words", """{"word":"Dada"}""", token).status, "already logged")
+        assertEquals(200, request("PUT", "/api/babies/$babyId/teeth/71", """{"came_on":"2026-10-05"}""", token).status)
+        assertEquals(404, request("PUT", "/api/babies/$babyId/teeth/99", """{"came_on":"2026-10-05"}""", token).status)
+
+        val data = get("/api/babies/$babyId/data", token).json.jsonObject
+        assertEquals(1, data["growth"]!!.jsonArray.size)
+        assertEquals(1, data["words"]!!.jsonArray.size)
+        assertEquals(1, data["teeth"]!!.jsonArray.size)
+        val summary = get("/api/babies/$babyId/summary", token)["text"]
+        assertTrue("Weight 7.60 kg on 1 Oct 2026 (about the" in summary, summary)
+        assertTrue("Words: 1" in summary && "Teeth: 1" in summary)
+
+        assertEquals(204, request("DELETE", "/api/babies/$babyId/growth/${weighed["id"]}", token = token).status)
+        assertEquals(204, request("DELETE", "/api/babies/$babyId/teeth/71", token = token).status)
+    }
+
+    @Test
+    fun `contacts belong to the family`() {
+        val token = newFamily()
+        val contact = post("/api/contacts", """{"role":"health_visitor","name":"Jo Smith","phone":"01234 567890"}""", token)
+        assertEquals(201, contact.status, contact.body)
+        assertEquals(200, request("PUT", "/api/contacts/${contact["id"]}", """{"role":"health_visitor","name":"Jo Smith","phone":"01234 000000"}""", token).status)
+        val contacts = get("/api/me", token).json.jsonObject["contacts"]!!.jsonArray
+        assertEquals("01234 000000", contacts.single().jsonObject["phone"]!!.jsonPrimitive.content)
+        assertEquals(404, request("DELETE", "/api/contacts/${contact["id"]}", token = newFamily("Other")).status)
+        assertEquals(204, request("DELETE", "/api/contacts/${contact["id"]}", token = token).status)
+    }
+
+    @Test
+    fun `a view-only carer can see everything but change nothing`() {
+        val token = newFamily()
+        val babyId = newBaby(token)
+        val code = post("/api/invites", """{"access":"view"}""", token)["code"]
+        val grandma = post("/api/join", """{"code":"$code","name":"Grandma","role":"grandparent"}""")["token"]
+
+        assertEquals(200, get("/api/babies/$babyId/data", grandma).status)
+        val me = get("/api/me", grandma).json.jsonObject["carer"]!!.jsonObject
+        assertEquals("view", me["access"]!!.jsonPrimitive.content)
+        val refused = post("/api/babies/$babyId/tastings", """{"food_id":"food.banana"}""", grandma)
+        assertEquals(403, refused.status)
+        assertTrue("view" in refused["error"])
+        assertEquals(403, post("/api/invites", "{}", grandma).status)
+        assertEquals(403, request("DELETE", "/api/family", token = grandma).status)
+    }
 }

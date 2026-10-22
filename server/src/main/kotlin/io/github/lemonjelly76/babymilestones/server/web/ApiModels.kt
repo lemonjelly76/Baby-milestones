@@ -5,7 +5,12 @@ import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistTick
 import io.github.lemonjelly76.babymilestones.core.json.Date
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
 import io.github.lemonjelly76.babymilestones.core.notes.AssistantNote
+import io.github.lemonjelly76.babymilestones.core.records.Contact
+import io.github.lemonjelly76.babymilestones.core.records.ContactRole
+import io.github.lemonjelly76.babymilestones.core.records.FirstWord
+import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
 import io.github.lemonjelly76.babymilestones.core.json.Timestamp
 import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
@@ -43,6 +48,7 @@ data class MeResponse(
     val babies: List<Baby>,
     val contentVersion: String,
     val mcpUrl: String? = null,
+    val contacts: List<Contact> = emptyList(),
 )
 
 @Serializable
@@ -80,7 +86,38 @@ data class BabyData(
     val tastings: List<FoodTasting> = emptyList(),
     val checklist: List<ChecklistTick> = emptyList(),
     val assistantNotes: List<AssistantNote> = emptyList(),
+    val growth: List<GrowthMeasurement> = emptyList(),
+    val words: List<FirstWord> = emptyList(),
+    val teeth: List<ToothRecord> = emptyList(),
 )
+
+@Serializable
+data class GrowthRequest(
+    val measuredOn: Date? = null,
+    val weightKg: Double? = null,
+    val lengthCm: Double? = null,
+    val headCm: Double? = null,
+    val measuredBy: String? = null,
+    val note: String? = null,
+)
+
+@Serializable
+data class WordRequest(val word: String, val saidOn: Date? = null, val note: String? = null)
+
+@Serializable
+data class ToothRequest(val cameOn: Date? = null)
+
+@Serializable
+data class ContactRequest(
+    val role: ContactRole = ContactRole.OTHER,
+    val name: String,
+    val phone: String? = null,
+    val email: String? = null,
+    val note: String? = null,
+)
+
+@Serializable
+data class InviteRequest(val access: String = "edit")
 
 @Serializable
 data class LogRequest(

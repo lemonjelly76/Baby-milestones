@@ -103,9 +103,14 @@ fun TodayScreen(
             }
         }
 
-        view.tip?.let {
-            SectionTitle("Today's idea")
-            InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer) { Text(it) }
+        if (view.playIdeas.isNotEmpty()) {
+            SectionTitle("Play ideas this week")
+            InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer) {
+                view.playIdeas.forEach { idea ->
+                    Text("• ${idea.text}", modifier = Modifier.padding(vertical = 2.dp))
+                    idea.milestoneTitle?.let { Text("   For: $it", style = MaterialTheme.typography.bodySmall) }
+                }
+            }
         }
 
         if (view.showFoods) FoodsCard(view, onFoods)

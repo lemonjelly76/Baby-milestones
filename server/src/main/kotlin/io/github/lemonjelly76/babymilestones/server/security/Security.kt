@@ -23,7 +23,7 @@ import java.time.Clock
 import java.util.Base64
 
 /** The signed-in carer. Every read and write is scoped to [familyId]. */
-data class CarerPrincipal(val carerId: String, val familyId: String, val name: String)
+data class CarerPrincipal(val carerId: String, val familyId: String, val name: String, val canEdit: Boolean = true)
 
 object Tokens {
     private val random = SecureRandom()
@@ -43,14 +43,28 @@ object Tokens {
         MessageDigest.getInstance("SHA-256").digest(token.toByteArray()).joinToString("") { "%02x".format(it) }
 }
 
+/**
+ * Signs the request in from its bearer token. View-only carers are refused any change here, except on /mcp, where
+ * every call is a POST and the tools themselves refuse writes.
+ */
 class BearerTokenFilter(private val families: FamilyStore, private val clock: Clock) : OncePerRequestFilter() {
+
+    companion object {
+        const val MCP_PATH = "/mcp"
+    }
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         val header = request.getHeader("Authorization")
         if (header != null && header.startsWith("Bearer ", ignoreCase = true)) {
             val carer = families.carerForToken(Tokens.hash(header.substring(7).trim()), clock.instant())
             if (carer != null) {
-                val principal = CarerPrincipal(carer.id, carer.familyId, carer.name)
+                val principal = CarerPrincipal(carer.id, carer.familyId, carer.name, carer.access != "view")
+                if (!principal.canEdit && request.method != "GET" && request.requestURI != MCP_PATH) {
+                    response.status = HttpStatus.FORBIDDEN.value()
+                    response.contentType = "application/json"
+                    response.writer.write("""{"error":"You have view-only access to this family"}""")
+                    return
+                }
                 SecurityContextHolder.getContext().authentication =
                     UsernamePasswordAuthenticationToken(principal, null, listOf(SimpleGrantedAuthority("ROLE_CARER")))
             }

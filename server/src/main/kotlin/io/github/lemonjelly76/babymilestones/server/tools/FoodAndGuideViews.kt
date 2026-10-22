@@ -15,6 +15,7 @@ import io.github.lemonjelly76.babymilestones.core.guides.GuideSection
 import io.github.lemonjelly76.babymilestones.core.guides.GuideTopic
 import io.github.lemonjelly76.babymilestones.core.guides.Guides
 import io.github.lemonjelly76.babymilestones.core.json.Date
+import io.github.lemonjelly76.babymilestones.core.records.FirstWord
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
 
@@ -62,6 +63,12 @@ data class GuideView(
 
 @Serializable
 data class GuidesView(val ageMonths: Int, val now: List<GuideSummaryView>, val comingUp: List<GuideSummaryView>)
+
+@Serializable
+data class ToothView(val id: String, val name: String, val usuallyAroundMonths: Int, val cameOn: Date? = null)
+
+@Serializable
+data class FirstsView(val words: List<FirstWord>, val teeth: List<ToothView>, val sources: List<SourceRef>)
 
 object FoodAndGuideViews {
     fun food(content: ContentBundle, f: Food, ageMonths: Int?) = FoodView(

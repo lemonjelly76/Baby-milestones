@@ -143,7 +143,7 @@ yet).
 
 ### ADR-011 MCP surface — Accepted
 
-All 11 read tools and 8 write tools from the spec, plus 8 for foods, guides and saved notes (ADR-014, ADR-016), defined
+All 11 read tools and 8 write tools from the spec, plus 8 for foods, guides and saved notes (ADR-014, ADR-016) and 6 for growth, words, teeth and contacts (ADR-018), defined
 once (`ToolCatalog`) and served both over MCP and to the assistant. Resources `content://version`, `baby://{id}/summary`, `content://milestones/{id}`, `content://periods/{id}`;
 prompts `weekly_checkin`, `prepare_for_review`, `explain_milestone`, `meal_ideas`. Every result carries `content_version`; content
 results carry their sources.
@@ -203,9 +203,52 @@ The user wants to avoid paying per API call and uses Claude mobile with the MCP 
 - **Connector address:** `MCP_PUBLIC_URL` (for example the Tailscale Funnel path) is shown in Settings next to the
   connector token.
 
+### ADR-017 Growth charts on the WHO standard behind the UK-WHO charts — Accepted
+
+The main gap against the red book and other baby apps (spec phase 3, brought forward at the user's request).
+
+- **Data:** the WHO Child Growth Standards (2006) weight-for-age, length/height-for-age and head-circumference-for-age
+  expanded tables (L, M, S by day), sampled weekly into `growth.json` (35 KB) and interpolated in between. Used under
+  CC BY-NC-SA 3.0 IGO (non-commercial family use). The RCPCH growth library is AGPL, so it isn't copied.
+- **Maths in `core` (`GrowthEngine`):** z = ((value / M)^L − 1) / (L·S), with the WHO restricted method for weight beyond
+  ±3 SD; centiles from the normal distribution; the UK-WHO chart's nine lines two thirds of an SD apart.
+- **Gestation:** born before 37 weeks, measurements are plotted from the due date until 1 year (32 to 36 weeks) or 2
+  years (under 32 weeks), as RCPCH advises; nothing is plotted before the due date. This differs from the milestone
+  correction (ADR-005) on purpose: each follows its own chart's rule.
+- **Departure from UK-WHO:** UK-WHO uses UK90 data at birth and from 4 years; this build uses the WHO standard
+  throughout 0 to 5. The differences are small, and the chart says it shows the WHO standard.
+- **Signposting:** NICE NG75's thresholds only (a fall across 1, 2 or 3 centile spaces depending on the first weight's
+  centile, or a weight below the 2nd centile), with calm copy that mentions how home weighing varies. No condition is
+  named. Centiles are explained as "how many in 100 children weigh less", never as good or bad.
+
+### ADR-018 First words, teeth, contacts and newborn checks — Accepted
+
+- **Words** (`first_word`, one row per word per child) and **teeth** (`tooth`, 20 milk teeth in FDI notation with the
+  NHS's usual ages) appear on the timeline (first word and first tooth called out) and in the health visitor summary as
+  counts, never a score.
+- **Contacts** belong to the family (health visitor, GP surgery, midwife, nursery, dentist), with tap-to-call.
+- **Newborn checks:** the physical examination (within 72 hours), blood spot test (day 5) and hearing test (before 4
+  weeks) join the England schedule, so the Health tab matches the red book from birth.
+- **MCP:** `get_growth`, `log_growth`, `get_firsts`, `log_word`, `log_tooth`, `get_contacts`; the weekly check-in prompt
+  asks about words, teeth and weigh-ins.
+
+### ADR-019 View-only carers — Accepted
+
+Invites carry an access level: edit (as before) or view, for grandparents and others who should see but not change.
+The bearer-token filter refuses any non-GET request from a view-only carer except on `/mcp`, where every call is a POST
+and the tool layer refuses writes instead. The app shows a "View only" banner and hides the main edit controls.
+
+### ADR-020 Memory book and weekly play ideas — Accepted
+
+- **Memory book:** `MemoryBook` in `core` groups the timeline's milestones, moments, words and teeth into chapters by
+  month of age; the app renders it as a PDF with the moments' photos (fetched with the carer's token, scaled to fit)
+  and shares it.
+- **Play ideas:** `WeeklyPlay` picks four activities a week from milestones the child is working on, then the period
+  guide, rotating each Monday; Today and `get_whats_next` show the same ones.
+
 ### ADR-013 Out of this build — Deferred
 
-Growth charts (UK-WHO), feed/nappy/sleep logging, a meal log, recipes and a step-by-step allergen plan (ADR-014), iOS, Room and an offline write queue, OAuth, Scotland/Wales/NI
+Feed/nappy/sleep logging, a medicine and temperature log (needs a decision: it would be a record only, ADR-010), a meal log, recipes and a step-by-step allergen plan (ADR-014), iOS, Room and an offline write queue, OAuth, Scotland/Wales/NI
 review schedules.
 
 ## 5. Requirements coverage
@@ -225,10 +268,13 @@ review schedules.
 | MCP read and write tools, resources, prompts | Built |
 | Assistant flows: weekly check-in, free-text logging, questions, review prep | Built; needs `ANTHROPIC_API_KEY` |
 | Privacy: UK hosting, family scoping, no backups, export and delete | Built |
-| Guides by age with checklists (user request, ADR-014) | Built (12 guides) |
+| Guides by age with checklists (user request, ADR-014) | Built |
 | Foods tracker for baby-led weaning (user request, ADR-014) | Built (109 foods, allergen tracker, suggestions) |
 | Claude's outputs saved on the server; in-app assistant opt-in (user request, ADR-016) | Built |
-| Growth charts | Deferred (phase 3) |
+| Growth charts | Built (ADR-017) |
+| First words, teeth, contacts, newborn checks (comparison with other apps) | Built (ADR-018) |
+| View-only carers, memory book, weekly play ideas | Built (ADR-019, ADR-020) |
+| Guides: childproofing, car seats, toddler meals, talking and books | Built (16 guides) |
 
 ## 6. Open questions
 

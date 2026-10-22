@@ -6,7 +6,13 @@ import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.content.PeriodGuide
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
 import io.github.lemonjelly76.babymilestones.core.food.FoodTracker
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthEngine
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthReport
+import io.github.lemonjelly76.babymilestones.core.guidance.PlayIdea
+import io.github.lemonjelly76.babymilestones.core.guidance.WeeklyPlay
 import io.github.lemonjelly76.babymilestones.core.guides.Guides
+import io.github.lemonjelly76.babymilestones.core.memories.MemoryBook
+import io.github.lemonjelly76.babymilestones.core.memories.MemoryChapter
 import io.github.lemonjelly76.babymilestones.core.guides.GuidesForAge
 import io.github.lemonjelly76.babymilestones.core.guides.SchoolDates
 import io.github.lemonjelly76.babymilestones.core.guides.SchoolStart
@@ -37,8 +43,15 @@ class BabyView(val data: BabyData, val content: ContentBundle, val today: LocalD
     val concerns: List<Concern> by lazy { ConcernEngine.concerns(snapshot, content.concerns) }
     val pending: PendingUpdates by lazy { Guidance.pendingUpdates(snapshot, schedule) }
     val whatsNext: WhatsNext by lazy { Guidance.whatsNext(snapshot, schedule, content) }
-    val timeline: List<TimelineEntry> by lazy { Timeline.build(snapshot, data.moments, schedule) }
-    val summary: ReviewSummary by lazy { ReviewSummary.build(snapshot, concerns, data.reviewNotes, foods) }
+    val timeline: List<TimelineEntry> by lazy {
+        Timeline.build(snapshot, data.moments, schedule, words = data.words, teeth = data.teeth, toothName = { content.tooth(it)?.name ?: it })
+    }
+    val summary: ReviewSummary by lazy {
+        ReviewSummary.build(snapshot, concerns, data.reviewNotes, foods, growth, data.words, data.teeth)
+    }
+    val growth: GrowthReport by lazy { GrowthEngine(content.growth!!).report(baby, data.growth, today) }
+    val playIdeas: List<PlayIdea> by lazy { WeeklyPlay.ideas(snapshot) }
+    val memories: List<MemoryChapter> by lazy { MemoryBook.chapters(baby, timeline) }
 
     /** Everyday guides and food follow chronological age. */
     val ageMonths: Int get() = snapshot.ages.chronological.months

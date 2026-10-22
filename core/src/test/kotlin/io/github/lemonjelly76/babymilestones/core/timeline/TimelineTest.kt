@@ -4,6 +4,8 @@ import io.github.lemonjelly76.babymilestones.core.Fixtures
 import io.github.lemonjelly76.babymilestones.core.Fixtures.achieved
 import io.github.lemonjelly76.babymilestones.core.Fixtures.baby
 import io.github.lemonjelly76.babymilestones.core.Fixtures.date
+import io.github.lemonjelly76.babymilestones.core.records.FirstWord
+import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.ScheduleEngine
 import io.github.lemonjelly76.babymilestones.core.tracking.LogSource
@@ -45,5 +47,18 @@ class TimelineTest {
         val timeline = Timeline.build(snapshot, emptyList(), null)
         assertEquals(listOf("social.laughs", "social.smiles_back", b.id), timeline.map { it.refId })
         assertEquals(true, timeline[1].before)
+    }
+
+    @Test
+    fun `first words and teeth appear on the timeline, the first of each called out`() {
+        val snapshot = Tracker(Fixtures.content).snapshot(Fixtures.baby("2026-01-01"), emptyList(), Fixtures.date("2026-10-22"))
+        val entries = Timeline.build(
+            snapshot, emptyList(), null,
+            words = listOf(FirstWord("w2", "b_01", "ball", Fixtures.date("2026-10-10")), FirstWord("w1", "b_01", "dada", Fixtures.date("2026-09-01"))),
+            teeth = listOf(ToothRecord("b_01", "71", Fixtures.date("2026-08-01"))),
+            toothName = { Fixtures.content.tooth(it)!!.name },
+        )
+        assertEquals(listOf("Said \u201cball\u201d", "First word: \u201cdada\u201d", "First tooth: lower left central incisor", "Ava was born"),
+            entries.map { it.title })
     }
 }

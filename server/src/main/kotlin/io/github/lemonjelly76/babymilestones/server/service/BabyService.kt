@@ -6,7 +6,13 @@ import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.FoodTracker
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthEngine
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthReport
 import io.github.lemonjelly76.babymilestones.core.guides.ChecklistTick
+import io.github.lemonjelly76.babymilestones.core.records.FirstWord
+import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
+import io.github.lemonjelly76.babymilestones.core.timeline.Timeline
 import io.github.lemonjelly76.babymilestones.core.notes.AssistantNote
 import io.github.lemonjelly76.babymilestones.core.schedule.BabySchedule
 import io.github.lemonjelly76.babymilestones.core.schedule.ScheduleEngine
@@ -17,6 +23,7 @@ import io.github.lemonjelly76.babymilestones.core.tracking.Baby
 import io.github.lemonjelly76.babymilestones.core.tracking.BabySnapshot
 import io.github.lemonjelly76.babymilestones.core.tracking.Tracker
 import io.github.lemonjelly76.babymilestones.server.store.BabyStore
+import io.github.lemonjelly76.babymilestones.server.store.ChildRecordStore
 import io.github.lemonjelly76.babymilestones.server.store.FamilyStore
 import io.github.lemonjelly76.babymilestones.server.store.Ids
 import io.github.lemonjelly76.babymilestones.server.store.NotFoundException
@@ -37,14 +44,24 @@ class BabyContext(
     loadTastings: () -> List<FoodTasting> = { emptyList() },
     loadTicks: () -> List<ChecklistTick> = { emptyList() },
     loadNotes: () -> List<AssistantNote> = { emptyList() },
+    loadGrowth: () -> List<GrowthMeasurement> = { emptyList() },
+    loadWords: () -> List<FirstWord> = { emptyList() },
+    loadTeeth: () -> List<ToothRecord> = { emptyList() },
 ) {
+    val growthMeasurements: List<GrowthMeasurement> by lazy(loadGrowth)
+    val words: List<FirstWord> by lazy(loadWords)
+    val teeth: List<ToothRecord> by lazy(loadTeeth)
     val tastings: List<FoodTasting> by lazy(loadTastings)
     val ticks: List<ChecklistTick> by lazy(loadTicks)
     val notes: List<AssistantNote> by lazy(loadNotes)
     val today: LocalDate get() = snapshot.today
     val concerns: List<Concern> by lazy { ConcernEngine.concerns(snapshot, content.concerns) }
     val foods: FoodReport by lazy { FoodTracker(content).report(tastings, today, snapshot.ages.chronological.months) }
-    val summary: ReviewSummary by lazy { ReviewSummary.build(snapshot, concerns, reviewNotes, foods) }
+    val growth: GrowthReport by lazy { GrowthEngine(content.growth!!).report(baby, growthMeasurements, today) }
+    val summary: ReviewSummary by lazy { ReviewSummary.build(snapshot, concerns, reviewNotes, foods, growth, words, teeth) }
+    fun timeline(from: LocalDate? = null, to: LocalDate? = null) = Timeline.build(
+        snapshot, moments, schedule, from, to, words, teeth, toothName = { content.tooth(it)?.name ?: it },
+    )
 }
 
 data class BabyInput(
@@ -58,6 +75,7 @@ data class BabyInput(
 @Service
 class BabyService(
     private val babies: BabyStore,
+    private val records: ChildRecordStore,
     private val families: FamilyStore,
     private val content: ContentBundle,
     private val tracker: Tracker,
@@ -102,6 +120,9 @@ class BabyService(
             loadTastings = { babies.tastings(babyId) },
             loadTicks = { babies.ticks(babyId) },
             loadNotes = { babies.assistantNotes(babyId) },
+            loadGrowth = { records.growth(babyId) },
+            loadWords = { records.words(babyId) },
+            loadTeeth = { records.teeth(babyId) },
         )
     }
 

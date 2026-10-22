@@ -12,7 +12,8 @@ Design decisions live in docs/design-document.md. Read it before changing archit
   `manifest.json`'s version when content changes.
 - Never add diagnosis, condition names, screening scores or medicine advice to content, prompts or tool results. The
   one exception is the NHS's list of who should get advice before introducing allergens (ADR-015).
-- Food and guide rules (keep offering, allergen timing, suggestions, school dates) live in `core` too.
+- Food, guide and growth rules (keep offering, allergen timing, suggestions, school dates, centiles and NICE NG75
+  signposting, play ideas) live in `core` too.
 - The in-app assistant costs money per message and is off by default; Claude via MCP is the main route (ADR-016).
 - Secrets come from environment variables; never commit .env.
 - Build with JDK 21: `export JAVA_HOME=~/.sdkman/candidates/java/21.0.12+1.1-tem`, then

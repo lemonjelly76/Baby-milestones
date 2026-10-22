@@ -2,6 +2,10 @@ package io.github.lemonjelly76.babymilestones.server.web
 
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
+import io.github.lemonjelly76.babymilestones.core.records.Contact
+import io.github.lemonjelly76.babymilestones.core.records.FirstWord
+import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
 import io.github.lemonjelly76.babymilestones.core.summary.ReviewNote
@@ -15,7 +19,9 @@ import io.github.lemonjelly76.babymilestones.server.security.currentCarer
 import io.github.lemonjelly76.babymilestones.server.service.BabyInput
 import io.github.lemonjelly76.babymilestones.server.service.BabyService
 import io.github.lemonjelly76.babymilestones.server.service.FamilyService
+import io.github.lemonjelly76.babymilestones.server.service.ChildRecordService
 import io.github.lemonjelly76.babymilestones.server.service.FoodService
+import io.github.lemonjelly76.babymilestones.server.service.GrowthInput
 import io.github.lemonjelly76.babymilestones.server.service.GuideService
 import io.github.lemonjelly76.babymilestones.server.service.TastingChanges
 import io.github.lemonjelly76.babymilestones.server.service.TastingInput
@@ -24,6 +30,7 @@ import io.github.lemonjelly76.babymilestones.server.service.LogInput
 import io.github.lemonjelly76.babymilestones.server.service.RecordService
 import io.github.lemonjelly76.babymilestones.server.service.Writer
 import io.github.lemonjelly76.babymilestones.server.store.BabyStore
+import io.github.lemonjelly76.babymilestones.server.store.ChildRecordStore
 import io.github.lemonjelly76.babymilestones.server.store.FamilyStore
 import io.github.lemonjelly76.babymilestones.server.store.Ids
 import io.github.lemonjelly76.babymilestones.server.store.NotFoundException
@@ -55,6 +62,8 @@ class ApiController(
     private val records: RecordService,
     private val foods: FoodService,
     private val guides: GuideService,
+    private val childRecords: ChildRecordService,
+    private val childRecordStore: ChildRecordStore,
     private val assistant: AssistantService,
     private val content: ContentBundle,
     private val babyStore: BabyStore,
@@ -87,6 +96,7 @@ class ApiController(
         return MeResponse(
             familyService.family(principal), familyService.carer(principal), familyService.carers(principal),
             babyService.babies(principal.familyId), content.version, mcpPublicUrl.ifBlank { null },
+            familyService.contacts(principal),
         )
     }
 
@@ -98,7 +108,22 @@ class ApiController(
     fun deleteFamily() = familyService.deleteFamily(currentCarer())
 
     @PostMapping("/invites")
-    fun invite(): InviteResponse = familyService.createInvite(currentCarer()).let { InviteResponse(it.code, it.expiresAt) }
+    fun invite(@RequestBody(required = false) request: InviteRequest?): InviteResponse =
+        familyService.createInvite(currentCarer(), request?.access ?: FamilyService.EDIT).let { InviteResponse(it.code, it.expiresAt) }
+
+    // --- contacts ---
+
+    @PostMapping("/contacts")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun addContact(@RequestBody request: ContactRequest): Contact = familyService.saveContact(currentCarer(), null, request.toContact())
+
+    @PutMapping("/contacts/{contactId}")
+    fun updateContact(@PathVariable contactId: String, @RequestBody request: ContactRequest): Contact =
+        familyService.saveContact(currentCarer(), contactId, request.toContact())
+
+    @DeleteMapping("/contacts/{contactId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteContact(@PathVariable contactId: String) = familyService.deleteContact(currentCarer(), contactId)
 
     @PostMapping("/tokens")
     fun token(@RequestBody request: TokenRequest): TokenResponse {
@@ -226,6 +251,37 @@ class ApiController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteAssistantNote(@PathVariable babyId: String, @PathVariable noteId: String) = guides.deleteNote(writer(), babyId, noteId)
 
+    // --- growth, first words and teeth ---
+
+    @PostMapping("/babies/{babyId}/growth")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun logGrowth(@PathVariable babyId: String, @RequestBody request: GrowthRequest): GrowthMeasurement =
+        childRecords.logGrowth(writer(), babyId, GrowthInput(
+            request.measuredOn, request.weightKg, request.lengthCm, request.headCm, request.measuredBy, request.note,
+        ))
+
+    @DeleteMapping("/babies/{babyId}/growth/{measurementId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteGrowth(@PathVariable babyId: String, @PathVariable measurementId: String) =
+        childRecords.deleteGrowth(writer(), babyId, measurementId)
+
+    @PostMapping("/babies/{babyId}/words")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun logWord(@PathVariable babyId: String, @RequestBody request: WordRequest): FirstWord =
+        childRecords.logWord(writer(), babyId, request.word, request.saidOn, request.note)
+
+    @DeleteMapping("/babies/{babyId}/words/{wordId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteWord(@PathVariable babyId: String, @PathVariable wordId: String) = childRecords.deleteWord(writer(), babyId, wordId)
+
+    @PutMapping("/babies/{babyId}/teeth/{toothId}")
+    fun logTooth(@PathVariable babyId: String, @PathVariable toothId: String, @RequestBody request: ToothRequest): ToothRecord =
+        childRecords.logTooth(writer(), babyId, toothId, request.cameOn)
+
+    @DeleteMapping("/babies/{babyId}/teeth/{toothId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteTooth(@PathVariable babyId: String, @PathVariable toothId: String) = childRecords.deleteTooth(writer(), babyId, toothId)
+
     // --- photos ---
 
     @PostMapping("/photos", consumes = ["image/*"])
@@ -271,9 +327,11 @@ class ApiController(
             baby, familyStore.family(familyId)?.region ?: "england", babyStore.logs(babyId), babyStore.moments(babyId),
             babyStore.appointments(babyId), babyStore.doses(babyId), babyStore.reviewNotes(babyId), content.version,
             babyStore.tastings(babyId), babyStore.ticks(babyId), babyStore.assistantNotes(babyId),
+            childRecordStore.growth(babyId), childRecordStore.words(babyId), childRecordStore.teeth(babyId),
         )
     }
 
     private fun BabyRequest.toInput() = BabyInput(name, dateOfBirth, dueDate, sex, dobEstimated)
+    private fun ContactRequest.toContact() = Contact("", role, name, phone, email, note)
     private fun LogRequest.toInput() = LogInput(milestoneId, achievedOn, approximate, note, photoRef)
 }

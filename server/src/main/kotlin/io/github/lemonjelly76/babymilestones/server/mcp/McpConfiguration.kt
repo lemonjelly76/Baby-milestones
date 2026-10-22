@@ -13,6 +13,7 @@ import io.github.lemonjelly76.babymilestones.server.tools.MilestoneDetail
 import io.github.lemonjelly76.babymilestones.server.tools.PeriodGuideView
 import io.github.lemonjelly76.babymilestones.server.tools.ToolCaller
 import io.github.lemonjelly76.babymilestones.server.tools.ToolCatalog
+import io.github.lemonjelly76.babymilestones.server.tools.ToolInputException
 import io.github.lemonjelly76.babymilestones.server.tools.ToolViews
 import io.modelcontextprotocol.common.McpTransportContext
 import io.modelcontextprotocol.json.jackson3.JacksonMcpJsonMapper
@@ -45,7 +46,7 @@ class McpConfiguration {
         fun caller(exchange: McpSyncServerExchange): ToolCaller {
             val carer = exchange.transportContext().get(CARER) as? CarerPrincipal
                 ?: throw IllegalStateException("Not signed in")
-            return ToolCaller(carer.familyId, carer.carerId, LogSource.ASSISTANT)
+            return ToolCaller(carer.familyId, carer.carerId, LogSource.ASSISTANT, carer.canEdit)
         }
     }
 
@@ -80,7 +81,9 @@ class McpConfiguration {
         .callHandler { exchange, request ->
             try {
                 val args = Args(PlainJson.fromPlain(request.arguments().orEmpty()) as JsonObject)
-                val result = tool.handler(caller(exchange), args)
+                val caller = caller(exchange)
+                if (tool.write && !caller.canEdit) throw ToolInputException("This connector has view-only access, so it can't make changes")
+                val result = tool.handler(caller, args)
                 McpSchema.CallToolResult.builder().addTextContent(result.toString()).build()
             } catch (e: RuntimeException) {
                 McpSchema.CallToolResult.builder().addTextContent(e.message ?: "Something went wrong").isError(true).build()
@@ -130,7 +133,8 @@ class McpConfiguration {
                 "in plain words using the baby's name, one or two at a time. When I answer yes, log it with log_milestone " +
                 "(after I confirm); 'not sure' becomes mark_not_sure. Then ask about any Not sure re-checks and appointments " +
                 "to mark. If they're eating solid food, ask what new foods they tried this week and log each with log_food, then " +
-                "mention anything get_foods says is due again. Finish with get_whats_next: two or three things to watch for " +
+                "mention anything get_foods says is due again. Ask about new words, teeth and any recent weigh-in, and log them " +
+                "with log_word, log_tooth and log_growth. Finish with get_whats_next: two or three things to watch for " +
                 "and one activity. Then save a short summary of the check-in with save_note (kind check_in) so it's in the app."
         },
         prompt(

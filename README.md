@@ -20,9 +20,12 @@ departs from it, is in [`docs/design-document.md`](docs/design-document.md).
   "not sure" (asked again in 2 weeks) or "no longer doing this".
 - **Period guide:** 12 periods with what's typical, play, sleep, feeding, safety for new abilities, appointments
   and what happens next; swipe between them.
-- **Timeline:** milestones, custom moments with photos, appointments and vaccinations.
-- **Health:** the UK schedule of reviews and vaccinations for the baby's date of birth (including the July 2025 and
-  January 2026 changes), booked and done dates, notes and questions for the health visitor.
+- **Timeline:** milestones, custom moments with photos, first words, teeth, appointments and vaccinations, and a
+  memory book PDF with the photos.
+- **Health:** growth charts (weight, length and head on the WHO standard behind the UK-WHO red book charts, corrected
+  for babies born before 37 weeks), teeth, the newborn checks, the UK schedule of reviews and vaccinations for the
+  baby's date of birth (including the July 2025 and January 2026 changes), questions for the health visitor and the
+  family's contacts.
 - **Health visitor summary:** achievements, anything not seen yet and the parents' questions, shared as a PDF or text.
 - **Concerns:** calm, content-driven signposting to the health visitor or GP; never a diagnosis.
 - **Guides:** cited guides for the child's age, from readiness for solids and baby-led weaning to potty training,
@@ -32,16 +35,17 @@ departs from it, is in [`docs/design-document.md`](docs/design-document.md).
 - **Claude:** use Claude mobile or claude.ai with the MCP connector; what Claude saves (check-ins, answers, meal ideas)
   appears in the app. An in-app assistant (charged per message through the Claude API) is off unless switched on in
   Settings; urgent symptoms and distress are caught on the phone before anything is sent.
-- **Family:** several carers per family (invite code or link), several babies, offline reading, weekly digest and
+- **Words and play:** a list of the words your child says, and four play ideas a week from what they're working on.
+- **Family:** several carers per family (invite code or link, with edit or view-only access), several babies, offline reading, weekly digest and
   other reminders, export and delete everything.
-- **MCP:** 27 tools, resources and 4 prompts at `/mcp` for Claude Desktop, claude.ai and the Claude app.
+- **MCP:** 33 tools, resources and 4 prompts at `/mcp` for Claude Desktop, claude.ai and the Claude app.
 
 ## How it's built
 
 | Path | What |
 | --- | --- |
 | `core/` | Pure Kotlin shared by app and server: age engine, status rules, concerns, schedule, pending updates, what's next, search, safety check, timeline, summary. Heavily unit-tested |
-| `core/src/main/resources/content/` | The content bundle: milestones, periods, guides, foods, references, concern and safety copy, UK schedule |
+| `core/src/main/resources/content/` | The content bundle: milestones, periods, guides, foods, growth tables, teeth, references, concern and safety copy, UK schedule |
 | `server/` | Spring Boot 4.1 (Kotlin), PostgreSQL + Flyway, REST API for the app, Spring AI MCP server, Claude API assistant |
 | `app/` | Android, Kotlin, Jetpack Compose, Material 3, Ktor client, WorkManager reminders |
 | `docs/design-document.md` | Decisions (ADRs), sources, requirement coverage, open questions |

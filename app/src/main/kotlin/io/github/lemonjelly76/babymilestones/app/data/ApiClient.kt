@@ -2,6 +2,10 @@ package io.github.lemonjelly76.babymilestones.app.data
 
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
+import io.github.lemonjelly76.babymilestones.core.records.Contact
+import io.github.lemonjelly76.babymilestones.core.records.FirstWord
+import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
 import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
@@ -86,7 +90,14 @@ class ApiClient(
 
     suspend fun deleteFamily() = noContent(HttpMethod.Delete, "/api/family")
 
-    suspend fun invite() = call(HttpMethod.Post, "/api/invites", InviteResponse.serializer(), "{}")
+    suspend fun invite(access: String = "edit") =
+        call(HttpMethod.Post, "/api/invites", InviteResponse.serializer(), InviteRequest.serializer(), InviteRequest(access))
+
+    suspend fun saveContact(id: String?, request: ContactRequest) =
+        if (id == null) call(HttpMethod.Post, "/api/contacts", Contact.serializer(), ContactRequest.serializer(), request)
+        else call(HttpMethod.Put, "/api/contacts/$id", Contact.serializer(), ContactRequest.serializer(), request)
+
+    suspend fun deleteContact(id: String) = noContent(HttpMethod.Delete, "/api/contacts/$id")
 
     suspend fun newToken(label: String) =
         call(HttpMethod.Post, "/api/tokens", TokenResponse.serializer(), TokenRequest.serializer(), TokenRequest(label))
@@ -169,6 +180,23 @@ class ApiClient(
     }
 
     suspend fun deleteNote(babyId: String, noteId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/notes/$noteId")
+
+    // --- growth, first words and teeth ---
+
+    suspend fun logGrowth(babyId: String, request: GrowthRequest) =
+        call(HttpMethod.Post, "/api/babies/$babyId/growth", GrowthMeasurement.serializer(), GrowthRequest.serializer(), request)
+
+    suspend fun deleteGrowth(babyId: String, id: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/growth/$id")
+
+    suspend fun logWord(babyId: String, request: WordRequest) =
+        call(HttpMethod.Post, "/api/babies/$babyId/words", FirstWord.serializer(), WordRequest.serializer(), request)
+
+    suspend fun deleteWord(babyId: String, id: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/words/$id")
+
+    suspend fun logTooth(babyId: String, toothId: String, request: ToothRequest) =
+        call(HttpMethod.Put, "/api/babies/$babyId/teeth/$toothId", ToothRecord.serializer(), ToothRequest.serializer(), request)
+
+    suspend fun deleteTooth(babyId: String, toothId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/teeth/$toothId")
 
     // --- photos ---
 

@@ -572,5 +572,218 @@
       "gov-primary-school",
       "national-offer-day"
     ]
+  },
+  {
+    "id": "guide.childproofing",
+    "title": "Childproofing the home",
+    "summary": "What to do as your baby starts to roll, crawl, climb and explore.",
+    "topic": "safety",
+    "from_months": 4,
+    "to_months": 48,
+    "sections": [
+      {
+        "heading": "Falls",
+        "bullets": [
+          "Change nappies on a mat on the floor, and never leave a baby alone on a raised surface.",
+          "Keep bouncers and car seats on the floor, not on tables or worktops.",
+          "Fit stair gates at the top and bottom of the stairs until your child is at least 2.",
+          "Use a 5-point harness in the highchair and pram every time.",
+          "Keep low furniture away from windows, and fit window locks or catches."
+        ]
+      },
+      {
+        "heading": "Burns and scalds",
+        "bullets": [
+          "Run cold water into the bath before hot, and test it with your elbow.",
+          "Keep hot drinks out of reach: they can still scald 15 minutes after they're made.",
+          "Use a cordless kettle or one with a short flex, and turn pan handles inwards."
+        ]
+      },
+      {
+        "heading": "Swallowing and poisoning",
+        "bullets": [
+          "Keep button batteries and magnets well away: swallowed, they can cause serious internal injuries.",
+          "Lock medicines away or keep them high up, out of reach and sight.",
+          "Store laundry capsules, dishwasher tablets, cleaning products and e-cigarette refills out of reach."
+        ]
+      },
+      {
+        "heading": "Water and cords",
+        "bullets": [
+          "Babies can drown in 5cm of water: stay within reach at bath time and empty the bath straight after.",
+          "Empty paddling pools after use, and fence off or cover ponds.",
+          "Tie up curtain and blind cords on a cleat hook, and don't leave cords or drawstring bags lying around."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.safe_stair_gates",
+        "text": "Stair gates at the top and bottom of the stairs"
+      },
+      {
+        "id": "check.safe_windows",
+        "text": "Window locks or catches fitted"
+      },
+      {
+        "id": "check.safe_cords",
+        "text": "Blind and curtain cords tied up out of reach"
+      },
+      {
+        "id": "check.safe_medicines",
+        "text": "Medicines and cleaning products locked away or up high"
+      },
+      {
+        "id": "check.safe_batteries",
+        "text": "Button batteries and magnets out of reach"
+      },
+      {
+        "id": "check.safe_furniture",
+        "text": "Low furniture moved away from windows"
+      }
+    ],
+    "sources": [
+      "nhs-baby-toddler-safety"
+    ]
+  },
+  {
+    "id": "guide.car_seats",
+    "title": "Car seats",
+    "summary": "The UK rules for child car seats, and keeping babies rear-facing.",
+    "topic": "safety",
+    "from_months": 0,
+    "to_months": 60,
+    "sections": [
+      {
+        "paragraphs": [
+          "Children must use a child car seat until they're 12 years old or 135cm tall, whichever comes first."
+        ]
+      },
+      {
+        "heading": "Height-based (i-Size) seats",
+        "bullets": [
+          "Rear-facing until your child is over 15 months old.",
+          "Look for the approval label R129 with a capital E in a circle."
+        ]
+      },
+      {
+        "heading": "Weight-based seats",
+        "bullets": [
+          "Group 0+ (up to 13kg): rear-facing baby carrier or seat with a harness.",
+          "Group 1 (about 9 to 18kg): rear- or forward-facing seat with a harness or safety shield.",
+          "Look for the approval label ECE R44 with a capital E in a circle."
+        ]
+      },
+      {
+        "heading": "Fitting",
+        "bullets": [
+          "Turn off the front airbag before fitting a rear-facing seat in a front seat.",
+          "Never fit a child seat in a side-facing seat.",
+          "Use the seat belt or ISOFIX fittings the seat was designed for."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.car_seat_label",
+        "text": "Seat has an R129 or ECE R44 label"
+      },
+      {
+        "id": "check.car_seat_rear",
+        "text": "Rear-facing (i-Size: until over 15 months)"
+      },
+      {
+        "id": "check.car_seat_airbag",
+        "text": "Front airbag off if the seat is in the front"
+      }
+    ],
+    "sources": [
+      "gov-car-seats"
+    ]
+  },
+  {
+    "id": "guide.toddler_meals",
+    "title": "Toddler meals",
+    "summary": "What a balanced day looks like from 1 to 5.",
+    "topic": "feeding",
+    "from_months": 12,
+    "to_months": 60,
+    "sections": [
+      {
+        "heading": "Each day",
+        "bullets": [
+          "Fruit and vegetables at every meal, in a variety of colours.",
+          "Starchy foods such as bread, rice, pasta and potatoes. Under 2s shouldn't have only wholegrain.",
+          "At least 350ml of milk, or two servings of milk-based foods like cheese or yoghurt. Full-fat until 2.",
+          "Protein: at least 2 portions from beans, lentils or tofu, or 1 from meat, fish or eggs.",
+          "At least 1 portion of oily fish a week."
+        ]
+      },
+      {
+        "heading": "Keep low",
+        "bullets": [
+          "No need to add salt: most foods already contain enough.",
+          "Sugary foods and drinks only with meals, not as snacks or before bed. No fizzy drinks.",
+          "Water and milk as the main drinks."
+        ]
+      },
+      {
+        "heading": "Fussy eating",
+        "paragraphs": [
+          "It's common for toddlers to eat only one or two fruits or vegetables at first. Keep offering small amounts of others so they can learn to like new tastes and textures."
+        ]
+      }
+    ],
+    "sources": [
+      "nhs-young-children-food",
+      "nhs-drinks-cups"
+    ]
+  },
+  {
+    "id": "guide.sharing_books",
+    "title": "Talking and sharing books",
+    "summary": "Everyday ways to build language, from chatting at nappy changes to stories.",
+    "topic": "everyday",
+    "from_months": 0,
+    "to_months": 60,
+    "sections": [
+      {
+        "bullets": [
+          "From birth: chat about what you're doing as you feed, change and bathe your baby.",
+          "From 6 months: look at books together. You don't have to read the words; talk about what you can see.",
+          "From 12 months: books and toys that make a noise help listening.",
+          "From 18 months: repetition helps children remember words, so reading favourites again and again is good.",
+          "From 2: switch off the TV and radio when you're talking together: background noise makes listening harder.",
+          "Talk in whichever language feels comfortable to you: knowing another language helps English too."
+        ]
+      },
+      {
+        "heading": "Dummies",
+        "paragraphs": [
+          "It's hard to learn to talk with a dummy in, so offer it only for sleep from 6 months and aim to stop by 12 months."
+        ]
+      },
+      {
+        "heading": "Why it matters",
+        "paragraphs": [
+          "The American Academy of Pediatrics recommends reading aloud with children from infancy: shared reading builds language and early literacy, and back-and-forth conversation matters as much as the words."
+        ]
+      }
+    ],
+    "checklist": [
+      {
+        "id": "check.books_daily",
+        "text": "A book together most days"
+      },
+      {
+        "id": "check.books_library",
+        "text": "Joined the local library"
+      }
+    ],
+    "sources": [
+      "nhs-talk",
+      "aap-2024-literacy",
+      "romeo-2018-conversation"
+    ]
   }
 ]

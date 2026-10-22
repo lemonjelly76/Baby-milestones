@@ -13,7 +13,6 @@ import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentRecord
 import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
 import io.github.lemonjelly76.babymilestones.core.summary.ReviewNote
 import io.github.lemonjelly76.babymilestones.core.timeline.Moment
-import io.github.lemonjelly76.babymilestones.core.timeline.Timeline
 import io.github.lemonjelly76.babymilestones.core.timeline.TimelineEntry
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneLog
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
@@ -22,7 +21,14 @@ import io.github.lemonjelly76.babymilestones.core.food.FoodNames
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthMeasurement
+import io.github.lemonjelly76.babymilestones.core.growth.GrowthReport
+import io.github.lemonjelly76.babymilestones.core.guidance.PlayIdea
+import io.github.lemonjelly76.babymilestones.core.guidance.WeeklyPlay
 import io.github.lemonjelly76.babymilestones.core.guides.Guides
+import io.github.lemonjelly76.babymilestones.core.records.Contact
+import io.github.lemonjelly76.babymilestones.core.records.FirstWord
+import io.github.lemonjelly76.babymilestones.core.records.ToothRecord
 import io.github.lemonjelly76.babymilestones.core.notes.AssistantNote
 import io.github.lemonjelly76.babymilestones.core.notes.NoteKind
 import io.github.lemonjelly76.babymilestones.server.service.BabyService
@@ -38,9 +44,13 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.put
 import kotlinx.serialization.KSerializer
+import io.github.lemonjelly76.babymilestones.server.service.ChildRecordService
+import io.github.lemonjelly76.babymilestones.server.service.GrowthInput
 import io.github.lemonjelly76.babymilestones.server.store.BabyStore
+import io.github.lemonjelly76.babymilestones.server.store.FamilyStore
 import org.springframework.stereotype.Component
 
 /** The MCP tools from the spec. Each returns JSON plus the content version, so answers can say where they came from. */
@@ -53,8 +63,11 @@ class ToolCatalog(
     private val content: ContentBundle,
     private val search: GuidanceSearch,
     private val babyStore: BabyStore,
+    private val childRecords: ChildRecordService,
+    private val families: FamilyStore,
 ) {
-    val tools: List<BabyTool> = readTools() + everydayReadTools() + writeTools() + everydayWriteTools()
+    val tools: List<BabyTool> = readTools() + everydayReadTools() + recordReadTools() + writeTools() + everydayWriteTools() +
+        recordWriteTools()
 
     fun find(name: String): BabyTool? = tools.firstOrNull { it.name == name }
 
@@ -172,7 +185,8 @@ class ToolCatalog(
         BabyTool(
             "get_whats_next", "What's next",
             "What to watch for next: milestones that typically follow recent achievements, milestones whose window " +
-                "opens soon, the next period, upcoming appointments and vaccinations, and one activity to try.",
+                "opens soon, the next period, upcoming appointments and vaccinations, one activity to try, and this week's " +
+                    "play ideas (the same ones the app shows).",
             schema {
                 string("baby_id", "Id from list_babies", required = true)
                 integer("horizon_weeks", "How far ahead to look; default 8")
@@ -180,10 +194,10 @@ class ToolCatalog(
         ) { caller, args ->
             val ctx = ctx(caller, args)
             val horizon = (args.optInt("horizon_weeks") ?: 8).coerceIn(1, 52)
-            BabyJson.encodeToJsonElement(
-                WhatsNext.serializer(),
-                Guidance.whatsNext(ctx.snapshot, ctx.schedule, content, horizon),
-            )
+            val next = BabyJson.encodeToJsonElement(WhatsNext.serializer(), Guidance.whatsNext(ctx.snapshot, ctx.schedule, content, horizon))
+            JsonObject(next.jsonObject + ("play_this_week" to BabyJson.encodeToJsonElement(
+                ListSerializer(PlayIdea.serializer()), WeeklyPlay.ideas(ctx.snapshot),
+            )))
         },
 
         BabyTool(
@@ -201,7 +215,7 @@ class ToolCatalog(
 
         BabyTool(
             "get_timeline", "Timeline",
-            "Logged milestones, moments, appointments and vaccinations in date order, newest first.",
+            "Logged milestones, moments, first words, teeth, appointments and vaccinations in date order, newest first.",
             schema {
                 string("baby_id", "Id from list_babies", required = true)
                 date("from", "Earliest date to include")
@@ -209,7 +223,7 @@ class ToolCatalog(
             }, write = false,
         ) { caller, args ->
             val ctx = ctx(caller, args)
-            val entries = Timeline.build(ctx.snapshot, ctx.moments, ctx.schedule, args.optDate("from"), args.optDate("to"))
+            val entries = ctx.timeline(args.optDate("from"), args.optDate("to"))
             json(ListSerializer(TimelineEntry.serializer()), entries)
         },
 
@@ -337,6 +351,94 @@ class ToolCatalog(
         ) { caller, args ->
             val ctx = ctx(caller, args)
             json(ListSerializer(AssistantNote.serializer()), ctx.notes.take((args.optInt("limit") ?: 10).coerceIn(1, 50)))
+        },
+    )
+
+    private fun recordReadTools() = listOf(
+        BabyTool(
+            "get_growth", "Growth",
+            "Weight, length or height and head measurements with their centiles on the WHO growth standard used by the " +
+                "UK-WHO charts (corrected for gestation where the charts are), plus any signpost to use. Explain a centile " +
+                "as 'about N in 100 children of the same age and sex are lighter or shorter'; never as good or bad.",
+            schema { string("baby_id", "Id from list_babies", required = true) }, write = false,
+        ) { caller, args ->
+            val ctx = ctx(caller, args)
+            json(GrowthReport.serializer(), ctx.growth, mapOf(
+                "standard" to JsonPrimitive(content.growth!!.standard),
+                "sources" to BabyJson.encodeToJsonElement(ListSerializer(SourceRef.serializer()), ToolViews.sources(content, content.growth!!.sources)),
+            ))
+        },
+
+        BabyTool(
+            "get_firsts", "First words and teeth",
+            "The words the child says, with when each was first said, and their milk teeth: which have come through and " +
+                "when, and the ones still to come with the age they usually appear (NHS).",
+            schema { string("baby_id", "Id from list_babies", required = true) }, write = false,
+        ) { caller, args ->
+            val ctx = ctx(caller, args)
+            val cameOn = ctx.teeth.associateBy({ it.toothId }, { it.cameOn })
+            json(FirstsView.serializer(), FirstsView(
+                ctx.words,
+                content.teeth.map { ToothView(it.id, it.name, it.typicalMonths, cameOn[it.id]) },
+                ToolViews.sources(content, content.teeth.flatMap { it.sources }.distinct()),
+            ))
+        },
+
+        BabyTool(
+            "get_contacts", "Contacts",
+            "The family's contacts: health visitor, GP surgery, midwife, nursery, dentist and others, with phone numbers.",
+            schema { }, write = false,
+        ) { caller, _ ->
+            json(ListSerializer(Contact.serializer()), families.contacts(caller.familyId))
+        },
+    )
+
+    private fun recordWriteTools() = listOf(
+        BabyTool(
+            "log_growth", "Log a measurement",
+            "Records a weighing or measurement: weight in kg, length or height in cm, head circumference in cm (any of " +
+                "them). Only numbers the parent gave, converted to kg and cm if they used pounds or inches.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                date("measured_on", "When; default today")
+                number("weight_kg", "Weight in kilograms")
+                number("length_cm", "Length or height in centimetres")
+                number("head_cm", "Head circumference in centimetres")
+                string("measured_by", "Who measured, e.g. Health visitor, GP, Home")
+            }, write = true,
+        ) { caller, args ->
+            val m = childRecords.logGrowth(writer(caller), args.string("baby_id"), GrowthInput(
+                args.optDate("measured_on"), args.optDouble("weight_kg"), args.optDouble("length_cm"), args.optDouble("head_cm"),
+                args.optString("measured_by"),
+            ))
+            json(GrowthMeasurement.serializer(), m)
+        },
+
+        BabyTool(
+            "log_word", "Log a word",
+            "Adds a word the child says to their words list, spelled the way the family says it. One call per word.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                string("word", "The word, e.g. dada", required = true)
+                date("said_on", "When it was first said; default today")
+                string("note", "What it means or when they say it")
+            }, write = true,
+        ) { caller, args ->
+            json(FirstWord.serializer(), childRecords.logWord(writer(caller), args.string("baby_id"), args.string("word"),
+                args.optDate("said_on"), args.optString("note")))
+        },
+
+        BabyTool(
+            "log_tooth", "Log a tooth",
+            "Records a milk tooth coming through. Tooth ids are FDI numbers from get_firsts: 71 and 81 are the lower " +
+                "front teeth, 51 and 61 the upper front teeth.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                string("tooth", "Tooth id from get_firsts", required = true)
+                date("came_on", "When it came through; default today")
+            }, write = true,
+        ) { caller, args ->
+            json(ToothRecord.serializer(), childRecords.logTooth(writer(caller), args.string("baby_id"), args.string("tooth"), args.optDate("came_on")))
         },
     )
 

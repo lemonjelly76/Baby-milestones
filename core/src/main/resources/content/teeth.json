@@ -1,0 +1,182 @@
+[
+  {
+    "id": "51",
+    "name": "Upper right central incisor",
+    "upper": true,
+    "typical_months": 6,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "52",
+    "name": "Upper right lateral incisor",
+    "upper": true,
+    "typical_months": 8,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "53",
+    "name": "Upper right canine",
+    "upper": true,
+    "typical_months": 18,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "54",
+    "name": "Upper right first molar",
+    "upper": true,
+    "typical_months": 12,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "55",
+    "name": "Upper right second molar",
+    "upper": true,
+    "typical_months": 24,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "61",
+    "name": "Upper left central incisor",
+    "upper": true,
+    "typical_months": 6,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "62",
+    "name": "Upper left lateral incisor",
+    "upper": true,
+    "typical_months": 8,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "63",
+    "name": "Upper left canine",
+    "upper": true,
+    "typical_months": 18,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "64",
+    "name": "Upper left first molar",
+    "upper": true,
+    "typical_months": 12,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "65",
+    "name": "Upper left second molar",
+    "upper": true,
+    "typical_months": 24,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "71",
+    "name": "Lower left central incisor",
+    "upper": false,
+    "typical_months": 6,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "72",
+    "name": "Lower left lateral incisor",
+    "upper": false,
+    "typical_months": 8,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "73",
+    "name": "Lower left canine",
+    "upper": false,
+    "typical_months": 18,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "74",
+    "name": "Lower left first molar",
+    "upper": false,
+    "typical_months": 12,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "75",
+    "name": "Lower left second molar",
+    "upper": false,
+    "typical_months": 24,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "81",
+    "name": "Lower right central incisor",
+    "upper": false,
+    "typical_months": 6,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "82",
+    "name": "Lower right lateral incisor",
+    "upper": false,
+    "typical_months": 8,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "83",
+    "name": "Lower right canine",
+    "upper": false,
+    "typical_months": 18,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "84",
+    "name": "Lower right first molar",
+    "upper": false,
+    "typical_months": 12,
+    "sources": [
+      "nhs-teething"
+    ]
+  },
+  {
+    "id": "85",
+    "name": "Lower right second molar",
+    "upper": false,
+    "typical_months": 24,
+    "sources": [
+      "nhs-teething"
+    ]
+  }
+]

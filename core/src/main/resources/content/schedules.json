@@ -11,6 +11,63 @@
     "note": "Vaccinations follow the UK routine schedule as changed in July 2025 and January 2026, picked by date of birth. Health visitor contacts follow England's Healthy Child Programme; Scotland, Wales and Northern Ireland run their own programmes with different review ages, so check with your health visitor. The flu vaccine is offered each autumn rather than on a birthday. To be checked against the current NHS schedule before release.",
     "appointments": [
       {
+        "id": "newborn_physical_exam",
+        "title": "Newborn physical examination",
+        "with": "Midwife or doctor",
+        "window_start": {
+          "months": 0,
+          "weeks": 0,
+          "days": 0
+        },
+        "window_end": {
+          "months": 0,
+          "weeks": 0,
+          "days": 3
+        },
+        "description": "A check of the eyes, heart, hips and, for boys, testicles, within 72 hours of birth (usually before you leave hospital). It's repeated at 6 to 8 weeks.",
+        "sources": [
+          "nhs-newborn-physical-exam"
+        ]
+      },
+      {
+        "id": "newborn_blood_spot",
+        "title": "Newborn blood spot (heel prick) test",
+        "with": "Midwife",
+        "window_start": {
+          "months": 0,
+          "weeks": 0,
+          "days": 5
+        },
+        "window_end": {
+          "months": 0,
+          "weeks": 0,
+          "days": 8
+        },
+        "description": "A few drops of blood from the heel, usually when your baby is 5 days old, to screen for rare conditions. Results should reach you by 6 weeks; ask your midwife, health visitor or GP if they haven't.",
+        "sources": [
+          "nhs-newborn-blood-spot"
+        ]
+      },
+      {
+        "id": "newborn_hearing",
+        "title": "Newborn hearing test",
+        "with": "Newborn hearing screener",
+        "window_start": {
+          "months": 0,
+          "weeks": 0,
+          "days": 0
+        },
+        "window_end": {
+          "months": 0,
+          "weeks": 4,
+          "days": 0
+        },
+        "description": "A quick hearing check, in hospital or at home, usually before 4 weeks old (it can be done up to 3 months). If it hasn't been offered, ask your health visitor or GP.",
+        "sources": [
+          "nhs-newborn-hearing"
+        ]
+      },
+      {
         "id": "new_birth_visit",
         "title": "New birth visit",
         "with": "Health visitor",
