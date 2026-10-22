@@ -252,7 +252,7 @@ fun GuideScreen(
 
             Expandable("Sources (${guide.sources.size})") { Sources(content, guide.sources) }
             guide.checkedOn?.let {
-                Text("Checked against these sources on ${it.pretty()}. Not yet reviewed by a health professional.",
+                Text("Checked against these sources on ${it.pretty()}.",
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Disclaimer(content)

@@ -299,7 +299,6 @@ detail after, trusted onward links, visible sources and a review date.
 
 - **Order on a guide:** emergency steps (when there are any), then "In short" (two to four key points), then the
   detail, the checklist, "Watch and read", related guides, sources (folded) and "Checked against these sources on …".
-  It also says the guide is not yet reviewed by a health professional, which is true until one is (open question).
 - **Watch and read:** links only to the NHS, GOV.UK, NHS boards and established charities (British Red Cross, St John
   Ambulance, Lullaby Trust, CAPT, ERIC, BookTrust, CBeebies Parenting, First Steps Nutrition Trust, Anaphylaxis UK,
   Allergy UK, Unicef UK Baby Friendly), each labelled video, read, tool or support. Every link was checked on 22 October
