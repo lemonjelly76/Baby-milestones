@@ -1,0 +1,273 @@
+[
+  {
+    "id": "newborn_0_2m",
+    "name": "Newborn",
+    "from_months": 0,
+    "to_months": 2,
+    "checklist_months": 2,
+    "typical": "Your baby is getting used to the world: feeding, sleeping and being held. They start to watch faces, calm to your voice and, usually between 6 and 8 weeks, give their first social smiles.",
+    "sleep": "Newborns sleep 14 to 17 hours in 24, in short stretches day and night (WHO). Always put your baby to sleep on their back, in their own clear, flat cot or Moses basket, in the same room as you for at least the first 6 months.",
+    "feeding": "Breast milk or first infant formula is all your baby needs for around the first 6 months. Feed responsively, when your baby shows early hunger cues. Breastfed babies should have a daily vitamin D supplement (8.5 to 10 micrograms); babies having more than 500ml of formula a day do not need one.",
+    "play": [
+      "Talk, sing and copy your baby's sounds, pausing for them to respond.",
+      "Short, frequent tummy time while awake and watched, building to 30 minutes a day across short spells.",
+      "Lots of face-to-face time and skin-to-skin contact."
+    ],
+    "safety": [
+      "Back to sleep for every sleep, with no pillows, bumpers or soft toys in the cot.",
+      "Never sleep with your baby on a sofa or armchair.",
+      "Use a rear-facing car seat for every journey."
+    ],
+    "what_happens_next": "Over the next two months your baby will hold their head steadier, coo back when you talk, and start smiling to get your attention.",
+    "touchpoints": [
+      "Health visitor new birth visit (10 to 14 days)",
+      "6 to 8 week review and GP physical check",
+      "First vaccinations at 8 weeks"
+    ],
+    "sources": ["cdc-ltsae-2022", "who-2019-under5", "lullaby-safer-sleep", "aap-2022-safe-sleep", "nhs-feeding", "sacn-2018-first-year", "hcp-england"]
+  },
+  {
+    "id": "early_infant_2_4m",
+    "name": "Early infant",
+    "from_months": 2,
+    "to_months": 4,
+    "checklist_months": 4,
+    "typical": "Your baby is becoming more sociable: smiling, cooing and chuckling with you. They hold their head steadier, bring their hands to their mouth and start batting at toys.",
+    "sleep": "Around 14 to 17 hours in 24 up to 3 months, then 12 to 16 hours including naps (WHO). Many babies are not sleeping through the night yet, and that is normal. Keep to back sleeping in a clear cot.",
+    "feeding": "Breast milk or first infant formula only. Babies are not ready for solid food before around 6 months, even if they seem hungrier: growth spurts are common at this age.",
+    "play": [
+      "Have back-and-forth 'conversations' with coos and smiles.",
+      "Tummy time with a toy or mirror to look at.",
+      "Hang toys within reach on a play gym for batting."
+    ],
+    "safety": [
+      "Babies can wriggle and roll unexpectedly: never leave them on a raised surface.",
+      "Keep hot drinks away from where you hold or feed your baby."
+    ],
+    "what_happens_next": "Next comes rolling, laughing out loud, reaching for toys and recognising familiar people.",
+    "touchpoints": ["Vaccinations at 12 and 16 weeks"],
+    "sources": ["cdc-ltsae-2022", "who-2019-under5", "lullaby-safer-sleep", "hewitt-2020-tummy-time", "sacn-2018-first-year", "nhs-safety"]
+  },
+  {
+    "id": "infant_4_6m",
+    "name": "Infant",
+    "from_months": 4,
+    "to_months": 6,
+    "checklist_months": 6,
+    "typical": "Your baby is laughing, squealing and taking turns making sounds with you. They roll from tummy to back, push up on straight arms and reach for what they want, which usually goes straight into their mouth.",
+    "sleep": "Around 12 to 16 hours in 24 including naps (WHO). Keep putting your baby down on their back; if they roll onto their front by themselves you don't need to turn them back.",
+    "feeding": "The UK advice is to start solid foods at around 6 months, when your baby can sit up holding their head steady, coordinate eyes, hands and mouth, and swallow food rather than pushing it out. When you start, introduce common allergens such as egg and peanut one at a time, and don't delay them; get advice first if your baby has severe eczema or a known food allergy.",
+    "play": [
+      "Floor play several times a day, with toys just out of reach to encourage rolling and reaching.",
+      "Copy sounds and blow raspberries back.",
+      "Share board books with bold pictures, every day."
+    ],
+    "safety": [
+      "Rolling has started or is close: never leave your baby on a bed, sofa or changing table.",
+      "Mouthing means small objects, coins and button batteries must be kept out of reach."
+    ],
+    "what_happens_next": "Next your baby will start sitting, babbling ('bababa') and may become wary of strangers.",
+    "touchpoints": ["Start of weaning guidance (around 6 months)"],
+    "sources": ["cdc-ltsae-2022", "who-2019-under5", "sacn-2018-first-year", "du-toit-2015-leap", "nhs-weaning", "lullaby-safer-sleep", "aap-2024-literacy"]
+  },
+  {
+    "id": "mover_6_9m",
+    "name": "Mover",
+    "from_months": 6,
+    "to_months": 9,
+    "checklist_months": 9,
+    "typical": "Your baby is sitting, babbling and getting on the move: some crawl, some shuffle, some roll. They may become shy with strangers and upset when you leave, a normal sign of a strong bond.",
+    "sleep": "Around 12 to 16 hours in 24 including naps (WHO). Keep your baby in your room until at least 6 months; after that, follow safer sleep advice wherever they sleep.",
+    "feeding": "Build up from smooth to mashed and soft finger foods, aiming for three meals a day alongside breast milk or formula. Offer water in an open or free-flow cup with meals. No salt, sugar or honey before 12 months. The NHS recommends vitamins A, C and D from 6 months to 5 years.",
+    "play": [
+      "Peekaboo and hide-and-find games.",
+      "Banging, filling and emptying with pots and blocks.",
+      "Name everything your baby looks at."
+    ],
+    "safety": [
+      "Cut small round foods like grapes lengthways into quarters and always stay with your baby while they eat.",
+      "Fit stair gates and move cables, cords and blind pulls out of reach.",
+      "Babies on the move find medicines and cleaning products: lock them away."
+    ],
+    "what_happens_next": "Next comes pulling up to stand, cruising along furniture, waving and first words such as 'mama' or 'dada'.",
+    "touchpoints": [],
+    "sources": ["cdc-ltsae-2022", "who-mgrs-motor-2006", "who-2019-under5", "nhs-weaning", "sacn-2018-first-year", "nhs-safety", "lullaby-safer-sleep"]
+  },
+  {
+    "id": "explorer_9_12m",
+    "name": "Explorer",
+    "from_months": 9,
+    "to_months": 12,
+    "checklist_months": 12,
+    "typical": "Your baby is exploring everything: pulling up to stand, cruising along furniture, picking up tiny things with finger and thumb, and understanding much more than they can say.",
+    "sleep": "Around 12 to 16 hours in 24 including naps (WHO). A calm, predictable bedtime routine helps.",
+    "feeding": "Three meals a day plus breast milk or formula. From 12 months whole cow's milk can be the main drink. Move from bottles to cups from around 12 months to protect teeth.",
+    "play": [
+      "Action songs like pat-a-cake.",
+      "Put-in and take-out games with a tub and blocks.",
+      "Read together every day and point at the pictures."
+    ],
+    "safety": [
+      "Lower the cot base as your baby pulls up.",
+      "Fix heavy furniture and TVs to the wall.",
+      "Small objects go straight in the mouth: watch out for button batteries and magnets."
+    ],
+    "what_happens_next": "Around the first birthday come first steps, first words and pointing to ask for things.",
+    "touchpoints": ["Health visitor 9 to 12 month review"],
+    "sources": ["cdc-ltsae-2022", "who-mgrs-motor-2006", "who-2019-under5", "nhs-weaning", "nhs-teeth", "nhs-safety", "hcp-england", "aap-2024-literacy"]
+  },
+  {
+    "id": "young_toddler_12_15m",
+    "name": "Young toddler",
+    "from_months": 12,
+    "to_months": 15,
+    "checklist_months": 15,
+    "typical": "Your toddler is taking first steps or getting close, trying out words, pointing to ask for things and showing you what they like. The age at which children walk varies widely: in the WHO study healthy children walked alone anywhere from about 8 to 18 months.",
+    "sleep": "Around 11 to 14 hours in 24 including naps (WHO).",
+    "feeding": "Family meals cut to size, with whole milk as the main drink (around 350ml a day is plenty). Let your toddler feed themselves with fingers and a spoon.",
+    "play": [
+      "Lots of active play, at least 3 hours a day spread through the day (WHO, from age 1).",
+      "Name what your child points at before you hand it over.",
+      "Simple stacking and posting toys."
+    ],
+    "safety": [
+      "Keep stair gates in place and doors to the outside closed.",
+      "Screen time is not recommended under 2 (WHO); reading and play together are better."
+    ],
+    "what_happens_next": "Next comes walking on their own, more words, pointing to share interest and copying everyday jobs.",
+    "touchpoints": ["1-year vaccinations"],
+    "sources": ["cdc-ltsae-2022", "who-mgrs-motor-2006", "who-2019-under5", "nhs-weaning", "nhs-toddler", "nhs-safety"]
+  },
+  {
+    "id": "toddler_15_18m",
+    "name": "Toddler",
+    "from_months": 15,
+    "to_months": 18,
+    "checklist_months": 18,
+    "typical": "Your toddler walks, climbs and explores, checking back that you're nearby. They use a few words, point to show you interesting things and copy what you do.",
+    "sleep": "Around 11 to 14 hours in 24 including naps (WHO). Many toddlers move to one nap around now.",
+    "feeding": "Three meals and two healthy snacks a day. Toddlers' appetites vary a lot from day to day; offer, don't force.",
+    "play": [
+      "Pretend jobs: sweeping, wiping, cooking with toy pans.",
+      "Daily outdoor play and walking.",
+      "Respond to every attempt to communicate: serve and return."
+    ],
+    "safety": [
+      "Climbing brings windows and shelves into reach: fit window restrictors.",
+      "Toddlers can drown in a few centimetres of water: stay with them at bath time and near ponds."
+    ],
+    "what_happens_next": "Next comes running, putting two words together, pretend play and noticing others' feelings.",
+    "touchpoints": ["18-month appointment (for children born on or after 1 July 2024)"],
+    "sources": ["cdc-ltsae-2022", "who-2019-under5", "romeo-2018-conversation", "nhs-toddler", "nhs-safety", "ukhsa-2026-schedule"]
+  },
+  {
+    "id": "talker_18_24m",
+    "name": "Talker",
+    "from_months": 18,
+    "to_months": 24,
+    "checklist_months": 24,
+    "typical": "Words are arriving fast. Your toddler starts putting two words together, points to body parts and pictures, runs, kicks a ball and notices when someone else is upset.",
+    "sleep": "Around 11 to 14 hours in 24 including naps (WHO).",
+    "feeding": "Family food with little salt or sugar; water and milk as drinks. Brush teeth twice a day with a smear of fluoride toothpaste.",
+    "play": [
+      "Expand what your child says: 'Car' becomes 'Blue car!'",
+      "Books with 'where's the…?' questions.",
+      "Running, chasing and ball games outside."
+    ],
+    "safety": [
+      "Keep medicines and cleaning products locked away; toddlers can open more than you'd expect.",
+      "No screen time is recommended under 2 (WHO)."
+    ],
+    "what_happens_next": "Next comes around 50 words, short sentences, pretend play and the 2 to 2.5 year review.",
+    "touchpoints": [],
+    "sources": ["cdc-ltsae-2022", "who-2019-under5", "romeo-2018-conversation", "aap-2024-literacy", "nhs-teeth", "nhs-safety"]
+  },
+  {
+    "id": "two_24_30m",
+    "name": "Two",
+    "from_months": 24,
+    "to_months": 30,
+    "checklist_months": 30,
+    "typical": "Your two-year-old is talking in short phrases, pretending, solving simple problems and wanting to do things themselves. Big feelings and tantrums are common and normal at this age.",
+    "sleep": "Around 11 to 14 hours in 24, often with one nap (WHO).",
+    "feeding": "Three meals and two snacks; offer new foods alongside familiar ones, repeatedly, without pressure.",
+    "play": [
+      "Pretend play with dolls, teddies and toy food.",
+      "At least 3 hours of activity a day (WHO).",
+      "Screen time no more than 1 hour a day from age 2, ideally watched together (WHO)."
+    ],
+    "safety": [
+      "Climbing on stools and chairs: keep dangerous things locked away, not just up high.",
+      "Pan handles turned in and hot drinks out of reach."
+    ],
+    "what_happens_next": "Next comes conversations, 'why?' questions, playing with other children and being understood by people outside the family.",
+    "touchpoints": ["Health visitor 2 to 2.5 year review"],
+    "sources": ["cdc-ltsae-2022", "who-2019-under5", "nhs-behaviour", "nhs-toddler", "nhs-safety", "hcp-england"]
+  },
+  {
+    "id": "two_and_a_half_30_36m",
+    "name": "Two and a half",
+    "from_months": 30,
+    "to_months": 36,
+    "checklist_months": 36,
+    "typical": "Your child is having simple conversations, asking questions, playing alongside and with other children, and getting more independent with dressing and eating.",
+    "sleep": "Around 11 to 14 hours in 24 (WHO); some children drop their nap.",
+    "feeding": "Family meals; let your child serve themselves small amounts. Brush teeth twice a day, moving to a pea-sized amount of fluoride toothpaste from age 3.",
+    "play": [
+      "Ask open questions and follow your child's lead in conversation.",
+      "Drawing with chunky crayons.",
+      "Regular time with other children."
+    ],
+    "safety": [
+      "Teach road safety by holding hands and talking about crossing.",
+      "Keep using a car seat suited to your child's height and weight."
+    ],
+    "what_happens_next": "Next comes longer sentences, role play, making friends and more self-control.",
+    "touchpoints": [],
+    "sources": ["cdc-ltsae-2022", "who-2019-under5", "romeo-2018-conversation", "nhs-teeth", "nhs-safety"]
+  },
+  {
+    "id": "three_36_48m",
+    "name": "Three",
+    "from_months": 36,
+    "to_months": 48,
+    "checklist_months": 48,
+    "typical": "Your three-year-old talks in sentences, tells you about their day, pretends to be other people and starts to make friends. They catch a big ball, pour a drink and draw people with a few body parts.",
+    "sleep": "Around 10 to 13 hours in 24, which may include a nap (WHO).",
+    "feeding": "Family food and drinks of water and milk. Keep sweet foods to mealtimes for teeth.",
+    "play": [
+      "At least 3 hours of activity a day, including an hour of energetic play (WHO).",
+      "Role play and dressing up.",
+      "Stories where your child guesses what happens next."
+    ],
+    "safety": [
+      "Teach your child their full name and what to do if they get lost.",
+      "Screen time no more than 1 hour a day (WHO)."
+    ],
+    "what_happens_next": "Next comes rhymes, counting, telling stories and getting ready for school.",
+    "touchpoints": ["Pre-school vaccinations at 3 years 4 months"],
+    "sources": ["cdc-ltsae-2022", "who-2019-under5", "aap-2024-literacy", "nhs-teeth", "nhs-safety", "nhs-vaccinations"]
+  },
+  {
+    "id": "four_48_60m",
+    "name": "Four",
+    "from_months": 48,
+    "to_months": 60,
+    "checklist_months": 60,
+    "typical": "Your four-year-old follows rules in games, holds longer conversations, counts, recognises some letters and numbers, hops and does up buttons, all part of getting ready for school.",
+    "sleep": "Around 10 to 13 hours in 24 (WHO).",
+    "feeding": "Family meals; involve your child in simple food preparation.",
+    "play": [
+      "Board and turn-taking games.",
+      "Making up stories together.",
+      "Energetic play every day (WHO: at least an hour of it)."
+    ],
+    "safety": [
+      "Practise crossing roads together and talk about why.",
+      "Swimming lessons help children be safer around water."
+    ],
+    "what_happens_next": "School starts in the September after your child turns 4 in England, and the school nursing team takes over from the health visitor.",
+    "touchpoints": ["School entry"],
+    "sources": ["cdc-ltsae-2022", "who-2019-under5", "aap-2024-literacy", "nhs-safety", "hcp-england"]
+  }
+]

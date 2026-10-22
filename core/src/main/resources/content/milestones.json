@@ -1,0 +1,3647 @@
+[
+  {
+    "id": "social.calms_when_held",
+    "domain": "social",
+    "title": "Calms down when spoken to or picked up",
+    "description": "Settles, even briefly, when you talk softly, hold them close or pick them up.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "social.smiles_to_get_attention"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Hold your baby skin to skin and talk or sing quietly.",
+      "Respond to crying promptly: you cannot spoil a young baby with comfort."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-behaviour"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.looks_at_face",
+    "domain": "social",
+    "title": "Looks at your face",
+    "description": "Studies faces during feeds and cuddles; faces are the most interesting thing they can see.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "social.looks_moves_sounds_for_attention"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Hold your face about 20–30 cm away, the distance young babies see best, and make slow expressions."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.happy_to_see_you",
+    "domain": "social",
+    "title": "Seems happy to see you when you walk up",
+    "description": "Brightens, quietens or moves arms and legs when a familiar carer comes close.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "social.knows_familiar_people"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Greet your baby by name each time you come to them."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.smiles_back",
+    "domain": "social",
+    "title": "Smiles when you talk to or smile at them",
+    "description": "The first social smiles, in reply to your face and voice, usually appear between 6 and 8 weeks.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "social.smiles_to_get_attention",
+      "social.chuckles"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Smile and wait: give your baby time to smile back, then respond with delight."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.makes_sounds",
+    "domain": "language",
+    "title": "Makes sounds other than crying",
+    "description": "Small gurgles, grunts and early 'ah' sounds, often when content.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "lang.coos"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Copy your baby's sounds back to them, then pause so they can 'answer'."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "nhs-talk"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.reacts_to_loud_sounds",
+    "domain": "language",
+    "title": "Reacts to loud sounds",
+    "description": "Startles, blinks, stops moving or cries at a sudden loud noise.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "lang.turns_to_voice"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Notice how your baby reacts to everyday sounds such as a door closing."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true,
+    "concern_note": "If your baby never reacts to loud sounds, mention it to your health visitor or GP soon; a hearing check can be arranged at any age."
+  },
+  {
+    "id": "cog.watches_you_move",
+    "domain": "cognitive",
+    "title": "Watches you as you move",
+    "description": "Follows a person moving nearby with their eyes, at least for a moment.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "cog.looks_at_hands"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Move slowly from side to side while your baby watches your face."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.looks_at_toy",
+    "domain": "cognitive",
+    "title": "Looks at a toy for several seconds",
+    "description": "Fixes their gaze on a high-contrast toy or picture for a few seconds.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "cog.reaches_for_toy"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Show black-and-white or bold-pattern pictures during wakeful, calm times."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.holds_head_up_tummy",
+    "domain": "movement",
+    "title": "Holds head up when on tummy",
+    "description": "Lifts the head briefly during tummy time.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "move.pushes_up_elbows",
+      "move.holds_head_steady"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Do short spells of tummy time while awake and watched, building up to at least 30 minutes spread across the day.",
+      "Lie your baby on your chest, face to face, as a gentle start."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "hewitt-2020-tummy-time",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.moves_arms_legs",
+    "domain": "movement",
+    "title": "Moves both arms and both legs",
+    "description": "Kicks and waves both arms and both legs, roughly equally on each side.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "move.swings_at_toys"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Give unrestricted floor time on a mat so your baby can kick freely."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true,
+    "concern_note": "If one side of the body moves much less than the other, mention it to your GP or health visitor soon."
+  },
+  {
+    "id": "move.opens_hands",
+    "domain": "movement",
+    "title": "Opens hands briefly",
+    "description": "Hands are often fisted at first but open for short moments.",
+    "emerging_from": 0,
+    "expected_by": 2,
+    "leads_to": [
+      "move.holds_toy"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Stroke the back of your baby's hand gently; it often makes the fingers open."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.smiles_to_get_attention",
+    "domain": "social",
+    "title": "Smiles on their own to get your attention",
+    "description": "Starts a smile themselves to draw you in, not only smiling back.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "social.knows_familiar_people"
+    ],
+    "builds_on": [
+      "social.calms_when_held",
+      "social.smiles_back"
+    ],
+    "activities": [
+      "When your baby smiles at you, respond: talk, smile and copy their expression."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.chuckles",
+    "domain": "social",
+    "title": "Chuckles when you try to make them laugh",
+    "description": "A chuckle or giggle that is not yet a full laugh.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "social.laughs"
+    ],
+    "builds_on": [
+      "social.smiles_back"
+    ],
+    "activities": [
+      "Try gentle surprises: funny faces, raspberries on the tummy, silly sounds."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.looks_moves_sounds_for_attention",
+    "domain": "social",
+    "title": "Looks at you, moves or makes sounds to get or keep your attention",
+    "description": "Uses eye contact, wriggling or noises to keep an interaction going.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "social.likes_mirror",
+      "lang.takes_turns_sounds"
+    ],
+    "builds_on": [
+      "social.looks_at_face"
+    ],
+    "activities": [
+      "Take turns: when your baby makes a sound or moves, answer, then pause and wait for their turn."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.coos",
+    "domain": "language",
+    "title": "Makes cooing sounds like 'oooo' and 'aahh'",
+    "description": "Long vowel sounds, often in reply to your voice.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "lang.takes_turns_sounds",
+      "lang.squeals"
+    ],
+    "builds_on": [
+      "lang.makes_sounds"
+    ],
+    "activities": [
+      "Talk through what you are doing during nappy changes and feeds, leaving gaps for your baby to coo back."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "nhs-talk"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.sounds_back",
+    "domain": "language",
+    "title": "Makes sounds back when you talk",
+    "description": "Answers your talk with sounds of their own: the start of conversation.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "lang.takes_turns_sounds"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Have 'conversations': say something, wait, and reply to whatever sound your baby makes."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.turns_to_voice",
+    "domain": "language",
+    "title": "Turns head towards the sound of your voice",
+    "description": "Looks round when they hear a familiar voice out of sight.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "social.looks_when_name_called"
+    ],
+    "builds_on": [
+      "lang.reacts_to_loud_sounds"
+    ],
+    "activities": [
+      "Call softly from one side, then the other, and smile when your baby finds you."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true,
+    "concern_note": "If your baby does not turn towards voices or sounds, ask your health visitor or GP about a hearing check."
+  },
+  {
+    "id": "cog.opens_mouth_for_feed",
+    "domain": "cognitive",
+    "title": "Opens mouth when they see breast or bottle, if hungry",
+    "description": "Recognises the breast or bottle and gets ready to feed.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "cog.closes_lips_no_more_food"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Watch for early feeding cues such as rooting and hand-to-mouth before crying starts."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-feeding"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.looks_at_hands",
+    "domain": "cognitive",
+    "title": "Looks at their hands with interest",
+    "description": "Discovers their own hands and watches them move.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "cog.reaches_for_toy"
+    ],
+    "builds_on": [
+      "cog.watches_you_move"
+    ],
+    "activities": [
+      "Let your baby play on their back with hands free, and offer a soft wrist rattle."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.holds_head_steady",
+    "domain": "movement",
+    "title": "Holds head steady without support when you hold them",
+    "description": "Head stays steady when held upright, without you supporting it.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "move.leans_on_hands_sitting"
+    ],
+    "builds_on": [
+      "move.holds_head_up_tummy"
+    ],
+    "activities": [
+      "Carry your baby upright facing you or the world for short spells so they practise head control."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "hewitt-2020-tummy-time"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.holds_toy",
+    "domain": "movement",
+    "title": "Holds a toy when you put it in their hand",
+    "description": "Grips a rattle or ring placed in their hand.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "move.transfers_hands"
+    ],
+    "builds_on": [
+      "move.opens_hands"
+    ],
+    "activities": [
+      "Offer light toys that are easy to grip, such as rings and rattles."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.swings_at_toys",
+    "domain": "movement",
+    "title": "Uses an arm to swing at toys",
+    "description": "Bats at toys hanging above or beside them.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "cog.reaches_for_toy"
+    ],
+    "builds_on": [
+      "move.moves_arms_legs"
+    ],
+    "activities": [
+      "Hang a toy within reach on a play gym and let your baby bat at it."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.hands_to_mouth",
+    "domain": "movement",
+    "title": "Brings hands to mouth",
+    "description": "Sucks fingers or fist, a way of exploring and self-soothing.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "cog.mouths_objects"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Let your baby explore their hands; keep nails short."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.pushes_up_elbows",
+    "domain": "movement",
+    "title": "Pushes up onto elbows or forearms when on tummy",
+    "description": "Lifts head and chest on forearms during tummy time.",
+    "emerging_from": 2,
+    "expected_by": 4,
+    "leads_to": [
+      "move.pushes_up_straight_arms",
+      "move.rolls_tummy_to_back"
+    ],
+    "builds_on": [
+      "move.holds_head_up_tummy"
+    ],
+    "activities": [
+      "Put a toy or a mirror in front of your baby during tummy time to encourage looking up."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "hewitt-2020-tummy-time",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.knows_familiar_people",
+    "domain": "social",
+    "title": "Knows familiar people",
+    "description": "Reacts differently to familiar carers than to strangers.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "social.shy_with_strangers",
+      "social.reacts_when_you_leave"
+    ],
+    "builds_on": [
+      "social.happy_to_see_you",
+      "social.smiles_to_get_attention"
+    ],
+    "activities": [
+      "Name the people your baby sees: 'Here's Grandma!'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.likes_mirror",
+    "domain": "social",
+    "title": "Likes to look at themselves in a mirror",
+    "description": "Smiles at, pats or 'talks' to their reflection.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "social.facial_expressions"
+    ],
+    "builds_on": [
+      "social.looks_moves_sounds_for_attention"
+    ],
+    "activities": [
+      "Use an unbreakable baby mirror at tummy time and point out 'There's you!'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.laughs",
+    "domain": "social",
+    "title": "Laughs",
+    "description": "A proper belly laugh.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "social.peekaboo"
+    ],
+    "builds_on": [
+      "social.chuckles"
+    ],
+    "activities": [
+      "Play simple anticipation games such as 'round and round the garden'."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.takes_turns_sounds",
+    "domain": "language",
+    "title": "Takes turns making sounds with you",
+    "description": "Makes a sound, waits for yours, then answers: early back-and-forth.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "lang.babbles",
+      "lang.waves_bye"
+    ],
+    "builds_on": [
+      "social.looks_moves_sounds_for_attention",
+      "lang.coos",
+      "lang.sounds_back"
+    ],
+    "activities": [
+      "Copy your baby's sounds and wait; the pause matters as much as the talking."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "nhs-talk"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.raspberries",
+    "domain": "language",
+    "title": "Blows raspberries",
+    "description": "Sticks the tongue out and blows.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "lang.babbles"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Blow raspberries back; playful mouth sounds build the muscles used for speech."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.squeals",
+    "domain": "language",
+    "title": "Makes squealing noises",
+    "description": "High-pitched squeals, often when excited.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "lang.babbles"
+    ],
+    "builds_on": [
+      "lang.coos"
+    ],
+    "activities": [
+      "Join in with the excitement and name the feeling: 'You're so happy!'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.mouths_objects",
+    "domain": "cognitive",
+    "title": "Puts things in their mouth to explore them",
+    "description": "Uses the mouth to learn about shape and texture.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "cog.bangs_things"
+    ],
+    "builds_on": [
+      "move.hands_to_mouth"
+    ],
+    "activities": [
+      "Offer safe, clean toys of different textures."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Keep small objects, coins, magnets and button batteries out of reach: anything that fits through a toilet-roll tube is a choking risk."
+  },
+  {
+    "id": "cog.reaches_for_toy",
+    "domain": "cognitive",
+    "title": "Reaches to grab a toy they want",
+    "description": "Stretches out to take a toy within reach.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "move.transfers_hands",
+      "cog.looks_for_dropped"
+    ],
+    "builds_on": [
+      "cog.looks_at_toy",
+      "cog.looks_at_hands",
+      "move.swings_at_toys"
+    ],
+    "activities": [
+      "Place toys just within reach during floor play so your baby has a reason to stretch."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Keep hot drinks well out of reach now your baby grabs at things."
+  },
+  {
+    "id": "cog.closes_lips_no_more_food",
+    "domain": "cognitive",
+    "title": "Closes lips to show they don't want more food",
+    "description": "Turns away or keeps lips shut when they have had enough.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "move.rakes_food"
+    ],
+    "builds_on": [
+      "cog.opens_mouth_for_feed"
+    ],
+    "activities": [
+      "Follow your baby's signals of fullness rather than encouraging a few more spoonfuls."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-weaning",
+      "sacn-2018-first-year"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.rolls_tummy_to_back",
+    "domain": "movement",
+    "title": "Rolls from tummy to back",
+    "description": "Rolls over from front to back on their own.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "move.gets_to_sitting"
+    ],
+    "builds_on": [
+      "move.pushes_up_elbows"
+    ],
+    "activities": [
+      "Give plenty of floor time; encourage rolling by placing a toy just out of reach to the side."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "hewitt-2020-tummy-time",
+      "who-2019-under5",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Never leave your baby on a bed, sofa or changing table: rolling can start without warning. Still put them to sleep on their back; once they roll over themselves, you don't need to turn them back."
+  },
+  {
+    "id": "move.pushes_up_straight_arms",
+    "domain": "movement",
+    "title": "Pushes up with straight arms when on tummy",
+    "description": "Lifts the chest right off the floor on straight arms.",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "move.crawls"
+    ],
+    "builds_on": [
+      "move.pushes_up_elbows"
+    ],
+    "activities": [
+      "Keep up daily tummy time with toys to look at and reach for."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "hewitt-2020-tummy-time"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.leans_on_hands_sitting",
+    "domain": "movement",
+    "title": "Leans on hands to support themselves when sitting",
+    "description": "Sits propped forward on their hands (tripod sitting).",
+    "emerging_from": 4,
+    "expected_by": 6,
+    "leads_to": [
+      "move.sits_without_support"
+    ],
+    "builds_on": [
+      "move.holds_head_steady"
+    ],
+    "activities": [
+      "Sit your baby on the floor between your legs or with cushions around for support."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.shy_with_strangers",
+    "domain": "social",
+    "title": "Is shy, clingy or fearful around strangers",
+    "description": "Wary of unfamiliar people, a sign of a strong bond with you.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "social.shows_object_likes"
+    ],
+    "builds_on": [
+      "social.knows_familiar_people"
+    ],
+    "activities": [
+      "Let your baby watch a new person from your lap before being handed over."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-behaviour"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.facial_expressions",
+    "domain": "social",
+    "title": "Shows several facial expressions, like happy, sad, angry and surprised",
+    "description": "Expresses a range of feelings on their face.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "social.claps_when_excited"
+    ],
+    "builds_on": [
+      "social.likes_mirror"
+    ],
+    "activities": [
+      "Name feelings as they happen: 'You're cross because the ball rolled away.'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.looks_when_name_called",
+    "domain": "social",
+    "title": "Looks when you call their name",
+    "description": "Turns or looks up when they hear their name.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "lang.looks_at_named_object"
+    ],
+    "builds_on": [
+      "lang.turns_to_voice"
+    ],
+    "activities": [
+      "Use your baby's name often, then reward the look with a smile."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true,
+    "concern_note": "If your baby rarely responds to their name, mention it at your next health visitor contact; a hearing check is often the first step."
+  },
+  {
+    "id": "social.reacts_when_you_leave",
+    "domain": "social",
+    "title": "Reacts when you leave (looks, reaches for you or cries)",
+    "description": "Notices and protests when a main carer goes, a normal stage of attachment.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "social.moves_away_checks_back"
+    ],
+    "builds_on": [
+      "social.knows_familiar_people"
+    ],
+    "activities": [
+      "Say goodbye briefly and cheerfully rather than slipping away; come back when you said you would."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-behaviour"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.peekaboo",
+    "domain": "social",
+    "title": "Smiles or laughs when you play peekaboo",
+    "description": "Enjoys hiding games and anticipates you reappearing.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "social.plays_pat_a_cake"
+    ],
+    "builds_on": [
+      "social.laughs"
+    ],
+    "activities": [
+      "Play peekaboo with your hands, a muslin or from behind furniture."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.babbles",
+    "domain": "language",
+    "title": "Makes lots of different sounds like 'mamamama' and 'babababa'",
+    "description": "Repeated consonant–vowel babble.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "lang.calls_parent_name",
+      "lang.tries_words"
+    ],
+    "builds_on": [
+      "lang.takes_turns_sounds",
+      "lang.raspberries",
+      "lang.squeals"
+    ],
+    "activities": [
+      "Babble back and add real words: 'ba-ba… ball!'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "nhs-talk"
+    ],
+    "concern_tracking": true,
+    "concern_note": "If your baby is not babbling by around 10 months, talk to your health visitor; they may suggest a hearing check."
+  },
+  {
+    "id": "lang.arms_up_to_be_picked_up",
+    "domain": "language",
+    "title": "Lifts arms up to be picked up",
+    "description": "Uses a gesture to ask for something: early communication without words.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "lang.points_to_ask",
+      "lang.waves_bye"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Respond to gestures and put words to them: 'Up? You want up!'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.looks_for_dropped",
+    "domain": "cognitive",
+    "title": "Looks for objects when dropped out of sight",
+    "description": "Watches where a spoon or toy falls, understanding that things still exist when out of view.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "cog.looks_for_hidden"
+    ],
+    "builds_on": [
+      "cog.reaches_for_toy"
+    ],
+    "activities": [
+      "Play dropping games from the high chair and look together: 'Where did it go?'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.bangs_things",
+    "domain": "cognitive",
+    "title": "Bangs two things together",
+    "description": "Bangs blocks or a spoon on a pan to make a noise.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "cog.puts_in_container"
+    ],
+    "builds_on": [
+      "cog.mouths_objects"
+    ],
+    "activities": [
+      "Give pots, wooden spoons and blocks for banging and copy the rhythm."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.gets_to_sitting",
+    "domain": "movement",
+    "title": "Gets to a sitting position by themselves",
+    "description": "Moves from lying to sitting without help.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "move.pulls_to_stand"
+    ],
+    "builds_on": [
+      "move.rolls_tummy_to_back",
+      "move.sits_without_support"
+    ],
+    "activities": [
+      "Give lots of time on the floor rather than in seats and walkers."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.transfers_hands",
+    "domain": "movement",
+    "title": "Moves things from one hand to the other",
+    "description": "Passes a toy between hands.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "move.pincer_grasp"
+    ],
+    "builds_on": [
+      "move.holds_toy",
+      "cog.reaches_for_toy"
+    ],
+    "activities": [
+      "Offer a toy to the hand that's already holding one and see what your baby does."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.rakes_food",
+    "domain": "movement",
+    "title": "Uses fingers to 'rake' food towards themselves",
+    "description": "Pulls small foods closer with a raking sweep of the fingers.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "move.pincer_grasp",
+      "move.finger_feeds_some"
+    ],
+    "builds_on": [
+      "cog.closes_lips_no_more_food"
+    ],
+    "activities": [
+      "Offer soft finger foods once weaning is under way, always with your baby sitting up and watched."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-weaning",
+      "sacn-2018-first-year",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Cut small round foods such as grapes and cherry tomatoes lengthways into quarters, and always stay with your baby while they eat."
+  },
+  {
+    "id": "move.sits_without_support",
+    "domain": "movement",
+    "title": "Sits without support",
+    "description": "Sits steadily on the floor without hands or cushions.",
+    "emerging_from": 6,
+    "expected_by": 9,
+    "leads_to": [
+      "move.gets_to_sitting"
+    ],
+    "builds_on": [
+      "move.leans_on_hands_sitting"
+    ],
+    "activities": [
+      "Sit your baby on the floor with toys around them to reach and turn for."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5",
+      "who-mgrs-motor-2006"
+    ],
+    "concern_tracking": true,
+    "typical_window": {
+      "from_months": 3.8,
+      "to_months": 9.2,
+      "reference": "who-mgrs-motor-2006",
+      "label": "Healthy children in the WHO study sat alone at anywhere from 3.8 to 9.2 months."
+    }
+  },
+  {
+    "id": "move.crawls",
+    "domain": "movement",
+    "title": "Crawls on hands and knees",
+    "description": "Moves forward on hands and knees. Some babies bottom-shuffle, roll or go straight to walking instead, and that is fine.",
+    "emerging_from": 5,
+    "expected_by": 13,
+    "leads_to": [],
+    "builds_on": [
+      "move.pushes_up_straight_arms"
+    ],
+    "activities": [
+      "Give plenty of safe floor space and put favourite toys a little way off."
+    ],
+    "sources": [
+      "who-mgrs-motor-2006",
+      "who-2019-under5",
+      "nhs-safety"
+    ],
+    "concern_tracking": false,
+    "safety_note": "Fit stair gates and cover sockets or move trailing cables before your baby is on the move.",
+    "typical_window": {
+      "from_months": 5.2,
+      "to_months": 13.5,
+      "reference": "who-mgrs-motor-2006",
+      "label": "Babies who crawl usually start between 5.2 and 13.5 months; about 4 in 100 never crawl."
+    }
+  },
+  {
+    "id": "social.plays_pat_a_cake",
+    "domain": "social",
+    "title": "Plays games with you, like pat-a-cake",
+    "description": "Joins in simple turn-taking games and songs with actions.",
+    "emerging_from": 9,
+    "expected_by": 12,
+    "leads_to": [
+      "social.copies_children",
+      "social.shows_object_likes"
+    ],
+    "builds_on": [
+      "social.peekaboo"
+    ],
+    "activities": [
+      "Sing action rhymes such as 'pat-a-cake' and 'row, row, row your boat'."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-play"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.waves_bye",
+    "domain": "language",
+    "title": "Waves 'bye-bye'",
+    "description": "Waves, often when prompted, to say goodbye.",
+    "emerging_from": 9,
+    "expected_by": 12,
+    "leads_to": [
+      "lang.uses_more_gestures"
+    ],
+    "builds_on": [
+      "lang.takes_turns_sounds",
+      "lang.arms_up_to_be_picked_up"
+    ],
+    "activities": [
+      "Wave and say 'bye-bye' every time someone leaves."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.calls_parent_name",
+    "domain": "language",
+    "title": "Calls a parent 'mama' or 'dada' or another special name",
+    "description": "Uses a name for a parent on purpose.",
+    "emerging_from": 9,
+    "expected_by": 12,
+    "leads_to": [
+      "lang.tries_words"
+    ],
+    "builds_on": [
+      "lang.babbles"
+    ],
+    "activities": [
+      "Refer to yourselves by the names you'd like your baby to use."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "nhs-talk"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.understands_no",
+    "domain": "language",
+    "title": "Understands 'no' (pauses or stops when you say it)",
+    "description": "Briefly stops or looks at you when you say 'no'.",
+    "emerging_from": 9,
+    "expected_by": 12,
+    "leads_to": [
+      "lang.follows_one_step"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Keep 'no' for things that matter, and say what to do instead: 'Gentle hands.'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-behaviour"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.puts_in_container",
+    "domain": "cognitive",
+    "title": "Puts something in a container, like a block in a cup",
+    "description": "Drops objects into a box or cup on purpose.",
+    "emerging_from": 9,
+    "expected_by": 12,
+    "leads_to": [
+      "cog.stacks_two"
+    ],
+    "builds_on": [
+      "cog.bangs_things"
+    ],
+    "activities": [
+      "Play 'in and out' with a tub and some blocks."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.looks_for_hidden",
+    "domain": "cognitive",
+    "title": "Looks for things they see you hide, like a toy under a blanket",
+    "description": "Finds a toy hidden while they watch.",
+    "emerging_from": 9,
+    "expected_by": 12,
+    "leads_to": [
+      "cog.uses_things_right_way"
+    ],
+    "builds_on": [
+      "cog.looks_for_dropped"
+    ],
+    "activities": [
+      "Hide a toy under a cloth while your baby watches, then ask 'Where is it?'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.pulls_to_stand",
+    "domain": "movement",
+    "title": "Pulls up to stand",
+    "description": "Uses furniture or your hands to pull up to standing.",
+    "emerging_from": 9,
+    "expected_by": 12,
+    "leads_to": [
+      "move.cruises"
+    ],
+    "builds_on": [
+      "move.gets_to_sitting"
+    ],
+    "activities": [
+      "Let your baby practise barefoot on a non-slip floor."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-safety",
+      "who-mgrs-motor-2006"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Lower the cot base, and fix heavy furniture such as bookcases and TVs to the wall.",
+    "typical_window": {
+      "from_months": 4.8,
+      "to_months": 11.4,
+      "reference": "who-mgrs-motor-2006",
+      "label": "In the WHO study, standing with support began anywhere from 4.8 to 11.4 months."
+    }
+  },
+  {
+    "id": "move.cruises",
+    "domain": "movement",
+    "title": "Walks, holding on to furniture",
+    "description": "Steps sideways along the sofa or furniture ('cruising').",
+    "emerging_from": 9,
+    "expected_by": 12,
+    "leads_to": [
+      "move.first_steps"
+    ],
+    "builds_on": [
+      "move.pulls_to_stand"
+    ],
+    "activities": [
+      "Arrange sturdy furniture so your baby can cruise from one piece to the next."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-mgrs-motor-2006"
+    ],
+    "concern_tracking": true,
+    "typical_window": {
+      "from_months": 5.9,
+      "to_months": 13.7,
+      "reference": "who-mgrs-motor-2006",
+      "label": "In the WHO study, walking with support began anywhere from 5.9 to 13.7 months."
+    }
+  },
+  {
+    "id": "move.drinks_from_open_cup_held",
+    "domain": "movement",
+    "title": "Drinks from a cup without a lid, as you hold it",
+    "description": "Sips from an open cup you hold.",
+    "emerging_from": 9,
+    "expected_by": 12,
+    "leads_to": [
+      "move.drinks_open_cup"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Offer water in an open or free-flow cup with meals from around 6 months."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-weaning",
+      "nhs-teeth"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.pincer_grasp",
+    "domain": "movement",
+    "title": "Picks things up between thumb and pointer finger",
+    "description": "Uses a pincer grip for small bits of food.",
+    "emerging_from": 9,
+    "expected_by": 12,
+    "leads_to": [
+      "move.finger_feeds_some",
+      "move.scribbles"
+    ],
+    "builds_on": [
+      "move.transfers_hands",
+      "move.rakes_food"
+    ],
+    "activities": [
+      "Offer small, soft pieces of food to practise picking up."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-weaning",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Small objects now go straight to the mouth: keep button batteries, magnets and loose change out of reach."
+  },
+  {
+    "id": "social.copies_children",
+    "domain": "social",
+    "title": "Copies other children while playing",
+    "description": "Watches other children and copies what they do, like taking toys out of a box.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "social.plays_next_to_children"
+    ],
+    "builds_on": [
+      "social.plays_pat_a_cake"
+    ],
+    "activities": [
+      "Go to baby groups, the park or the library so your child can watch other children."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.shows_object_likes",
+    "domain": "social",
+    "title": "Shows you an object they like",
+    "description": "Holds up or brings a toy to share their interest with you.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "social.points_to_show"
+    ],
+    "builds_on": [
+      "social.shy_with_strangers",
+      "social.plays_pat_a_cake"
+    ],
+    "activities": [
+      "Respond with interest and name what they show you."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true,
+    "concern_note": "Sharing interest by showing and pointing is an important social skill; if you don't see it by 15 to 18 months, mention it to your health visitor."
+  },
+  {
+    "id": "social.claps_when_excited",
+    "domain": "social",
+    "title": "Claps when excited",
+    "description": "Claps hands to show excitement.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "social.notices_others_upset"
+    ],
+    "builds_on": [
+      "social.facial_expressions"
+    ],
+    "activities": [
+      "Clap and cheer together when something fun happens."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.hugs_toy",
+    "domain": "social",
+    "title": "Hugs a soft toy or doll",
+    "description": "Shows affection to a soft toy.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "cog.pretend_play"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Include soft toys in your routines: 'Teddy's going to sleep too.'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.shows_affection",
+    "domain": "social",
+    "title": "Shows you affection (hugs, cuddles or kisses you)",
+    "description": "Starts hugs, cuddles or kisses.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "social.notices_others_upset"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Return affection warmly and name it: 'What a lovely cuddle.'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.tries_words",
+    "domain": "language",
+    "title": "Tries to say one or two words besides 'mama' or 'dada'",
+    "description": "Uses a word or word-like sound, such as 'ba' for ball or 'da' for dog.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "lang.says_three_words"
+    ],
+    "builds_on": [
+      "lang.babbles",
+      "lang.calls_parent_name"
+    ],
+    "activities": [
+      "Repeat their word back correctly and add to it: 'Ball! A red ball.'",
+      "Read together every day; point at pictures and name them."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "aap-2024-literacy",
+      "nhs-talk"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.looks_at_named_object",
+    "domain": "language",
+    "title": "Looks at a familiar object when you name it",
+    "description": "Looks towards the cup, dog or ball when you say its name.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "lang.points_in_book"
+    ],
+    "builds_on": [
+      "social.looks_when_name_called"
+    ],
+    "activities": [
+      "Name things your child is already looking at."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.follows_gesture_words",
+    "domain": "language",
+    "title": "Follows directions given with both a gesture and words",
+    "description": "Gives you a toy when you hold out your hand and say 'Give me the toy'.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "lang.follows_one_step"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Pair simple requests with a gesture, then praise the response."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.points_to_ask",
+    "domain": "language",
+    "title": "Points to ask for something or to get help",
+    "description": "Points at something they want or need help with.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "social.points_to_show",
+      "lang.uses_more_gestures"
+    ],
+    "builds_on": [
+      "lang.arms_up_to_be_picked_up"
+    ],
+    "activities": [
+      "When your child points, name what they're pointing at before you hand it over."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true,
+    "concern_note": "If your child is not pointing by 15 to 18 months, mention it at your next health visitor contact."
+  },
+  {
+    "id": "cog.uses_things_right_way",
+    "domain": "cognitive",
+    "title": "Tries to use things the right way, like a phone, cup or book",
+    "description": "Holds a toy phone to the ear or 'drinks' from a cup.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "cog.copies_chores"
+    ],
+    "builds_on": [
+      "cog.looks_for_hidden"
+    ],
+    "activities": [
+      "Give everyday objects to explore and show how they are used."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.stacks_two",
+    "domain": "cognitive",
+    "title": "Stacks at least two small objects, like blocks",
+    "description": "Places one block on top of another.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "cog.uses_two_hands"
+    ],
+    "builds_on": [
+      "cog.puts_in_container"
+    ],
+    "activities": [
+      "Build towers together and enjoy knocking them down."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.first_steps",
+    "domain": "movement",
+    "title": "Takes a few steps on their own",
+    "description": "Walks a few steps without holding on.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "move.walks_alone"
+    ],
+    "builds_on": [
+      "move.cruises"
+    ],
+    "activities": [
+      "Let your child walk barefoot indoors; hold their hands lightly rather than lifting them."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5",
+      "who-mgrs-motor-2006"
+    ],
+    "concern_tracking": true,
+    "typical_window": {
+      "from_months": 8.2,
+      "to_months": 17.6,
+      "reference": "who-mgrs-motor-2006",
+      "label": "In the WHO study, walking alone began anywhere from 8.2 to 17.6 months."
+    }
+  },
+  {
+    "id": "move.finger_feeds_some",
+    "domain": "movement",
+    "title": "Uses fingers to feed themselves some food",
+    "description": "Picks up food and gets it to their mouth.",
+    "emerging_from": 12,
+    "expected_by": 15,
+    "leads_to": [
+      "move.feeds_self_fingers"
+    ],
+    "builds_on": [
+      "move.rakes_food",
+      "move.pincer_grasp"
+    ],
+    "activities": [
+      "Offer finger foods at every meal and let your child feed themselves alongside spoon-feeding."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-weaning"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.moves_away_checks_back",
+    "domain": "social",
+    "title": "Moves away from you, but looks to make sure you are close by",
+    "description": "Explores, then checks back with you: using you as a safe base.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "social.calms_after_drop_off"
+    ],
+    "builds_on": [
+      "social.reacts_when_you_leave"
+    ],
+    "activities": [
+      "Stay nearby and available at the playground so your child can explore and return."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-behaviour"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.points_to_show",
+    "domain": "social",
+    "title": "Points to show you something interesting",
+    "description": "Points to share an interest, such as a plane in the sky, not just to ask for something.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "lang.points_in_book",
+      "social.looks_at_your_face_new"
+    ],
+    "builds_on": [
+      "social.shows_object_likes",
+      "lang.points_to_ask"
+    ],
+    "activities": [
+      "Look where your child points and talk about it: 'Yes, a big plane!'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true,
+    "concern_note": "Pointing to share interest is an important social skill; if you have not seen it by 18 months, talk to your health visitor or GP."
+  },
+  {
+    "id": "social.hands_out_to_wash",
+    "domain": "social",
+    "title": "Puts hands out for you to wash them",
+    "description": "Cooperates with simple care routines.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "social.follows_routines"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Talk through each step of routines such as washing hands."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.looks_at_book",
+    "domain": "social",
+    "title": "Looks at a few pages in a book with you",
+    "description": "Sits with you and looks at a book for a few pages.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "lang.points_in_book"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Share books every day; let your child turn the pages and choose the book."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.helps_dress",
+    "domain": "social",
+    "title": "Helps you dress them by pushing an arm through a sleeve or lifting a foot",
+    "description": "Joins in with getting dressed.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "move.takes_off_clothes"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Give your child time to help with dressing, even when it's slower."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.says_three_words",
+    "domain": "language",
+    "title": "Tries to say three or more words besides 'mama' or 'dada'",
+    "description": "Uses at least three words, even if not said clearly.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "lang.two_words_together"
+    ],
+    "builds_on": [
+      "lang.tries_words"
+    ],
+    "activities": [
+      "Talk about what your child is doing and wait for them to join in.",
+      "Use 'serve and return': respond to every attempt to communicate."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "aap-2024-literacy",
+      "nhs-talk"
+    ],
+    "concern_tracking": true,
+    "concern_note": "If your child is not using any words by 18 months, talk to your health visitor; they can suggest support and a hearing check."
+  },
+  {
+    "id": "lang.follows_one_step",
+    "domain": "language",
+    "title": "Follows one-step directions without gestures",
+    "description": "Gives you the toy when you say 'Give it to me' without holding out your hand.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "cog.two_step_instructions"
+    ],
+    "builds_on": [
+      "lang.understands_no",
+      "lang.follows_gesture_words"
+    ],
+    "activities": [
+      "Give simple, clear requests one at a time."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.copies_chores",
+    "domain": "cognitive",
+    "title": "Copies you doing chores, like sweeping with a broom",
+    "description": "Imitates everyday jobs around the home.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "cog.pretend_play"
+    ],
+    "builds_on": [
+      "cog.uses_things_right_way"
+    ],
+    "activities": [
+      "Let your child 'help' with simple jobs such as wiping the table."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.simple_play",
+    "domain": "cognitive",
+    "title": "Plays with toys in a simple way, like pushing a toy car",
+    "description": "Uses toys for their purpose.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "cog.plays_with_two_toys"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Offer push-along toys, cars and simple puzzles."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.walks_alone",
+    "domain": "movement",
+    "title": "Walks without holding on to anyone or anything",
+    "description": "Walks independently across a room.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "move.runs",
+      "move.walks_up_stairs"
+    ],
+    "builds_on": [
+      "move.first_steps"
+    ],
+    "activities": [
+      "Take short walks outside together; WHO advises at least 3 hours a day of varied physical activity from age 1."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5",
+      "nhs-safety",
+      "who-mgrs-motor-2006"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Use stair gates at the top and bottom of stairs, and keep doors to roads and ponds closed.",
+    "typical_window": {
+      "from_months": 8.2,
+      "to_months": 17.6,
+      "reference": "who-mgrs-motor-2006",
+      "label": "In the WHO study, walking alone began anywhere from 8.2 to 17.6 months."
+    },
+    "concern_note": "If your child is not walking by 18 months, talk to your health visitor or GP."
+  },
+  {
+    "id": "move.scribbles",
+    "domain": "movement",
+    "title": "Scribbles",
+    "description": "Makes marks on paper with a crayon.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "cog.draws_circle"
+    ],
+    "builds_on": [
+      "move.pincer_grasp"
+    ],
+    "activities": [
+      "Offer chunky crayons and large paper, and draw alongside your child."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.drinks_open_cup",
+    "domain": "movement",
+    "title": "Drinks from a cup without a lid and may spill sometimes",
+    "description": "Holds and drinks from an open cup, with some spills.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "move.serves_self_food"
+    ],
+    "builds_on": [
+      "move.drinks_from_open_cup_held"
+    ],
+    "activities": [
+      "Use an open cup at meals; NHS advice is to move off bottles from around 1 year."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-teeth",
+      "nhs-weaning"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.feeds_self_fingers",
+    "domain": "movement",
+    "title": "Feeds themselves with their fingers",
+    "description": "Manages most finger foods alone.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "move.eats_with_spoon"
+    ],
+    "builds_on": [
+      "move.finger_feeds_some"
+    ],
+    "activities": [
+      "Eat together as a family so your child can copy you."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-weaning"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.tries_spoon",
+    "domain": "movement",
+    "title": "Tries to use a spoon",
+    "description": "Attempts to feed themselves with a spoon.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "move.eats_with_spoon"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Give your child their own spoon at meals, and accept the mess."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.climbs_furniture",
+    "domain": "movement",
+    "title": "Climbs on and off a sofa or chair without help",
+    "description": "Climbs up and gets down safely.",
+    "emerging_from": 15,
+    "expected_by": 18,
+    "leads_to": [
+      "move.jumps"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Give safe climbing chances at the playground or on floor cushions."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Climbing brings windows and shelves into reach: fit window restrictors and move furniture away from windows."
+  },
+  {
+    "id": "social.notices_others_upset",
+    "domain": "social",
+    "title": "Notices when others are hurt or upset",
+    "description": "Pauses or looks sad when someone is crying.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "social.comforts_others"
+    ],
+    "builds_on": [
+      "social.claps_when_excited",
+      "social.shows_affection"
+    ],
+    "activities": [
+      "Talk about how others might feel: 'She's sad because she fell over.'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-behaviour"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.looks_at_your_face_new",
+    "domain": "social",
+    "title": "Looks at your face to see how to react in a new situation",
+    "description": "Checks your expression before deciding how to feel.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "social.joins_other_children"
+    ],
+    "builds_on": [
+      "social.points_to_show"
+    ],
+    "activities": [
+      "Stay calm and encouraging when your child meets something new."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.points_in_book",
+    "domain": "language",
+    "title": "Points to things in a book when you ask, like 'Where is the bear?'",
+    "description": "Finds named pictures in a book.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "lang.names_things_in_book"
+    ],
+    "builds_on": [
+      "lang.looks_at_named_object",
+      "social.points_to_show",
+      "social.looks_at_book"
+    ],
+    "activities": [
+      "Ask 'Where's the…?' questions as you read together."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.two_words_together",
+    "domain": "language",
+    "title": "Says at least two words together, like 'More milk'",
+    "description": "Puts two words together.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "lang.action_word_phrase"
+    ],
+    "builds_on": [
+      "lang.says_three_words"
+    ],
+    "activities": [
+      "Expand what your child says: if they say 'milk', you say 'more milk'."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "nhs-talk"
+    ],
+    "concern_tracking": true,
+    "concern_note": "If your child is not putting two words together by around 2 years, talk to your health visitor; it is often covered at the 2 to 2.5 year review."
+  },
+  {
+    "id": "lang.points_body_parts",
+    "domain": "language",
+    "title": "Points to at least two body parts when you ask",
+    "description": "Shows you their nose, tummy or toes when asked.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "lang.names_things_in_book"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Sing 'heads, shoulders, knees and toes' and play naming games at bath time."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.uses_more_gestures",
+    "domain": "language",
+    "title": "Uses more gestures than just waving and pointing, like blowing a kiss or nodding",
+    "description": "Uses a range of gestures to communicate.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "lang.conversation_two_exchanges"
+    ],
+    "builds_on": [
+      "lang.waves_bye",
+      "lang.points_to_ask"
+    ],
+    "activities": [
+      "Use gestures yourself, such as nodding, shrugging and thumbs up, as you talk."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.uses_two_hands",
+    "domain": "cognitive",
+    "title": "Holds something in one hand while using the other",
+    "description": "Holds a container and takes the lid off.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "move.twists_things"
+    ],
+    "builds_on": [
+      "cog.stacks_two"
+    ],
+    "activities": [
+      "Give containers with easy lids to open and shut."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.switches_buttons",
+    "domain": "cognitive",
+    "title": "Tries to use switches, knobs or buttons on a toy",
+    "description": "Experiments with how things work.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "cog.problem_solving"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Offer toys with buttons and flaps, and let your child figure them out."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.plays_with_two_toys",
+    "domain": "cognitive",
+    "title": "Plays with more than one toy at the same time",
+    "description": "Combines toys, like putting toy food on a toy plate.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "cog.pretend_play"
+    ],
+    "builds_on": [
+      "cog.simple_play"
+    ],
+    "activities": [
+      "Set up simple play scenes: a tea set, teddies and blocks."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.kicks_ball",
+    "domain": "movement",
+    "title": "Kicks a ball",
+    "description": "Kicks a large ball forward.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "move.catches_ball"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Play gentle kick-about in the garden or park."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.runs",
+    "domain": "movement",
+    "title": "Runs",
+    "description": "Runs, even if a little unsteadily.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "move.jumps"
+    ],
+    "builds_on": [
+      "move.walks_alone"
+    ],
+    "activities": [
+      "Give daily time to run around outside."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.walks_up_stairs",
+    "domain": "movement",
+    "title": "Walks (not climbs) up a few stairs, with or without help",
+    "description": "Walks up steps, perhaps holding a rail or your hand.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "move.hops"
+    ],
+    "builds_on": [
+      "move.walks_alone"
+    ],
+    "activities": [
+      "Practise on a few steps together, holding hands."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Keep stair gates in place until your child can manage stairs reliably."
+  },
+  {
+    "id": "move.eats_with_spoon",
+    "domain": "movement",
+    "title": "Eats with a spoon",
+    "description": "Feeds themselves with a spoon, with some spills.",
+    "emerging_from": 18,
+    "expected_by": 24,
+    "leads_to": [
+      "move.uses_fork"
+    ],
+    "builds_on": [
+      "move.feeds_self_fingers",
+      "move.tries_spoon"
+    ],
+    "activities": [
+      "Offer thicker foods such as yoghurt and porridge to practise spooning."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.plays_next_to_children",
+    "domain": "social",
+    "title": "Plays next to other children and sometimes plays with them",
+    "description": "Plays alongside others and begins to join in.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "social.joins_other_children"
+    ],
+    "builds_on": [
+      "social.copies_children"
+    ],
+    "activities": [
+      "Arrange time with other children; don't expect sharing yet."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.look_at_me",
+    "domain": "social",
+    "title": "Shows you what they can do by saying 'Look at me!'",
+    "description": "Wants you to see what they can do.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "social.likes_to_help"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Notice and praise effort: 'You climbed all the way up!'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.follows_routines",
+    "domain": "social",
+    "title": "Follows simple routines when told, like tidying up when you say 'It's tidy-up time'",
+    "description": "Joins in with simple routines on request.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "social.does_chores"
+    ],
+    "builds_on": [
+      "social.hands_out_to_wash"
+    ],
+    "activities": [
+      "Use the same words and order for daily routines, such as a tidy-up song."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-behaviour"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.says_50_words",
+    "domain": "language",
+    "title": "Says about 50 words",
+    "description": "Has a vocabulary of around 50 words.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "lang.four_word_sentences"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Read together daily and talk about the pictures.",
+      "Limit screen time: WHO advises none before 2 and no more than an hour a day at 2 to 4 years."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "aap-2024-literacy",
+      "who-2019-under5",
+      "nhs-talk"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.action_word_phrase",
+    "domain": "language",
+    "title": "Says two or more words together, with one action word, like 'Doggie run'",
+    "description": "Combines a word with an action word.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "lang.says_action_in_picture"
+    ],
+    "builds_on": [
+      "lang.two_words_together"
+    ],
+    "activities": [
+      "Talk about what's happening as it happens: 'The dog is running!'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.names_things_in_book",
+    "domain": "language",
+    "title": "Names things in a book when you point and ask 'What is this?'",
+    "description": "Names pictures in a book.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "lang.says_action_in_picture"
+    ],
+    "builds_on": [
+      "lang.points_in_book",
+      "lang.points_body_parts"
+    ],
+    "activities": [
+      "Pause on a page and let your child name what they see."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.uses_i_me_we",
+    "domain": "language",
+    "title": "Says words like 'I', 'me' or 'we'",
+    "description": "Uses pronouns to talk about themselves.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "lang.says_first_name"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Model them naturally in your own speech."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.pretend_play",
+    "domain": "cognitive",
+    "title": "Uses things to pretend, like feeding a block to a doll as if it were food",
+    "description": "Pretend play with objects standing in for others.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "social.pretends_to_be"
+    ],
+    "builds_on": [
+      "social.hugs_toy",
+      "cog.copies_chores",
+      "cog.plays_with_two_toys"
+    ],
+    "activities": [
+      "Join in pretend play and follow your child's lead."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-play"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.problem_solving",
+    "domain": "cognitive",
+    "title": "Shows simple problem-solving, like standing on a small stool to reach something",
+    "description": "Works out a simple way to reach a goal.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "cog.tells_what_comes_next"
+    ],
+    "builds_on": [
+      "cog.switches_buttons"
+    ],
+    "activities": [
+      "Give your child a few moments to solve small problems before you step in."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Climbing to reach things means medicines, cleaning products and laundry pods must be locked away up high."
+  },
+  {
+    "id": "cog.two_step_instructions",
+    "domain": "cognitive",
+    "title": "Follows two-step instructions like 'Put the toy down and close the door'",
+    "description": "Remembers and carries out two steps.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "lang.answers_what_for"
+    ],
+    "builds_on": [
+      "lang.follows_one_step"
+    ],
+    "activities": [
+      "Give two-step requests in play: 'Get your shoes and bring them here.'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.knows_a_colour",
+    "domain": "cognitive",
+    "title": "Shows they know at least one colour",
+    "description": "Points to a red crayon when asked 'Which one is red?'",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "cog.names_colours"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Name colours in everyday talk: 'Your red cup.'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.twists_things",
+    "domain": "movement",
+    "title": "Uses hands to twist things, like turning door handles or unscrewing lids",
+    "description": "Twists lids and handles.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "move.strings_beads"
+    ],
+    "builds_on": [
+      "cog.uses_two_hands"
+    ],
+    "activities": [
+      "Give jars with easy lids and screw toys to practise."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Child-resistant caps slow children down but don't stop them: store medicines locked away."
+  },
+  {
+    "id": "move.takes_off_clothes",
+    "domain": "movement",
+    "title": "Takes some clothes off by themselves, like loose trousers or an open jacket",
+    "description": "Removes simple clothing.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "move.puts_on_clothes"
+    ],
+    "builds_on": [
+      "social.helps_dress"
+    ],
+    "activities": [
+      "Let your child take off coat and shoes when you get home."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.jumps",
+    "domain": "movement",
+    "title": "Jumps off the ground with both feet",
+    "description": "Jumps with both feet leaving the ground.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "move.hops"
+    ],
+    "builds_on": [
+      "move.climbs_furniture",
+      "move.runs"
+    ],
+    "activities": [
+      "Jump together: over a line on the ground or into puddles."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.turns_pages",
+    "domain": "movement",
+    "title": "Turns book pages, one at a time, when you read",
+    "description": "Turns single pages.",
+    "emerging_from": 24,
+    "expected_by": 30,
+    "leads_to": [
+      "move.holds_crayon_fingers"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Use board books and let your child turn the pages."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.calms_after_drop_off",
+    "domain": "social",
+    "title": "Calms down within 10 minutes after you leave, like at nursery drop-off",
+    "description": "Settles after a short time once you have gone.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "social.changes_behaviour_by_place"
+    ],
+    "builds_on": [
+      "social.moves_away_checks_back"
+    ],
+    "activities": [
+      "Keep goodbyes short and predictable, and tell your child when you'll be back."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-behaviour"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.joins_other_children",
+    "domain": "social",
+    "title": "Notices other children and joins them to play",
+    "description": "Joins in with other children's play.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "social.asks_to_play",
+      "social.follows_rules_games"
+    ],
+    "builds_on": [
+      "social.looks_at_your_face_new",
+      "social.plays_next_to_children"
+    ],
+    "activities": [
+      "Arrange regular time with other children, such as playgroups or nursery."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.conversation_two_exchanges",
+    "domain": "language",
+    "title": "Talks with you in conversation using at least two back-and-forth exchanges",
+    "description": "Keeps a short conversation going.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "lang.conversation_three_exchanges"
+    ],
+    "builds_on": [
+      "lang.uses_more_gestures"
+    ],
+    "activities": [
+      "Ask open questions and follow your child's topic."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.asks_questions",
+    "domain": "language",
+    "title": "Asks 'who', 'what', 'where' or 'why' questions",
+    "description": "Asks questions, like 'Where is Mummy?'",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "lang.answers_what_for"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Answer patiently and sometimes ask back: 'What do you think?'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.says_action_in_picture",
+    "domain": "language",
+    "title": "Says what action is happening in a picture or book when asked",
+    "description": "Describes actions such as 'running', 'eating' or 'playing'.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "lang.talks_about_day"
+    ],
+    "builds_on": [
+      "lang.action_word_phrase",
+      "lang.names_things_in_book"
+    ],
+    "activities": [
+      "Ask 'What's he doing?' as you read."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.says_first_name",
+    "domain": "language",
+    "title": "Says their first name when asked",
+    "description": "Tells you their name.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "lang.talks_about_day"
+    ],
+    "builds_on": [
+      "lang.uses_i_me_we"
+    ],
+    "activities": [
+      "Practise names in songs and games."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.understood_by_others",
+    "domain": "language",
+    "title": "Talks well enough for others to understand, most of the time",
+    "description": "Speech is mostly clear to people outside the family.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "lang.tells_story"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Repeat back unclear words correctly without asking your child to say them again."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "nhs-talk"
+    ],
+    "concern_tracking": true,
+    "concern_note": "If people outside the family find your child hard to understand most of the time, talk to your health visitor or GP about a speech and language referral."
+  },
+  {
+    "id": "cog.draws_circle",
+    "domain": "cognitive",
+    "title": "Draws a circle when you show them how",
+    "description": "Copies a circle you draw.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "cog.draws_person"
+    ],
+    "builds_on": [
+      "move.scribbles"
+    ],
+    "activities": [
+      "Draw shapes together with chunky crayons or chalk."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.avoids_hot_objects",
+    "domain": "cognitive",
+    "title": "Avoids touching hot objects, like a cooker, when you warn them",
+    "description": "Understands simple warnings about danger.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "social.avoids_danger"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Explain simply why something is dangerous."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Keep pan handles turned inwards and children away from the cooker even if they understand warnings."
+  },
+  {
+    "id": "move.strings_beads",
+    "domain": "movement",
+    "title": "Strings items together, like large beads or pasta",
+    "description": "Threads large beads onto a string.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "move.unbuttons"
+    ],
+    "builds_on": [
+      "move.twists_things"
+    ],
+    "activities": [
+      "Thread pasta tubes onto a shoelace together."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-safety"
+    ],
+    "concern_tracking": true,
+    "safety_note": "Use large beads under supervision; small beads are a choking risk."
+  },
+  {
+    "id": "move.puts_on_clothes",
+    "domain": "movement",
+    "title": "Puts on some clothes by themselves, like loose trousers or a jacket",
+    "description": "Dresses in simple clothing.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "move.unbuttons"
+    ],
+    "builds_on": [
+      "move.takes_off_clothes"
+    ],
+    "activities": [
+      "Lay clothes out in order and let your child try."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.uses_fork",
+    "domain": "movement",
+    "title": "Uses a fork",
+    "description": "Feeds themselves with a fork.",
+    "emerging_from": 30,
+    "expected_by": 36,
+    "leads_to": [
+      "move.serves_self_food"
+    ],
+    "builds_on": [
+      "move.eats_with_spoon"
+    ],
+    "activities": [
+      "Give a child-size fork at meals."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.pretends_to_be",
+    "domain": "social",
+    "title": "Pretends to be something else during play (teacher, superhero, dog)",
+    "description": "Takes on roles in pretend play.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "social.sings_dances_acts"
+    ],
+    "builds_on": [
+      "cog.pretend_play"
+    ],
+    "activities": [
+      "Keep a dressing-up box and join in role play."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-play"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.asks_to_play",
+    "domain": "social",
+    "title": "Asks to go and play with children if none are around",
+    "description": "Seeks out other children, e.g. 'Can I play with Alex?'",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "social.follows_rules_games"
+    ],
+    "builds_on": [
+      "social.joins_other_children"
+    ],
+    "activities": [
+      "Arrange play dates and visits to places with other children."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.comforts_others",
+    "domain": "social",
+    "title": "Comforts others who are hurt or sad, like hugging a crying friend",
+    "description": "Shows empathy with actions.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "social.follows_rules_games"
+    ],
+    "builds_on": [
+      "social.notices_others_upset"
+    ],
+    "activities": [
+      "Praise kindness when you see it."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.avoids_danger",
+    "domain": "social",
+    "title": "Avoids danger, like not jumping from tall heights at the playground",
+    "description": "Shows some judgement about risk.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "social.follows_rules_games"
+    ],
+    "builds_on": [
+      "cog.avoids_hot_objects"
+    ],
+    "activities": [
+      "Let your child take small, supervised risks so they learn their limits."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.likes_to_help",
+    "domain": "social",
+    "title": "Likes to be a 'helper'",
+    "description": "Enjoys helping with tasks.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "social.does_chores"
+    ],
+    "builds_on": [
+      "social.look_at_me"
+    ],
+    "activities": [
+      "Give small jobs such as putting socks in the drawer."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.changes_behaviour_by_place",
+    "domain": "social",
+    "title": "Changes behaviour based on where they are (library, playground, place of worship)",
+    "description": "Adjusts behaviour to the setting.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "social.follows_rules_games"
+    ],
+    "builds_on": [
+      "social.calms_after_drop_off"
+    ],
+    "activities": [
+      "Talk ahead of time about what happens in a new place."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-behaviour"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.four_word_sentences",
+    "domain": "language",
+    "title": "Says sentences with four or more words",
+    "description": "Speaks in longer sentences.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "lang.tells_story"
+    ],
+    "builds_on": [
+      "lang.says_50_words"
+    ],
+    "activities": [
+      "Have back-and-forth conversations about everyday things."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.says_words_from_song",
+    "domain": "language",
+    "title": "Says some words from a song, story or nursery rhyme",
+    "description": "Joins in with familiar words.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "lang.rhymes"
+    ],
+    "builds_on": [],
+    "activities": [
+      "Sing nursery rhymes and leave a gap for your child to fill in."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.talks_about_day",
+    "domain": "language",
+    "title": "Talks about at least one thing that happened during their day",
+    "description": "Tells you about something they did, like 'I played football.'",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "lang.tells_story"
+    ],
+    "builds_on": [
+      "lang.says_action_in_picture",
+      "lang.says_first_name"
+    ],
+    "activities": [
+      "Ask about the best part of their day at teatime or bedtime."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.answers_what_for",
+    "domain": "language",
+    "title": "Answers simple questions like 'What is a coat for?'",
+    "description": "Explains what everyday things are used for.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "lang.answers_about_story"
+    ],
+    "builds_on": [
+      "cog.two_step_instructions",
+      "lang.asks_questions"
+    ],
+    "activities": [
+      "Play 'what is it for?' with everyday objects."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.names_colours",
+    "domain": "cognitive",
+    "title": "Names a few colours of items",
+    "description": "Names several colours.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "cog.names_letters"
+    ],
+    "builds_on": [
+      "cog.knows_a_colour"
+    ],
+    "activities": [
+      "Play 'I spy' with colours."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.tells_what_comes_next",
+    "domain": "cognitive",
+    "title": "Tells what comes next in a well-known story",
+    "description": "Remembers the order of a familiar story.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "lang.answers_about_story"
+    ],
+    "builds_on": [
+      "cog.problem_solving"
+    ],
+    "activities": [
+      "Pause in a favourite story and ask 'What happens next?'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.draws_person",
+    "domain": "cognitive",
+    "title": "Draws a person with three or more body parts",
+    "description": "Draws a person with, say, a head, arms and legs.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "cog.writes_letters_in_name"
+    ],
+    "builds_on": [
+      "cog.draws_circle"
+    ],
+    "activities": [
+      "Draw family pictures together and talk about them."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.catches_ball",
+    "domain": "movement",
+    "title": "Catches a large ball most of the time",
+    "description": "Catches a big ball thrown gently.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "move.hops"
+    ],
+    "builds_on": [
+      "move.kicks_ball"
+    ],
+    "activities": [
+      "Play catch with a large, soft ball."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.serves_self_food",
+    "domain": "movement",
+    "title": "Serves themselves food or pours water, with adult supervision",
+    "description": "Spoons food onto a plate or pours from a small jug.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "social.does_chores"
+    ],
+    "builds_on": [
+      "move.drinks_open_cup",
+      "move.uses_fork"
+    ],
+    "activities": [
+      "Let your child pour from a small jug at mealtimes."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.unbuttons",
+    "domain": "movement",
+    "title": "Unbuttons some buttons",
+    "description": "Undoes large buttons.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "move.buttons"
+    ],
+    "builds_on": [
+      "move.strings_beads",
+      "move.puts_on_clothes"
+    ],
+    "activities": [
+      "Practise on a coat with big buttons."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.holds_crayon_fingers",
+    "domain": "movement",
+    "title": "Holds a crayon or pencil between fingers and thumb (not a fist)",
+    "description": "Uses a finger grip rather than a fist.",
+    "emerging_from": 36,
+    "expected_by": 48,
+    "leads_to": [
+      "cog.writes_letters_in_name"
+    ],
+    "builds_on": [
+      "move.turns_pages"
+    ],
+    "activities": [
+      "Offer short crayons, which encourage a finger grip."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.follows_rules_games",
+    "domain": "social",
+    "title": "Follows rules or takes turns when playing games with other children",
+    "description": "Plays simple games with rules.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "social.joins_other_children",
+      "social.asks_to_play",
+      "social.comforts_others",
+      "social.avoids_danger",
+      "social.changes_behaviour_by_place"
+    ],
+    "activities": [
+      "Play simple board and turn-taking games together."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "nhs-play"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.sings_dances_acts",
+    "domain": "social",
+    "title": "Sings, dances or acts for you",
+    "description": "Performs for an audience.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "social.pretends_to_be"
+    ],
+    "activities": [
+      "Be an enthusiastic audience."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "social.does_chores",
+    "domain": "social",
+    "title": "Does simple chores at home, like matching socks or clearing the table",
+    "description": "Helps with simple jobs.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "social.follows_routines",
+      "social.likes_to_help",
+      "move.serves_self_food"
+    ],
+    "activities": [
+      "Give a regular small job and thank them for it."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.tells_story",
+    "domain": "language",
+    "title": "Tells a story they heard or made up with at least two events",
+    "description": "Tells a story with a sequence.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "lang.understood_by_others",
+      "lang.four_word_sentences",
+      "lang.talks_about_day"
+    ],
+    "activities": [
+      "Make up stories together, taking turns to add what happens next."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.answers_about_story",
+    "domain": "language",
+    "title": "Answers simple questions about a book or story after you read it",
+    "description": "Remembers and talks about a story.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "lang.answers_what_for",
+      "cog.tells_what_comes_next"
+    ],
+    "activities": [
+      "Ask about the characters after reading: 'Why was the bear sad?'"
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.conversation_three_exchanges",
+    "domain": "language",
+    "title": "Keeps a conversation going with more than three back-and-forth exchanges",
+    "description": "Holds a longer conversation.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "lang.conversation_two_exchanges"
+    ],
+    "activities": [
+      "Talk together at mealtimes without screens."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "romeo-2018-conversation",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "lang.rhymes",
+    "domain": "language",
+    "title": "Uses or recognises simple rhymes (bat–cat, ball–tall)",
+    "description": "Hears and plays with rhyming words.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "lang.says_words_from_song"
+    ],
+    "activities": [
+      "Read rhyming books and make up silly rhymes."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.counts_to_10",
+    "domain": "cognitive",
+    "title": "Counts to 10",
+    "description": "Says the numbers 1 to 10 in order.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [],
+    "activities": [
+      "Count stairs, toys and steps together."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.names_numbers",
+    "domain": "cognitive",
+    "title": "Names some numbers between 1 and 5 when you point to them",
+    "description": "Recognises some written numbers.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [],
+    "activities": [
+      "Point out numbers on doors, buses and clocks."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.time_words",
+    "domain": "cognitive",
+    "title": "Uses words about time, like 'yesterday', 'tomorrow', 'morning' or 'night'",
+    "description": "Talks about when things happen.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [],
+    "activities": [
+      "Talk through the day's plan in the morning and what happened at bedtime."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.pays_attention",
+    "domain": "cognitive",
+    "title": "Pays attention for 5 to 10 minutes during activities",
+    "description": "Stays with an activity such as story time for 5 to 10 minutes.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [],
+    "activities": [
+      "Choose activities your child enjoys and keep screens off in the background."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.writes_letters_in_name",
+    "domain": "cognitive",
+    "title": "Writes some letters in their name",
+    "description": "Copies or writes a few letters of their name.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "cog.draws_person",
+      "move.holds_crayon_fingers"
+    ],
+    "activities": [
+      "Write their name together on drawings."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "cog.names_letters",
+    "domain": "cognitive",
+    "title": "Names some letters when you point to them",
+    "description": "Recognises some letters.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "cog.names_colours"
+    ],
+    "activities": [
+      "Point out letters on signs, especially those in their name."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "aap-2024-literacy"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.buttons",
+    "domain": "movement",
+    "title": "Buttons some buttons",
+    "description": "Does up large buttons.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "move.unbuttons"
+    ],
+    "activities": [
+      "Let your child practise on their own coat."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022"
+    ],
+    "concern_tracking": true
+  },
+  {
+    "id": "move.hops",
+    "domain": "movement",
+    "title": "Hops on one foot",
+    "description": "Hops on one foot a few times.",
+    "emerging_from": 48,
+    "expected_by": 60,
+    "leads_to": [],
+    "builds_on": [
+      "move.walks_up_stairs",
+      "move.jumps",
+      "move.catches_ball"
+    ],
+    "activities": [
+      "Play hopscotch or 'hop like a frog' games."
+    ],
+    "sources": [
+      "cdc-ltsae-2022",
+      "zubler-2022",
+      "who-2019-under5"
+    ],
+    "concern_tracking": true
+  }
+]

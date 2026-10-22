@@ -1,0 +1,654 @@
+[
+  {
+    "region": "england",
+    "version": "2026-01",
+    "applies_to": [
+      "england",
+      "wales",
+      "northern_ireland",
+      "scotland"
+    ],
+    "note": "Vaccinations follow the UK routine schedule as changed in July 2025 and January 2026, picked by date of birth. Health visitor contacts follow England's Healthy Child Programme; Scotland, Wales and Northern Ireland run their own programmes with different review ages, so check with your health visitor. The flu vaccine is offered each autumn rather than on a birthday. To be checked against the current NHS schedule before release.",
+    "appointments": [
+      {
+        "id": "new_birth_visit",
+        "title": "New birth visit",
+        "with": "Health visitor",
+        "window_start": {
+          "months": 0,
+          "weeks": 0,
+          "days": 10
+        },
+        "window_end": {
+          "months": 0,
+          "weeks": 0,
+          "days": 14
+        },
+        "description": "A home visit to check how you and your baby are doing, talk about feeding, sleep and safety, and introduce the health visiting service.",
+        "sources": [
+          "hcp-england",
+          "nhs-reviews"
+        ]
+      },
+      {
+        "id": "review_6_8_weeks",
+        "title": "6 to 8 week review",
+        "with": "Health visitor",
+        "window_start": {
+          "months": 0,
+          "weeks": 6,
+          "days": 0
+        },
+        "window_end": {
+          "months": 0,
+          "weeks": 8,
+          "days": 0
+        },
+        "description": "A check on your baby's growth and development and on how you are feeling.",
+        "sources": [
+          "hcp-england",
+          "nhs-reviews"
+        ]
+      },
+      {
+        "id": "physical_check_6_8_weeks",
+        "title": "6 to 8 week physical check",
+        "with": "GP",
+        "window_start": {
+          "months": 0,
+          "weeks": 6,
+          "days": 0
+        },
+        "window_end": {
+          "months": 0,
+          "weeks": 8,
+          "days": 0
+        },
+        "description": "A physical examination of your baby's eyes, heart, hips and, for boys, testes, and a check on how you are.",
+        "sources": [
+          "nhs-reviews"
+        ]
+      },
+      {
+        "id": "vaccinations_8_weeks",
+        "title": "8 week vaccinations",
+        "with": "GP practice nurse",
+        "window_start": {
+          "months": 0,
+          "weeks": 8,
+          "days": 0
+        },
+        "window_end": {
+          "months": 0,
+          "weeks": 12,
+          "days": 0
+        },
+        "description": "Your baby's first routine vaccinations.",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "id": "vaccinations_12_weeks",
+        "title": "12 week vaccinations",
+        "with": "GP practice nurse",
+        "window_start": {
+          "months": 0,
+          "weeks": 12,
+          "days": 0
+        },
+        "window_end": {
+          "months": 0,
+          "weeks": 16,
+          "days": 0
+        },
+        "description": "Second routine vaccinations.",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "id": "vaccinations_16_weeks",
+        "title": "16 week vaccinations",
+        "with": "GP practice nurse",
+        "window_start": {
+          "months": 0,
+          "weeks": 16,
+          "days": 0
+        },
+        "window_end": {
+          "months": 0,
+          "weeks": 20,
+          "days": 0
+        },
+        "description": "Third routine vaccinations.",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "id": "review_1_year",
+        "title": "9 to 12 month review",
+        "with": "Health visitor",
+        "window_start": {
+          "months": 9,
+          "weeks": 0,
+          "days": 0
+        },
+        "window_end": {
+          "months": 12,
+          "weeks": 0,
+          "days": 0
+        },
+        "description": "A review of your baby's development, often using a questionnaire you fill in beforehand, plus a chance to talk about anything worrying you.",
+        "sources": [
+          "hcp-england",
+          "nhs-reviews"
+        ]
+      },
+      {
+        "id": "vaccinations_1_year",
+        "title": "1 year vaccinations",
+        "with": "GP practice nurse",
+        "window_start": {
+          "months": 12,
+          "weeks": 0,
+          "days": 0
+        },
+        "window_end": {
+          "months": 13,
+          "weeks": 0,
+          "days": 0
+        },
+        "description": "Routine vaccinations around the first birthday.",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "id": "vaccinations_18_months",
+        "title": "18 month vaccinations",
+        "with": "GP practice nurse",
+        "window_start": {
+          "months": 18,
+          "weeks": 0,
+          "days": 0
+        },
+        "window_end": {
+          "months": 19,
+          "weeks": 0,
+          "days": 0
+        },
+        "description": "A routine vaccination appointment added from January 2026 for children born on or after 1 July 2024.",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_from": "2024-07-01"
+      },
+      {
+        "id": "review_2_years",
+        "title": "2 to 2.5 year review",
+        "with": "Health visitor",
+        "window_start": {
+          "months": 24,
+          "weeks": 0,
+          "days": 0
+        },
+        "window_end": {
+          "months": 30,
+          "weeks": 0,
+          "days": 0
+        },
+        "description": "A review of your child's development, including talking, play, behaviour and toileting, usually with a questionnaire you fill in beforehand.",
+        "sources": [
+          "hcp-england",
+          "nhs-reviews"
+        ]
+      },
+      {
+        "id": "vaccinations_preschool",
+        "title": "Pre-school vaccinations",
+        "with": "GP practice nurse",
+        "window_start": {
+          "months": 40,
+          "weeks": 0,
+          "days": 0
+        },
+        "window_end": {
+          "months": 41,
+          "weeks": 0,
+          "days": 0
+        },
+        "description": "Pre-school booster vaccinations at 3 years 4 months.",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "id": "school_entry",
+        "title": "School entry health check",
+        "with": "School nursing team",
+        "window_start": {
+          "months": 48,
+          "weeks": 0,
+          "days": 0
+        },
+        "window_end": {
+          "months": 60,
+          "weeks": 0,
+          "days": 0
+        },
+        "description": "Height, weight, hearing and vision checks in the Reception year, carried out by the school nursing team.",
+        "sources": [
+          "hcp-england"
+        ]
+      }
+    ],
+    "doses": [
+      {
+        "code": "6in1_1",
+        "vaccine": "6-in-1",
+        "dose": "1st dose",
+        "age": {
+          "months": 0,
+          "weeks": 8,
+          "days": 0
+        },
+        "appointment": "vaccinations_8_weeks",
+        "protects_against": "diphtheria, tetanus, whooping cough, polio, Hib and hepatitis B",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "rota_1",
+        "vaccine": "Rotavirus",
+        "dose": "1st dose",
+        "age": {
+          "months": 0,
+          "weeks": 8,
+          "days": 0
+        },
+        "appointment": "vaccinations_8_weeks",
+        "protects_against": "rotavirus",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "menb_1",
+        "vaccine": "MenB",
+        "dose": "1st dose",
+        "age": {
+          "months": 0,
+          "weeks": 8,
+          "days": 0
+        },
+        "appointment": "vaccinations_8_weeks",
+        "protects_against": "meningococcal group B",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "6in1_2",
+        "vaccine": "6-in-1",
+        "dose": "2nd dose",
+        "age": {
+          "months": 0,
+          "weeks": 12,
+          "days": 0
+        },
+        "appointment": "vaccinations_12_weeks",
+        "protects_against": "diphtheria, tetanus, whooping cough, polio, Hib and hepatitis B",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "rota_2",
+        "vaccine": "Rotavirus",
+        "dose": "2nd dose",
+        "age": {
+          "months": 0,
+          "weeks": 12,
+          "days": 0
+        },
+        "appointment": "vaccinations_12_weeks",
+        "protects_against": "rotavirus",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "menb_2",
+        "vaccine": "MenB",
+        "dose": "2nd dose",
+        "age": {
+          "months": 0,
+          "weeks": 12,
+          "days": 0
+        },
+        "appointment": "vaccinations_12_weeks",
+        "protects_against": "meningococcal group B",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_from": "2025-04-07"
+      },
+      {
+        "code": "pcv_1",
+        "vaccine": "Pneumococcal (PCV)",
+        "dose": "1st dose",
+        "age": {
+          "months": 0,
+          "weeks": 12,
+          "days": 0
+        },
+        "appointment": "vaccinations_12_weeks",
+        "protects_against": "pneumococcal disease",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_to": "2025-04-06"
+      },
+      {
+        "code": "6in1_3",
+        "vaccine": "6-in-1",
+        "dose": "3rd dose",
+        "age": {
+          "months": 0,
+          "weeks": 16,
+          "days": 0
+        },
+        "appointment": "vaccinations_16_weeks",
+        "protects_against": "diphtheria, tetanus, whooping cough, polio, Hib and hepatitis B",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "pcv_1",
+        "vaccine": "Pneumococcal (PCV)",
+        "dose": "1st dose",
+        "age": {
+          "months": 0,
+          "weeks": 16,
+          "days": 0
+        },
+        "appointment": "vaccinations_16_weeks",
+        "protects_against": "pneumococcal disease",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_from": "2025-04-07"
+      },
+      {
+        "code": "menb_2",
+        "vaccine": "MenB",
+        "dose": "2nd dose",
+        "age": {
+          "months": 0,
+          "weeks": 16,
+          "days": 0
+        },
+        "appointment": "vaccinations_16_weeks",
+        "protects_against": "meningococcal group B",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_to": "2025-04-06"
+      },
+      {
+        "code": "pcv_2",
+        "vaccine": "Pneumococcal (PCV)",
+        "dose": "booster",
+        "age": {
+          "months": 12,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_1_year",
+        "protects_against": "pneumococcal disease",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "menb_3",
+        "vaccine": "MenB",
+        "dose": "booster",
+        "age": {
+          "months": 12,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_1_year",
+        "protects_against": "meningococcal group B",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "mmrv_1",
+        "vaccine": "MMRV",
+        "dose": "1st dose",
+        "age": {
+          "months": 12,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_1_year",
+        "protects_against": "measles, mumps, rubella and chickenpox",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_from": "2025-01-01"
+      },
+      {
+        "code": "mmr_1",
+        "vaccine": "MMR",
+        "dose": "1st dose",
+        "age": {
+          "months": 12,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_1_year",
+        "protects_against": "measles, mumps and rubella",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_to": "2024-12-31"
+      },
+      {
+        "code": "hibmenc",
+        "vaccine": "Hib/MenC",
+        "dose": "booster",
+        "age": {
+          "months": 12,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_1_year",
+        "protects_against": "Hib and meningococcal group C",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_to": "2024-12-31"
+      },
+      {
+        "code": "6in1_4",
+        "vaccine": "6-in-1",
+        "dose": "4th dose",
+        "age": {
+          "months": 18,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_18_months",
+        "protects_against": "diphtheria, tetanus, whooping cough, polio, Hib and hepatitis B",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_from": "2024-07-01"
+      },
+      {
+        "code": "mmrv_2",
+        "vaccine": "MMRV",
+        "dose": "2nd dose",
+        "age": {
+          "months": 18,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_18_months",
+        "protects_against": "measles, mumps, rubella and chickenpox",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_from": "2025-01-01"
+      },
+      {
+        "code": "mmrv_18m",
+        "vaccine": "MMRV",
+        "dose": "2nd measles-containing dose",
+        "age": {
+          "months": 18,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_18_months",
+        "protects_against": "measles, mumps, rubella and chickenpox",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_from": "2024-07-01",
+        "dob_to": "2024-12-31"
+      },
+      {
+        "code": "flu_2y",
+        "vaccine": "Children's flu vaccine (nasal spray)",
+        "dose": "yearly, offered each autumn",
+        "age": {
+          "months": 24,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "review_2_years",
+        "protects_against": "flu",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "flu_3y",
+        "vaccine": "Children's flu vaccine (nasal spray)",
+        "dose": "yearly, offered each autumn",
+        "age": {
+          "months": 36,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_preschool",
+        "protects_against": "flu",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "4in1",
+        "vaccine": "4-in-1 pre-school booster",
+        "dose": "booster",
+        "age": {
+          "months": 40,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_preschool",
+        "protects_against": "diphtheria, tetanus, whooping cough and polio",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      },
+      {
+        "code": "mmr_2",
+        "vaccine": "MMR",
+        "dose": "2nd dose",
+        "age": {
+          "months": 40,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_preschool",
+        "protects_against": "measles, mumps and rubella",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_to": "2022-08-31"
+      },
+      {
+        "code": "mmrv_preschool",
+        "vaccine": "MMRV",
+        "dose": "2nd measles-containing dose",
+        "age": {
+          "months": 40,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "vaccinations_preschool",
+        "protects_against": "measles, mumps, rubella and chickenpox",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ],
+        "dob_from": "2022-09-01",
+        "dob_to": "2024-06-30"
+      },
+      {
+        "code": "flu_4y",
+        "vaccine": "Children's flu vaccine (nasal spray)",
+        "dose": "yearly, offered each autumn",
+        "age": {
+          "months": 48,
+          "weeks": 0,
+          "days": 0
+        },
+        "appointment": "school_entry",
+        "protects_against": "flu",
+        "sources": [
+          "nhs-vaccinations",
+          "ukhsa-2026-schedule"
+        ]
+      }
+    ]
+  }
+]

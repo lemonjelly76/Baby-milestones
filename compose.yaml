@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: baby_milestones
+      POSTGRES_USER: baby_milestones
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U baby_milestones -d baby_milestones"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/baby_milestones
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    # 8080 to 8082 are taken by other services on the home server
+    ports:
+      - "${APP_PORT:-8083}:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db-data:

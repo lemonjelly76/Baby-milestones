@@ -1,0 +1,184 @@
+# Baby Milestones — Design Document
+
+Last updated: 21 October 2026
+
+Status key: Accepted · Proposed · Deferred · Rejected
+
+Source: the "Baby Milestones App — Spec" (Claude Docs, 20 October 2026). This document records how the first build
+implements it and where it departs from it.
+
+## 1. Purpose
+
+Parents and carers see, for each child from birth to 5, what's typical now, what's coming next and what hasn't been
+logged yet; they log milestones in two taps, get calm signposting when something may be worth a chat, and take a
+summary to health visitor reviews. An AI assistant answers from the same data, never from its own knowledge.
+
+## 2. Engineering principles
+
+- SOLID and clean code; test-driven development
+- One rulebook: ages, statuses, concerns and schedules live in `core` and nowhere else
+- Content is versioned, cited data; the model never writes content
+- Safety rules enforced in code, not only in prompts
+
+## 3. Constraints
+
+- Development notes about a child are health data (special category under UK GDPR): store little, keep it in the
+  family, keep it in the UK.
+- Family use: a private APK and the existing always-on home server, like music-player and garmin-ai.
+- claude.ai reaches custom connectors from Anthropic's cloud, so `/mcp` must be on public HTTPS to use it there.
+
+## 4. Decision log
+
+### ADR-001 Engineering approach — Accepted
+
+SOLID, clean code, TDD, minimal comments (section 2).
+
+### ADR-002 Technology stack — Accepted
+
+- **Shared library (`core`):** Kotlin/JVM 17 bytecode with kotlinx.serialization, used by both app and server.
+- **Server:** Kotlin, Spring Boot 4.1, Spring AI 2.0 MCP server (Streamable HTTP), PostgreSQL 18 with Flyway and
+  `JdbcClient`, Anthropic Java SDK. One Gradle build with the app, Docker Compose to run.
+- **App:** Kotlin, Jetpack Compose, Material 3, Ktor client, WorkManager; single module, no DI framework.
+
+**Why:** answers the spec's first open question. The spec asked for one Kotlin library shared by app and server;
+a Kotlin Spring Boot server in the same Gradle build gets that for free, keeps the work stack (Spring Boot, MCP Java
+SDK) and matches music-player and garmin-ai, which already run this way on the home server. Firebase would have
+needed the age engine reimplemented for Cloud Functions or a separate Cloud Run service.
+
+### ADR-003 Content is cited, versioned data — Accepted
+
+The bundle is JSON under `core/src/main/resources/content/` (manifest, references, milestones, periods, concerns,
+safety, schedules). It ships inside the APK and the server; the app downloads a newer bundle from `/api/content`
+when the server has one. `ContentValidator` rejects duplicate or mis-prefixed ids, broken `leads_to`/`builds_on`
+links, links that lead to an earlier milestone, uncited entries, unknown references and period gaps.
+
+### ADR-004 Evidence base — Accepted
+
+At the user's request, content follows published evidence and cites it (29 references, each shown in the app and
+returned by the tools):
+
+- **Milestones:** the CDC/AAP *Learn the Signs. Act Early.* checklists (2022), all 12 ages, wording kept close to
+  the original in UK English. They come from an evidence review (Zubler et al., *Pediatrics* 2022) that chose
+  milestones most children (≥75%) reach by each age from normative data, so a missing one is a prompt to watch and
+  talk to a professional, not a sign of being "behind average". The app says this wherever it shows an age.
+- **`emerging_from`:** the previous checklist age (the milestone usually appears between the two visits), unless a
+  measured window exists.
+- **Measured ranges:** the WHO Motor Development Study (Martorell et al. 2006) 1st–99th percentile windows for
+  sitting alone (3.8–9.2 months), standing with help, walking with help and walking alone (8.2–17.6 months), shown
+  as reassurance. Crawling is included from the same study but never raises a concern: 4.3% of healthy children never
+  crawl, which is also why the 2022 checklists dropped it.
+- **Activities:** chosen for evidence behind them: conversational turns (Romeo et al. 2018), shared reading (AAP
+  2024 policy), tummy time (Hewitt et al. 2020 systematic review; WHO 2019), active play and screen limits (WHO 2019).
+- **Period guides:** sleep ranges and activity from WHO 2019; safer sleep from the Lullaby Trust and AAP 2022;
+  feeding and weaning from SACN 2018 and the NHS, with early allergen introduction from the LEAP trial (Du Toit et
+  al. 2015); home safety from the NHS.
+- **UK schedule:** NHS vaccination schedule and the UKHSA notice of the July 2025 and January 2026 changes;
+  health visitor contacts from England's Healthy Child Programme.
+- **Concern thresholds:** the spec's, signposting only. Losing a skill always prompts a check (in line with CDC
+  "act early" guidance and NICE CG128, which is not shown in the app because it names a condition).
+
+Content still needs review by a health professional before release (spec open question 5).
+
+### ADR-005 Age engine — Accepted
+
+- Corrected age = time since the due date, applied when born 21+ days early (the spec's 3 weeks; spec open question 6
+  stays open, the threshold is one constant). Milestones use it until chronological age 24 months, then chronological.
+- Milestone dates are `base.plusMonths(n)`, and whole months are counted the same way, so month ends and leap days
+  agree (born 31 January → 1 month on 28 February).
+- Before the due date, corrected age reads "3 weeks before due date".
+
+### ADR-006 Status rules — Accepted
+
+Only log entries are stored. Status, in order: lost skill, achieved, not sure, not seen yet (past `expected_by`),
+due now (within 28 days of it), coming up (past `emerging_from`), later. "Due now" wins over "later" when a
+milestone's window is shorter than four weeks. Not sure is re-asked after 14 days. One current log entry per
+milestone; every change is copied to `milestone_log_history` first.
+
+### ADR-007 Concerns: unlogged is not "not seen" — Accepted
+
+**Departure from the spec:** the spec's thresholds would flag every milestone a family hadn't logged before they
+started using the app, so a 6-month-old added today would get a screen of "Worth a chat" cards. Milestones whose
+checklist date passed before the baby was added (`tracking_since`) appear as catch-up prompts instead, and only
+count towards concerns once a parent answers "not sure". Found while testing on the emulator.
+
+### ADR-008 Access: a token per carer, scoped to the family — Accepted
+
+- Creating a family needs `SETUP_CODE` (or, without one, only the first family can be created).
+- Carers join with a 10-character, single-use invite code valid for 7 days (also as a `babymilestones://join` link).
+- Every carer gets a random bearer token; only its SHA-256 is stored. Every query is scoped by family id; tests
+  check that one family can't read or write another's baby over REST, MCP or the assistant's confirm endpoint.
+- `/mcp` takes the same tokens; Settings creates a separate "claude" token for Claude Desktop or claude.ai so it can
+  be replaced without signing a phone out.
+
+**Departure from the spec:** the spec suggested OAuth scoped to a family. Bearer tokens carry the same scope without
+an authorisation server, as in music-player ADR-011.
+
+### ADR-009 The app computes, the server stores — Accepted
+
+The app fetches a baby's raw records (`/api/babies/{id}/data`) and computes every view with `core`, so Today, the
+period guide and notifications work offline from the last copy. Writes go to the server and refresh that baby.
+
+**Departure from the spec:** the cache is JSON files rather than Room; writes need a connection (no offline queue
+yet).
+
+### ADR-010 The assistant — Accepted
+
+- **Where the loop runs:** on the server (`POST /api/assistant/messages`), so the API key never reaches the APK.
+  The loop calls the same tool catalog in-process that `/mcp` serves.
+- **Model:** `claude-opus-5-5` at low effort (short, phone-sized answers), the stable system prompt and tool list
+  cached, server-side refusal fallback enabled. `ANTHROPIC_MODEL` overrides it.
+- **Writes:** write tools never run from the model. Each becomes a proposal with a plain-words summary; the app shows
+  them together on one confirmation sheet and `POST /api/assistant/confirm` runs the ones the parent ticks. Ids are
+  validated when proposed, so the model hears about a bad id before the parent sees it.
+- **Safety:** the fixed phrase check (`core`'s `SafetyCheck`) runs on the phone before anything is sent and again on
+  the server. Urgent symptoms and distress show app-rendered cards and never reach the model; medicine questions get
+  the pharmacist card alongside the answer.
+- **Privacy:** the conversation lives on the phone; only its text turns are sent, never photos. The server keeps no
+  assistant history.
+
+### ADR-011 MCP surface — Accepted
+
+All 11 read tools and 8 write tools from the spec, defined once (`ToolCatalog`) and served both over MCP and to the
+assistant. Resources `content://version`, `baby://{id}/summary`, `content://milestones/{id}`, `content://periods/{id}`;
+prompts `weekly_checkin`, `prepare_for_review`, `explain_milestone`. Every result carries `content_version`; content
+results carry their sources.
+
+### ADR-012 UK schedule — Accepted
+
+One schedule, versioned by date of birth: the 12/16-week swap of MenB and PCV (born from 7 April 2025), MMRV at
+1 year (born from 2025), the 18-month appointment with the 4th 6-in-1 and an MMRV dose (born from 1 July 2024), the
+pre-school MMRV for children born September 2022 to June 2024, and yearly flu from 2. Health visitor contacts follow
+England's Healthy Child Programme; the other nations use the same vaccinations and fall back to these reviews with a
+note (spec open question 4). The transitional date boundaries need checking against the current NHS schedule before
+release (spec section "Age engine and developmental periods").
+
+### ADR-013 Out of this build — Deferred
+
+Growth charts (UK-WHO), feed/nappy/sleep logging, iOS, Room and an offline write queue, OAuth, Scotland/Wales/NI
+review schedules.
+
+## 5. Requirements coverage
+
+| Spec item | Status |
+| --- | --- |
+| Onboarding: name, DOB or age, due date, sex; age read back; backfill checklist | Built |
+| Age engine + tests (premature, month ends, leap years) | Built (`core`, 53 tests) |
+| Periods, milestone content 0–60 months with sources | Built (12 periods, 160 milestones) |
+| Status rules, not sure re-check, edits with history, delete | Built |
+| Custom moments, appointments, vaccinations by DOB and region | Built |
+| Today, Period guide, Milestones, Timeline, Health, Ask screens | Built |
+| Health visitor summary export (PDF and share sheet) | Built |
+| Multiple babies, several carers, invite by link | Built |
+| Concerns and safety rules, disclaimer footer | Built (ADR-007 departure) |
+| Notifications: weekly digest, due now, appointment window, 3-week nudge | Built (daily WorkManager job) |
+| MCP read and write tools, resources, prompts | Built |
+| Assistant flows: weekly check-in, free-text logging, questions, review prep | Built; needs `ANTHROPIC_API_KEY` |
+| Privacy: UK hosting, family scoping, no backups, export and delete | Built |
+| Growth charts | Deferred (phase 3) |
+
+## 6. Open questions
+
+- Who reviews milestone, concern and safety copy before release? (spec)
+- Corrected-age threshold: 3+ weeks early, or any birth before 37 weeks? (spec)
+- England only, or each nation's review schedule? (spec)
+- Should past appointment windows for a baby added late be marked in one go?

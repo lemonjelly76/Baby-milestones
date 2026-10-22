@@ -1,0 +1,30 @@
+{
+  "not_seen_one": {
+    "title": "Seen this yet?",
+    "body": "Not seen yet: {milestones}. Most children do this by now, but many get there a little later. Try the activities for a couple of weeks and we'll check again.",
+    "signpost": "Mention it at your next health visitor contact.",
+    "urgency": "info"
+  },
+  "worth_a_chat": {
+    "title": "Worth a chat",
+    "body": "Not seen yet: {milestones}. That doesn't mean something is wrong, but it's worth talking to your health visitor or GP, who can look at the whole picture. We've added it to your health visitor summary.",
+    "signpost": "Health visitor or GP: a routine appointment.",
+    "urgency": "routine"
+  },
+  "skill_lost": {
+    "title": "Talk to someone soon",
+    "body": "You've noted that your child no longer does something they used to: {milestones}. Losing a skill is always worth checking promptly, whatever their age.",
+    "signpost": "Contact your health visitor or GP in the next few days.",
+    "urgency": "prompt"
+  },
+  "worth_a_chat_domain_count": 2,
+  "worth_a_chat_weeks_past": 4,
+  "recheck_weeks_min": 2,
+  "recheck_weeks_max": 4,
+  "sources": [
+    "cdc-ltsae-2022",
+    "zubler-2022",
+    "hcp-england",
+    "nhs-reviews"
+  ]
+}

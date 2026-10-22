@@ -1,0 +1,178 @@
+package io.github.lemonjelly76.babymilestones.app.data
+
+import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
+import io.github.lemonjelly76.babymilestones.core.json.BabyJson
+import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentRecord
+import io.github.lemonjelly76.babymilestones.core.schedule.DoseRecord
+import io.github.lemonjelly76.babymilestones.core.summary.ReviewNote
+import io.github.lemonjelly76.babymilestones.core.timeline.Moment
+import io.github.lemonjelly76.babymilestones.core.tracking.Baby
+import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneLog
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.header
+import io.ktor.client.request.request
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsBytes
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.http.HttpMethod
+import io.ktor.http.contentType
+import io.ktor.http.isSuccess
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.builtins.ListSerializer
+
+class ApiException(val status: Int, message: String) : Exception(message)
+
+/** The family server's REST API. Every call but sign-up carries the carer's bearer token. */
+class ApiClient(
+    private val baseUrl: () -> String,
+    private val token: () -> String?,
+    private val http: HttpClient = HttpClient(OkHttp) {
+        install(HttpTimeout) {
+            requestTimeoutMillis = 120_000
+            connectTimeoutMillis = 10_000
+        }
+        expectSuccess = false
+    },
+) {
+    private suspend fun send(method: HttpMethod, path: String, configure: HttpRequestBuilder.() -> Unit = {}): HttpResponse {
+        val response = http.request(baseUrl().trimEnd('/') + path) {
+            this.method = method
+            token()?.let { header("Authorization", "Bearer $it") }
+            configure()
+        }
+        if (!response.status.isSuccess()) {
+            val text = response.bodyAsText()
+            val message = runCatching { BabyJson.decodeFromString(ErrorResponse.serializer(), text).error }.getOrNull()
+                ?: "The server answered ${response.status.value}"
+            throw ApiException(response.status.value, message)
+        }
+        return response
+    }
+
+    private suspend fun <T> call(method: HttpMethod, path: String, out: KSerializer<T>, body: String? = null): T {
+        val response = send(method, path) {
+            if (body != null) {
+                contentType(ContentType.Application.Json)
+                setBody(body)
+            }
+        }
+        return BabyJson.decodeFromString(out, response.bodyAsText())
+    }
+
+    private suspend fun <B, T> call(method: HttpMethod, path: String, out: KSerializer<T>, inSerializer: KSerializer<B>, body: B): T =
+        call(method, path, out, BabyJson.encodeToString(inSerializer, body))
+
+    private suspend fun noContent(method: HttpMethod, path: String) {
+        send(method, path)
+    }
+
+    // --- family ---
+
+    suspend fun createFamily(request: CreateFamilyRequest) =
+        call(HttpMethod.Post, "/api/families", SignInResponse.serializer(), CreateFamilyRequest.serializer(), request)
+
+    suspend fun join(request: JoinRequest) = call(HttpMethod.Post, "/api/join", SignInResponse.serializer(), JoinRequest.serializer(), request)
+
+    suspend fun me() = call(HttpMethod.Get, "/api/me", MeResponse.serializer())
+
+    suspend fun updateFamily(request: UpdateFamilyRequest) =
+        call(HttpMethod.Patch, "/api/family", Family.serializer(), UpdateFamilyRequest.serializer(), request)
+
+    suspend fun deleteFamily() = noContent(HttpMethod.Delete, "/api/family")
+
+    suspend fun invite() = call(HttpMethod.Post, "/api/invites", InviteResponse.serializer(), "{}")
+
+    suspend fun newToken(label: String) =
+        call(HttpMethod.Post, "/api/tokens", TokenResponse.serializer(), TokenRequest.serializer(), TokenRequest(label))
+
+    // --- content ---
+
+    suspend fun contentVersion() = call(HttpMethod.Get, "/api/content/version", ContentVersion.serializer()).version
+
+    suspend fun contentText(): String = send(HttpMethod.Get, "/api/content").bodyAsText()
+
+    fun parseContent(text: String): ContentBundle = BabyJson.decodeFromString(ContentBundle.serializer(), text)
+
+    // --- babies ---
+
+    suspend fun createBaby(request: BabyRequest) = call(HttpMethod.Post, "/api/babies", Baby.serializer(), BabyRequest.serializer(), request)
+
+    suspend fun updateBaby(id: String, request: BabyRequest) =
+        call(HttpMethod.Put, "/api/babies/$id", Baby.serializer(), BabyRequest.serializer(), request)
+
+    suspend fun deleteBaby(id: String) = noContent(HttpMethod.Delete, "/api/babies/$id")
+
+    suspend fun babyData(id: String) = call(HttpMethod.Get, "/api/babies/$id/data", BabyData.serializer())
+
+    // --- milestone log ---
+
+    suspend fun log(babyId: String, request: LogRequest) =
+        call(HttpMethod.Post, "/api/babies/$babyId/logs", MilestoneLog.serializer(), LogRequest.serializer(), request)
+
+    suspend fun backfill(babyId: String, entries: List<LogRequest>) = call(
+        HttpMethod.Post, "/api/babies/$babyId/logs/backfill", ListSerializer(MilestoneLog.serializer()),
+        BackfillRequest.serializer(), BackfillRequest(entries),
+    )
+
+    suspend fun updateLog(babyId: String, logId: String, request: LogUpdateRequest) =
+        call(HttpMethod.Patch, "/api/babies/$babyId/logs/$logId", MilestoneLog.serializer(), LogUpdateRequest.serializer(), request)
+
+    suspend fun removeLog(babyId: String, logId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/logs/$logId")
+
+    suspend fun notSure(babyId: String, milestoneId: String) =
+        call(HttpMethod.Post, "/api/babies/$babyId/not-sure", MilestoneLog.serializer(), NotSureRequest.serializer(), NotSureRequest(milestoneId))
+
+    // --- records ---
+
+    suspend fun addMoment(babyId: String, request: MomentRequest) =
+        call(HttpMethod.Post, "/api/babies/$babyId/moments", Moment.serializer(), MomentRequest.serializer(), request)
+
+    suspend fun deleteMoment(babyId: String, momentId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/moments/$momentId")
+
+    suspend fun appointment(babyId: String, type: String, request: AppointmentRequest) =
+        call(HttpMethod.Put, "/api/babies/$babyId/appointments/$type", AppointmentRecord.serializer(), AppointmentRequest.serializer(), request)
+
+    suspend fun vaccination(babyId: String, code: String, request: VaccinationRequest) =
+        call(HttpMethod.Put, "/api/babies/$babyId/vaccinations/$code", DoseRecord.serializer(), VaccinationRequest.serializer(), request)
+
+    suspend fun removeVaccination(babyId: String, code: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/vaccinations/$code")
+
+    suspend fun addReviewNote(babyId: String, text: String) =
+        call(HttpMethod.Post, "/api/babies/$babyId/review-notes", ReviewNote.serializer(), ReviewNoteRequest.serializer(), ReviewNoteRequest(text))
+
+    suspend fun resolveReviewNote(babyId: String, noteId: String, resolved: Boolean) =
+        call(HttpMethod.Patch, "/api/babies/$babyId/review-notes/$noteId", ReviewNote.serializer(), ResolveRequest.serializer(), ResolveRequest(resolved))
+
+    suspend fun deleteReviewNote(babyId: String, noteId: String) = noContent(HttpMethod.Delete, "/api/babies/$babyId/review-notes/$noteId")
+
+    // --- photos ---
+
+    suspend fun uploadPhoto(bytes: ByteArray, contentType: String): String {
+        val response = send(HttpMethod.Post, "/api/photos") {
+            contentType(ContentType.parse(contentType))
+            setBody(bytes)
+        }
+        return BabyJson.decodeFromString(PhotoResponse.serializer(), response.bodyAsText()).id
+    }
+
+    suspend fun photo(id: String): ByteArray = send(HttpMethod.Get, "/api/photos/$id").bodyAsBytes()
+
+    // --- assistant ---
+
+    suspend fun ask(babyId: String, messages: List<ChatMessage>) = call(
+        HttpMethod.Post, "/api/assistant/messages", AssistantReply.serializer(), AssistantRequest.serializer(),
+        AssistantRequest(babyId, messages),
+    )
+
+    suspend fun confirm(proposals: List<Proposal>) = call(
+        HttpMethod.Post, "/api/assistant/confirm", ListSerializer(ConfirmResult.serializer()), ConfirmRequest.serializer(),
+        ConfirmRequest(proposals),
+    )
+
+    suspend fun export(): String = send(HttpMethod.Get, "/api/export").bodyAsText()
+}

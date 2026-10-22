@@ -1,0 +1,50 @@
+{
+  "urgent_phrases": [
+    "not breathing", "stopped breathing", "struggling to breathe", "difficulty breathing", "trouble breathing",
+    "breathing fast", "breathing very fast", "grunting", "sucking in under", "blue lips", "turning blue", "turned blue",
+    "gone blue", "looks grey", "very pale", "blotchy", "floppy", "unresponsive", "won't wake", "can't wake",
+    "cannot wake", "hard to wake", "very sleepy", "having a fit", "had a fit", "seizure", "convulsion", "fitting",
+    "rash that doesn't fade", "rash doesn't fade", "non-blanching", "glass test", "fever", "high temperature",
+    "temperature of 38", "temperature of 39", "temperature of 40", "38 degrees", "39 degrees", "40 degrees",
+    "38c", "39c", "40c", "38°c", "39°c", "40°c", "not feeding", "won't feed", "refusing feeds", "refusing to feed",
+    "stopped feeding", "dry nappies", "no wet nappies", "fewer wet nappies", "green vomit", "vomiting green",
+    "green sick", "projectile vomiting", "keeps vomiting", "keeps being sick", "blood in", "bleeding",
+    "head injury", "hit his head", "hit her head", "hit their head", "banged his head", "banged her head",
+    "fell off", "swallowed", "button battery", "magnet", "choking", "choked", "burn", "burned", "burnt", "scald",
+    "poison", "dehydrated", "sunken soft spot", "sunken fontanelle", "bulging fontanelle", "bulging soft spot",
+    "stiff neck", "high-pitched cry", "high pitched cry", "meningitis", "sepsis", "yellow skin", "yellow eyes",
+    "allergic reaction", "swollen lips", "swollen face", "swollen tongue", "very unwell", "very ill", "seriously ill"
+  ],
+  "distress_phrases": [
+    "can't cope", "cannot cope", "not coping", "struggling to cope", "can't do this", "cannot do this",
+    "depressed", "depression", "hopeless", "worthless", "want to die", "wish i was dead", "kill myself",
+    "end it all", "suicidal", "suicide", "harm myself", "hurt myself", "self harm", "self-harm",
+    "hurt the baby", "hurt my baby", "harm the baby", "harm my baby", "shake the baby", "shake him", "shake her",
+    "so alone", "breaking down", "panic attack", "panic attacks", "anxious all the time", "can't stop crying",
+    "don't love my baby", "don't feel anything for", "regret having", "no point", "falling apart", "at breaking point"
+  ],
+  "urgent_card": {
+    "title": "Get help now if you're worried",
+    "body": "Call 999 if your child has stopped breathing, is struggling to breathe, turns blue or grey, cannot be woken, has a fit, or has a rash that doesn't fade when you press a glass on it. For urgent advice, for example a high temperature in a baby under 3 months (38°C or more), call NHS 111 or use 111 online. Trust your instincts: you know your child best.",
+    "signpost": "999 for emergencies · NHS 111 for urgent advice",
+    "urgency": "urgent"
+  },
+  "distress_card": {
+    "title": "You don't have to manage this alone",
+    "body": "It sounds like things are really hard right now. Your health visitor and GP support parents too, not just babies, so please tell them how you're feeling. If you feel you might harm yourself or your child, call 999 or go to A&E. For urgent mental health support, call NHS 111 and choose the mental health option, or call Samaritans free on 116 123 at any time.",
+    "signpost": "Health visitor or GP · NHS 111 (mental health option) · Samaritans 116 123 · 999 in an emergency",
+    "urgency": "urgent"
+  },
+  "medication_phrases": [
+    "calpol", "paracetamol", "ibuprofen", "nurofen", "dose", "dosage", "how much medicine", "antibiotic",
+    "antibiotics", "medicine", "medication", "teething gel", "gaviscon", "antihistamine", "piriton"
+  ],
+  "medication_card": {
+    "title": "Medicines and doses",
+    "body": "This app can't advise on medicines or doses. A pharmacist can tell you which medicines suit your child's age and weight and how much to give, or you can ask your GP or NHS 111.",
+    "signpost": "Pharmacist · GP · NHS 111",
+    "urgency": "routine"
+  },
+  "disclaimer": "This is general information, not medical advice. If you're worried about your child, talk to your health visitor or GP.",
+  "disclaimer_link": "https://www.nhs.uk/baby/babys-development/"
+}

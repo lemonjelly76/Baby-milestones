@@ -1,0 +1,244 @@
+[
+  {
+    "id": "cdc-ltsae-2022",
+    "title": "Learn the Signs. Act Early. Milestone checklists, 2 months to 5 years",
+    "publisher": "US Centers for Disease Control and Prevention with the American Academy of Pediatrics",
+    "year": 2022,
+    "url": "https://www.cdc.gov/act-early/milestones/index.html",
+    "kind": "checklist",
+    "note": "Each checklist lists milestones that most children (75% or more) reach by that age, so a missing milestone is a prompt to talk to a professional rather than a sign of being behind average. Public domain."
+  },
+  {
+    "id": "zubler-2022",
+    "title": "Evidence-Informed Milestones for Developmental Surveillance Tools (Zubler JM, Wiggins LD, Macias MM, et al.)",
+    "publisher": "Pediatrics 149(3):e2021052138",
+    "year": 2022,
+    "url": "https://doi.org/10.1542/peds.2021-052138",
+    "kind": "study",
+    "note": "The evidence review behind the 2022 CDC/AAP checklists: an expert working group chose milestones from published normative data; about 80% of final milestones had normative data from multiple sources. Social-emotional and cognitive milestones had the least normative data."
+  },
+  {
+    "id": "who-mgrs-motor-2006",
+    "title": "WHO Motor Development Study: windows of achievement for six gross motor development milestones (Martorell R, de Onis M, et al.)",
+    "publisher": "Acta Paediatrica 95(S450):86-95, WHO Multicentre Growth Reference Study",
+    "year": 2006,
+    "url": "https://www.who.int/tools/child-growth-standards/standards/motor-development-milestones",
+    "kind": "study",
+    "note": "Longitudinal data from healthy children in Ghana, India, Norway, Oman and the USA. Windows run from the 1st to the 99th percentile. 4.3% of children never crawled on hands and knees."
+  },
+  {
+    "id": "who-2019-under5",
+    "title": "Guidelines on physical activity, sedentary behaviour and sleep for children under 5 years of age",
+    "publisher": "World Health Organization",
+    "year": 2019,
+    "url": "https://www.who.int/publications/i/item/9789241550536",
+    "kind": "guideline",
+    "note": "Infants: floor-based play several times a day, at least 30 minutes of tummy time spread through the day for those not yet mobile, no screen time, not restrained for more than an hour at a time. Sleep 14-17 hours (0-3 months), 12-16 hours (4-11 months), 11-14 hours (1-2 years), 10-13 hours (3-4 years). Screen time not recommended under 2; no more than 1 hour a day at 2-4 years."
+  },
+  {
+    "id": "hewitt-2020-tummy-time",
+    "title": "Tummy time and infant health outcomes: a systematic review (Hewitt L, Kerr E, Stanley RM, Okely AD)",
+    "publisher": "Pediatrics 145(6):e20192168",
+    "year": 2020,
+    "url": "https://doi.org/10.1542/peds.2019-2168",
+    "kind": "systematic_review",
+    "note": "16 studies, 4,237 infants: tummy time was positively associated with gross motor and total development and with preventing brachycephaly (flat head)."
+  },
+  {
+    "id": "romeo-2018-conversation",
+    "title": "Beyond the 30-million-word gap: children's conversational exposure is associated with language-related brain function (Romeo RR, et al.)",
+    "publisher": "Psychological Science 29(5):700-710",
+    "year": 2018,
+    "url": "https://doi.org/10.1177/0956797617742725",
+    "kind": "study",
+    "note": "Back-and-forth conversational turns with adults, more than the number of words heard, were linked to children's language skills and language-related brain activity."
+  },
+  {
+    "id": "aap-2024-literacy",
+    "title": "Literacy promotion: an essential component of primary care pediatric practice. Policy statement (Klass P, Miller-Fitzwater A, High PC)",
+    "publisher": "Pediatrics 154(6):e2024069090, American Academy of Pediatrics",
+    "year": 2024,
+    "url": "https://doi.org/10.1542/peds.2024-069090",
+    "kind": "guideline",
+    "note": "Recommends shared reading from birth; the accompanying technical report reviews evidence that it supports language, cognitive and social-emotional development."
+  },
+  {
+    "id": "aap-2022-safe-sleep",
+    "title": "Sleep-related infant deaths: updated 2022 recommendations for reducing infant deaths in the sleep environment (Moon RY, Carlin RF, Hand I)",
+    "publisher": "Pediatrics 150(1):e2022057990, American Academy of Pediatrics",
+    "year": 2022,
+    "url": "https://doi.org/10.1542/peds.2022-057990",
+    "kind": "guideline"
+  },
+  {
+    "id": "lullaby-safer-sleep",
+    "title": "Safer sleep advice",
+    "publisher": "The Lullaby Trust",
+    "year": 2024,
+    "url": "https://www.lullabytrust.org.uk/safer-sleep-advice/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-sids",
+    "title": "Reduce the risk of sudden infant death syndrome (SIDS)",
+    "publisher": "NHS",
+    "year": 2024,
+    "url": "https://www.nhs.uk/baby/caring-for-a-newborn/reduce-the-risk-of-sudden-infant-death-syndrome/",
+    "kind": "public_health"
+  },
+  {
+    "id": "sacn-2018-first-year",
+    "title": "Feeding in the first year of life",
+    "publisher": "Scientific Advisory Committee on Nutrition (SACN)",
+    "year": 2018,
+    "url": "https://www.gov.uk/government/publications/feeding-in-the-first-year-of-life-sacn-report",
+    "kind": "guideline",
+    "note": "UK evidence review behind the advice to introduce solid foods at around 6 months and not to delay common allergens such as egg and peanut once weaning starts."
+  },
+  {
+    "id": "du-toit-2015-leap",
+    "title": "Randomized trial of peanut consumption in infants at risk for peanut allergy (LEAP; Du Toit G, et al.)",
+    "publisher": "New England Journal of Medicine 372:803-813",
+    "year": 2015,
+    "url": "https://doi.org/10.1056/NEJMoa1414850",
+    "kind": "study",
+    "note": "Early introduction of peanut lowered peanut allergy in high-risk infants. Babies with severe eczema or a known allergy should get advice before introducing peanut."
+  },
+  {
+    "id": "nhs-weaning",
+    "title": "Weaning (Start for Life)",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/start-for-life/baby/weaning/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-feeding",
+    "title": "Breastfeeding and bottle feeding",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/breastfeeding-and-bottle-feeding/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-sleep",
+    "title": "Helping your baby to sleep",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/caring-for-a-newborn/helping-your-baby-to-sleep/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-talk",
+    "title": "Help your baby learn to talk",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/babys-development/play-and-learning/help-your-baby-learn-to-talk/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-play",
+    "title": "Baby and toddler play ideas",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/babys-development/play-and-learning/baby-and-toddler-play-ideas/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-behaviour",
+    "title": "Baby and toddler behaviour",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/babys-development/behaviour/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-safety",
+    "title": "Baby and toddler safety",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/first-aid-and-safety/safety/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-teeth",
+    "title": "Taking care of children's teeth",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/live-well/healthy-teeth-and-gums/taking-care-of-childrens-teeth/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-reviews",
+    "title": "Baby reviews: your baby's health and development checks",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/babys-development/height-weight-and-reviews/baby-reviews/",
+    "kind": "public_health"
+  },
+  {
+    "id": "hcp-england",
+    "title": "Healthy Child Programme 0 to 19: health visitor and school nurse commissioning",
+    "publisher": "Office for Health Improvement and Disparities, GOV.UK",
+    "year": 2023,
+    "url": "https://www.gov.uk/government/publications/healthy-child-programme-0-to-19-health-visitor-and-school-nurse-commissioning",
+    "kind": "guideline",
+    "note": "Sets the five mandated health visitor contacts in England: antenatal, new birth visit, 6-8 week review, 1 year review and 2 to 2.5 year review."
+  },
+  {
+    "id": "nhs-vaccinations",
+    "title": "NHS vaccinations and when to have them",
+    "publisher": "NHS",
+    "year": 2026,
+    "url": "https://www.nhs.uk/vaccinations/nhs-vaccinations-and-when-to-have-them/",
+    "kind": "public_health"
+  },
+  {
+    "id": "ukhsa-2026-schedule",
+    "title": "Changes to the childhood vaccination schedule from January 2026",
+    "publisher": "UK Health Security Agency",
+    "year": 2025,
+    "url": "https://ukhsa.blog.gov.uk/2025/12/30/changes-to-the-childhood-vaccination-schedule-from-january-2026/",
+    "kind": "public_health"
+  },
+  {
+    "id": "phs-immunisations",
+    "title": "Baby and child immunisations",
+    "publisher": "Public Health Scotland",
+    "year": 2026,
+    "url": "https://www.publichealthscotland.scot/our-areas-of-work/immunisations/immunisations-by-group/baby-and-child/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-seriously-ill",
+    "title": "Is your baby or toddler seriously ill?",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/health/is-your-baby-or-toddler-seriously-ill/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-postnatal-depression",
+    "title": "Postnatal depression",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/mental-health/conditions/post-natal-depression/overview/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-development",
+    "title": "Your baby's development",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/babys-development/",
+    "kind": "public_health"
+  },
+  {
+    "id": "nhs-toddler",
+    "title": "Toddler (Start for Life)",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/start-for-life/toddler/",
+    "kind": "public_health"
+  }
+]
