@@ -185,6 +185,7 @@ private fun FoodsCard(view: BabyView, viewModel: AppViewModel, onFoods: () -> Un
                             foodId = p.item.foodId, name = if (p.item.foodId == null) p.item.name else null,
                         ), "Logged ${p.item.name}")
                     })
+                    FoodThumb(p.item.foodId?.let(view.content::food), 36.dp, Modifier.padding(end = 8.dp))
                     Text(p.item.name)
                 }
             }

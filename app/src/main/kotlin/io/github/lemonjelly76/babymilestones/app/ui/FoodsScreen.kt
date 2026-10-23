@@ -47,8 +47,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import io.github.lemonjelly76.babymilestones.app.data.BabyView
@@ -63,6 +65,7 @@ import io.github.lemonjelly76.babymilestones.core.food.FoodProgress
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.Liking
 import io.github.lemonjelly76.babymilestones.core.food.PlanDayItem
+import io.github.lemonjelly76.babymilestones.core.food.PlanKind
 import io.github.lemonjelly76.babymilestones.core.food.PlanSource
 import io.github.lemonjelly76.babymilestones.core.food.PlannedFood
 import java.time.LocalDate
@@ -110,7 +113,7 @@ fun FoodsScreen(state: AppState, babyId: String, viewModel: AppViewModel, onBack
         },
     ) { padding ->
         Column(Modifier.padding(padding).fillMaxSize().verticalScroll(rememberScrollState()).then(ScreenPadding)) {
-            FoodsHeader(view)
+            FoodsHeader(view, showGroups = filter == FoodFilter.TRIED)
             if (view.foods.reactions.isNotEmpty()) ReactionsCard(view, onOpenGuide)
 
             Row(Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 8.dp), horizontalArrangement = Gap) {
@@ -130,7 +133,7 @@ fun FoodsScreen(state: AppState, babyId: String, viewModel: AppViewModel, onBack
                             detail = "Offered ${p.timesOffered} ${if (p.timesOffered == 1) "time" else "times"} · last ${p.lastOffered.format(DAY_SHORT)}" +
                                 (p.lastLiking?.let { " · ${it.label.lowercase()}" } ?: "") +
                                 (if (p.keepOffering) " · keep offering" else ""),
-                            tried = true,
+                            markTried = false,
                             onOpen = { open = target(p) },
                             onLog = { quickLog(target(p)) },
                             food = p.foodId?.let(content::food),
@@ -160,13 +163,13 @@ fun FoodsScreen(state: AppState, babyId: String, viewModel: AppViewModel, onBack
 }
 
 @Composable
-private fun FoodsHeader(view: BabyView) {
+private fun FoodsHeader(view: BabyView, showGroups: Boolean) {
     val foods = view.foods
     InfoCard(color = MaterialTheme.colorScheme.primaryContainer) {
         Text("${foods.tried} ${if (foods.tried == 1) "food" else "foods"} tried", style = MaterialTheme.typography.titleLarge)
         Text("Variety and repetition matter more than a number: keep offering what isn't liked yet.",
             style = MaterialTheme.typography.bodySmall)
-        foods.groups.filter { it.group != FoodGroup.OTHER }.forEach { g ->
+        if (showGroups) foods.groups.filter { it.group != FoodGroup.OTHER }.forEach { g ->
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 6.dp)) {
                 Text(g.group.label, style = MaterialTheme.typography.bodySmall, modifier = Modifier.width(140.dp))
                 LinearProgressIndicator(
@@ -223,19 +226,25 @@ private fun FoodPlanSection(
     LinearProgressIndicator(progress = { done.toFloat() / plan.size }, modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp))
     val (earlier, coming) = view.planDays.partition { it.date.isBefore(view.today) }
     val missed = earlier.flatMap { it.items }.filterNot { it.progress.done }
+    @Composable fun row(entry: PlanDayItem, detailed: Boolean, dayHasNote: Boolean = false) = PlanRow(
+        entry, entry.progress.item.foodId?.let(content::food), canEdit, detailed, dayHasNote,
+        onOpen = { onOpen(target(entry.progress.item)) }, onLog = { onLog(target(entry.progress.item)) },
+    )
     if (missed.isNotEmpty()) {
-        Text("Earlier, not logged yet", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(top = 8.dp))
-        missed.forEach { PlanRow(it, it.progress.item.foodId?.let(content::food), canEdit, onOpen = { onOpen(target(it.progress.item)) }, onLog = { onLog(target(it.progress.item)) }) }
+        PlanDayTitle("Earlier, not logged yet")
+        missed.forEach { row(it, detailed = true) }
     }
-    coming.forEach { day ->
-        Text(dayLabel(day.date, view.today), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(top = 12.dp))
+    var showAll by rememberSaveable { mutableStateOf(false) }
+    val shown = if (showAll) coming else coming.take(PLAN_DAYS_SHOWN)
+    shown.forEach { day ->
+        PlanDayTitle(dayLabel(day.date, view.today))
         day.note?.let { note ->
             InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer) { Text(note, style = MaterialTheme.typography.bodySmall) }
         }
-        day.items.forEach { PlanRow(it, it.progress.item.foodId?.let(content::food), canEdit, onOpen = { onOpen(target(it.progress.item)) }, onLog = { onLog(target(it.progress.item)) }) }
+        val detailed = !day.date.isAfter(view.today.plusDays(1))
+        day.items.forEach { row(it, detailed, dayHasNote = day.note != null) }
     }
+    if (coming.size > shown.size) TextButton(onClick = { showAll = true }) { Text("Show the next ${coming.size - shown.size} days") }
     if (canEdit) Row(horizontalArrangement = Gap, modifier = Modifier.padding(vertical = 8.dp)) {
         OutlinedButton(onClick = { replacing = true }) { Text("New plan") }
         OutlinedButton(onClick = { openClaude(context, claudePrompt) }) { Text("Ask Claude") }
@@ -249,27 +258,44 @@ private fun FoodPlanSection(
 }
 
 @Composable
-private fun PlanRow(entry: PlanDayItem, food: Food?, canEdit: Boolean, onOpen: () -> Unit, onLog: () -> Unit) {
+private fun PlanDayTitle(text: String) {
+    Text(text, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier.padding(top = 12.dp))
+}
+
+/**
+ * One planned food. Detailed rows (missed, today and tomorrow) say why, when it was had before and how to serve it;
+ * later days just name the food, and its card has the rest. A new allergen's reason is left out under the day's note,
+ * which already says it.
+ */
+@Composable
+private fun PlanRow(
+    entry: PlanDayItem, food: Food?, canEdit: Boolean, detailed: Boolean, dayHasNote: Boolean, onOpen: () -> Unit, onLog: () -> Unit,
+) {
     val progress = entry.progress
     val item = progress.item
-    Row(Modifier.fillMaxWidth().clickable(onClick = onOpen), verticalAlignment = Alignment.Top) {
+    Row(Modifier.fillMaxWidth().clickable(onClick = onOpen), verticalAlignment = if (detailed) Alignment.Top else Alignment.CenterVertically) {
         Checkbox(progress.done, { if (!progress.done) onLog() }, enabled = canEdit && !progress.done)
-        Column(Modifier.padding(top = 10.dp)) { FoodThumb(food, 44.dp) }
-        Column(Modifier.weight(1f).padding(vertical = 10.dp)) {
+        FoodThumb(food, 44.dp, Modifier.padding(top = if (detailed) 10.dp else 0.dp, end = 12.dp))
+        Column(Modifier.weight(1f).padding(vertical = if (detailed) 10.dp else 6.dp)) {
             Text(item.name, style = MaterialTheme.typography.bodyLarge,
                 textDecoration = if (progress.done) TextDecoration.LineThrough else null)
             val small = MaterialTheme.typography.bodySmall
             val muted = MaterialTheme.colorScheme.onSurfaceVariant
-            if (progress.doneOn != null) {
-                Text("Logged ${progress.doneOn!!.format(DAY_SHORT)}", style = small, color = muted)
-            } else {
-                Text(item.reason ?: item.kind.label, style = small, color = muted)
-                entry.hadBefore?.let { Text(it, style = small, color = muted) }
-                entry.howToServe?.let { Text("How to serve: $it", style = small, modifier = Modifier.padding(top = 2.dp)) }
+            when {
+                progress.doneOn != null -> Text("Logged ${progress.doneOn!!.format(DAY_SHORT)}", style = small, color = muted)
+                !detailed -> Text(item.kind.label, style = small, color = muted)
+                else -> {
+                    if (!(dayHasNote && item.kind == PlanKind.NEW_ALLERGEN)) Text(item.reason ?: item.kind.label, style = small, color = muted)
+                    entry.hadBefore?.let { Text(it, style = small, color = muted) }
+                    entry.howToServe?.let { Text("How to serve: $it", style = small, modifier = Modifier.padding(top = 2.dp)) }
+                }
             }
         }
     }
 }
+
+private const val PLAN_DAYS_SHOWN = 5
 
 private fun dayLabel(date: LocalDate, today: LocalDate): String = when (date) {
     today -> "Today"
@@ -281,19 +307,22 @@ private fun dayLabel(date: LocalDate, today: LocalDate): String = when (date) {
 private fun TryNext(
     view: BabyView, content: ContentBundle, onOpen: (FoodTarget) -> Unit, onLog: (FoodTarget) -> Unit, onOpenGuide: (String) -> Unit,
 ) {
-    val suggestions = view.foods.suggestions
-    if (suggestions.isEmpty()) {
+    // Foods still to come in the plan are already listed above it.
+    val planned = view.plan.filterNot { it.done }.mapNotNull { it.item.foodId }.toSet()
+    val suggestions = view.foods.suggestions.filterNot { it.foodId in planned }
+    if (view.foods.suggestions.isEmpty()) {
         InfoCard(onClick = { onOpenGuide("guide.ready_for_solids") }) {
             Text("The NHS recommends starting solid food at around 6 months. See the signs of readiness ›")
         }
         return
     }
-    SectionTitle("Ideas right now")
+    if (suggestions.isEmpty()) return
+    SectionTitle(if (planned.isEmpty()) "Ideas right now" else "More ideas")
     Text("Worked out from what ${view.baby.name} has tried, following NHS weaning advice.",
         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     suggestions.forEach { s ->
         val food = content.food(s.foodId) ?: return@forEach
-        FoodRow(food.name, s.reason, tried = view.foods.progress(food.id) != null,
+        FoodRow(food.name, s.reason, markTried = view.foods.progress(food.id) != null,
             onOpen = { onOpen(FoodTarget.of(food)) }, onLog = { onLog(FoodTarget.of(food)) }, food = food)
     }
 }
@@ -314,7 +343,7 @@ private fun AllFoods(view: BabyView, content: ContentBundle, onOpen: (FoodTarget
                 if (f.ironRich) add("iron-rich")
                 if (f.chokingRisk) add("prepare carefully")
             }
-            FoodRow(f.name, tags.joinToString(" · ").ifEmpty { null }, tried = view.foods.progress(f.id) != null,
+            FoodRow(f.name, tags.joinToString(" · ").ifEmpty { null }, markTried = view.foods.progress(f.id) != null,
                 onOpen = { onOpen(FoodTarget.of(f)) }, onLog = if (f.suitableAt(view.ageMonths)) ({ onLog(FoodTarget.of(f)) }) else null,
                 food = f)
         }
@@ -341,24 +370,22 @@ private fun Allergens(view: BabyView, content: ContentBundle, onOpen: (FoodTarge
                 }
                 if (status.state == AllergenState.INTRODUCED) Icon(Icons.Outlined.CheckCircle, null, tint = MaterialTheme.colorScheme.primary)
             }
-            Row(Modifier.horizontalScroll(rememberScrollState())) {
+            Row(Modifier.horizontalScroll(rememberScrollState()).padding(top = 8.dp), horizontalArrangement = Gap) {
                 content.foods.filter { status.allergen in it.allergens && it.suitableAt(view.ageMonths) }
-                    .sortedBy { it.allergens.size }.take(4).forEach { f ->
-                    TextButton(onClick = { onOpen(FoodTarget.of(f)) }) { Text(f.name) }
-                }
+                    .sortedBy { it.allergens.size }.take(4).forEach { f -> FoodTile(f) { onOpen(FoodTarget.of(f)) } }
             }
         }
     }
 }
 
 @Composable
-private fun FoodRow(name: String, detail: String?, tried: Boolean, onOpen: () -> Unit, onLog: (() -> Unit)?, food: Food? = null) {
+private fun FoodRow(name: String, detail: String?, markTried: Boolean, onOpen: () -> Unit, onLog: (() -> Unit)?, food: Food? = null) {
     Row(Modifier.fillMaxWidth().clickable(onClick = onOpen).padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
         FoodThumb(food)
         Column(Modifier.weight(1f)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(name, style = MaterialTheme.typography.bodyLarge)
-                if (tried) Icon(Icons.Outlined.CheckCircle, "Tried", tint = MaterialTheme.colorScheme.primary,
+                if (markTried) Icon(Icons.Outlined.CheckCircle, "Tried", tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(start = 6.dp))
             }
             detail?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
@@ -465,6 +492,17 @@ private fun FoodSheet(
     deleting?.let { id ->
         ConfirmDialog("Remove this entry?", "It will no longer count towards ${target.name}.", "Remove",
             { viewModel.removeFood(babyId, id) }, { deleting = null })
+    }
+}
+
+/** A photo with the food's name under it, for picking a food to open. */
+@Composable
+private fun FoodTile(food: Food, onClick: () -> Unit) {
+    Column(Modifier.width(76.dp).clip(RoundedCornerShape(8.dp)).clickable(onClick = onClick).padding(bottom = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        FoodThumb(food, 72.dp, Modifier)
+        Text(food.name, style = MaterialTheme.typography.labelMedium, textAlign = TextAlign.Center, maxLines = 2,
+            modifier = Modifier.padding(top = 4.dp))
     }
 }
 

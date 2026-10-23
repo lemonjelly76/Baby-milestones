@@ -11,10 +11,10 @@
     ],
     "image": {
       "file": "food/broccoli.jpg",
-      "author": "Horacio Cambeiro",
-      "licence": "CC BY-SA 3.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Cooked_broccoli_florets_in_a_textured_glass_bowl.jpg",
-      "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+      "author": "Forest and Kim Starr",
+      "licence": "CC BY 3.0 US",
+      "source": "https://commons.wikimedia.org/wiki/File:Starr-091108-9387-Brassica_oleracea_var_botrytis-broccoli_florets-Olinda-Maui_(24962924176).jpg",
+      "licence_url": "https://creativecommons.org/licenses/by/3.0/us/"
     },
     "sources": [
       "nhs-what-to-feed",
