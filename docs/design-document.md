@@ -319,11 +319,9 @@ page; all credits are listed under Settings, and kept in `docs/food-photo-credit
 the serving advice, so the egg photo shows whole eggs rather than a runny yolk. No photo yet: baby cereal, leek,
 parsnip, soya yoghurt (no clear, openly licensed picture found).
 
-The photos show foods as bought, so on a food that needs preparing to lower the choking risk (grapes, cherry tomatoes,
-raisins…) the card's photo carries "As bought, not as served", pointing to the serving advice under it. Foods without a
-photo, and the family's own foods, get a plain tile the same size, so lists stay aligned. With a photo on every plan
-row, only missed foods, today and tomorrow show the full detail (why, had before, how to serve); later days are one line
-each, and only the next five days show until asked.
+Foods without a photo, and the family's own foods, get a plain tile the same size, so lists stay aligned. With a photo
+on every plan row, only missed foods, today and tomorrow show the full detail (why, had before, how to serve); later
+days are one line each, and only the next five days show until asked.
 
 ### ADR-013 Out of this build — Deferred
 

@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
@@ -72,11 +71,7 @@ fun FoodThumb(food: Food?, size: Dp = 48.dp, modifier: Modifier = Modifier.paddi
     }
 }
 
-/**
- * The full-width photo on a food's card, with its credit linking to the source. The photos show the food as you'd
- * buy it, so for foods that need preparing to lower the choking risk the photo says so, rather than look like a way
- * to serve it.
- */
+/** The full-width photo on a food's card, with its credit linking to the source. */
 @Composable
 fun FoodHeroPhoto(food: Food?) {
     val image = food?.image ?: return
@@ -88,14 +83,6 @@ fun FoodHeroPhoto(food: Food?) {
         ) {
             foodBitmap(image.file, 480)?.let {
                 Image(it.asImageBitmap(), food.name, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-            }
-            if (food.chokingRisk) Surface(
-                color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.85f),
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.align(Alignment.BottomStart).padding(8.dp),
-            ) {
-                Text("As bought, not as served: see how to prepare it below.", style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.inverseOnSurface, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
             }
         }
         Text(image.credit + " (cropped)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
