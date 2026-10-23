@@ -25,6 +25,7 @@ summary to health visitor reviews. An AI assistant answers from the same data, n
 - Development notes about a child are health data (special category under UK GDPR): store little, keep it in the
   family, keep it in the UK.
 - Family use: a private APK and the existing always-on home server, like music-player and garmin-ai.
+- Other families may have only a computer on their home WiFi, without Tailscale (ADR-027).
 - claude.ai reaches custom connectors from Anthropic's cloud, so `/mcp` must be on public HTTPS to use it there.
 
 ## 4. Decision log
@@ -347,6 +348,23 @@ regaining birth weight, registering the birth, the crying peak, the 8, 12 and 16
   at 3 to 6 months), very fast or difficult breathing, clammy skin and a weak, high-pitched or continuous cry under
   "call 999 or go to A&E". The urgent-help guide and the app's emergency card said NHS 111 for the temperatures; both
   now match the NHS page.
+
+### ADR-027 Home WiFi without Tailscale — Accepted
+
+Another family should be able to run it with only a computer and their WiFi. Android release builds refuse plain HTTP
+by default, and a home server has no trusted certificate without something like Tailscale, so the app used to need
+Tailscale.
+
+- **Plain HTTP only to the home network (`app.data.ServerAddress`):** release builds allow cleartext, and the app
+  accepts `http://` only for private and link-local addresses (10/8, 172.16/12, 192.168/16, 169.254/16, IPv6 fc00::/7
+  and fe80::/10), Tailscale's 100.64/10, `localhost`, single-label names and `.local`, `.lan`, `.home.arpa` and
+  `.internal` names. Anything else must be `https://`. The setup screen checks as you type, an address without a
+  scheme gets `http://` on the home network and `https://` otherwise, and `ApiClient` checks again before every call.
+- **Trade-off:** on plain HTTP the family's data and bearer token cross the home WiFi unencrypted. That's acceptable on
+  a trusted home network and the user's choice; Tailscale (or another HTTPS address) remains the recommended setup
+  and also works away from home.
+- **What doesn't work on WiFi alone:** the Claude connector, because claude.ai calls it from the internet. Settings
+  says so when the connector address is a home one. Away from home the app shows what it last loaded.
 
 ### ADR-013 Out of this build — Deferred
 

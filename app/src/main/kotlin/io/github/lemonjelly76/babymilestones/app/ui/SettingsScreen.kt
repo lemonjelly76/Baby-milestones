@@ -125,6 +125,11 @@ fun SettingsScreen(state: AppState, viewModel: AppViewModel, onBack: () -> Unit,
                 Text("Copied to the clipboard. Making a new token replaces this one.", style = MaterialTheme.typography.bodySmall)
             }
             Text("Connector address: $endpoint", style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
+            if (state.me?.mcpUrl == null && endpoint.startsWith("http://")) Text(
+                "Claude reaches connectors from the internet, so it can't use a home WiFi address. To use Claude, publish the " +
+                    "server's /mcp on a public https address (for example with Tailscale Funnel) and set MCP_PUBLIC_URL.",
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 4.dp),
+            )
             Toggle("In-app assistant (Ask here)", state.assistantEnabled) { viewModel.setAssistantEnabled(it) }
             Text("Off by default. When on, each message is answered by the Claude API on your server, which is charged per use. " +
                 "Only the text of your questions is sent, never photos.", style = MaterialTheme.typography.bodySmall)

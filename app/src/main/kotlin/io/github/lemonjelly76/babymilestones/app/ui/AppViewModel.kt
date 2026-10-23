@@ -8,6 +8,7 @@ import io.github.lemonjelly76.babymilestones.app.data.BabyView
 import io.github.lemonjelly76.babymilestones.app.data.LocalStore
 import io.github.lemonjelly76.babymilestones.app.data.NotificationSettings
 import io.github.lemonjelly76.babymilestones.app.data.Repository
+import io.github.lemonjelly76.babymilestones.app.data.ServerAddress
 import io.github.lemonjelly76.babymilestones.app.notify.Reminders
 import io.github.lemonjelly76.babymilestones.core.api.AppointmentRequest
 import io.github.lemonjelly76.babymilestones.core.api.BabyData
@@ -158,7 +159,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     // --- setup and family ---
 
     fun setServer(url: String) {
-        store.serverUrl = url
+        store.serverUrl = (ServerAddress.check(url) as? ServerAddress.Valid)?.url ?: url
         _state.update { it.copy(serverUrl = store.serverUrl) }
     }
 

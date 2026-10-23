@@ -45,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import io.github.lemonjelly76.babymilestones.app.data.ServerAddress
 import io.github.lemonjelly76.babymilestones.core.age.AgeEngine
 import io.github.lemonjelly76.babymilestones.core.age.BabyDates
 import io.github.lemonjelly76.babymilestones.core.api.BabyRequest
@@ -82,9 +83,19 @@ fun SetupScreen(state: AppState, viewModel: AppViewModel, invite: Invite?, onInv
         Text("Track your baby's development from birth to 5, with guidance from the CDC, WHO and NHS.",
             style = MaterialTheme.typography.bodyMedium)
         Spacer(Modifier.height(8.dp))
+        val address = ServerAddress.check(server)
         OutlinedTextField(server, { server = it }, label = { Text("Family server address") },
-            placeholder = { Text("https://home.example.ts.net:8445") }, singleLine = true, modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri))
+            placeholder = { Text("http://192.168.1.20:8083") }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
+            isError = server.isNotBlank() && address is ServerAddress.Invalid,
+            supportingText = {
+                when {
+                    server.isBlank() -> Text("On home WiFi, the computer's address and port, for example http://192.168.1.20:8083.")
+                    address is ServerAddress.Invalid -> Text(address.message)
+                    address is ServerAddress.Valid && address.plainHttp ->
+                        Text("A home network address: it works on your home WiFi. Away from home you can still read what's on the phone.")
+                }
+            })
 
         SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
             SegmentedButton(!joining, { joining = false }, SegmentedButtonDefaults.itemShape(0, 2)) { Text("New family") }
@@ -105,7 +116,7 @@ fun SetupScreen(state: AppState, viewModel: AppViewModel, invite: Invite?, onInv
             }
             Button(
                 onClick = { viewModel.setServer(server); viewModel.join(code, name, email.ifBlank { null }, role) },
-                enabled = server.isNotBlank() && code.length >= 6 && name.isNotBlank() && !state.busy,
+                enabled = address is ServerAddress.Valid && code.length >= 6 && name.isNotBlank() && !state.busy,
                 modifier = Modifier.fillMaxWidth(),
             ) { Text("Join family") }
         } else {
@@ -122,7 +133,7 @@ fun SetupScreen(state: AppState, viewModel: AppViewModel, invite: Invite?, onInv
                     viewModel.setServer(server)
                     viewModel.createFamily(familyName, region, name, email.ifBlank { null }, setupCode.ifBlank { null })
                 },
-                enabled = server.isNotBlank() && name.isNotBlank() && !state.busy,
+                enabled = address is ServerAddress.Valid && name.isNotBlank() && !state.busy,
                 modifier = Modifier.fillMaxWidth(),
             ) { Text("Create family") }
         }

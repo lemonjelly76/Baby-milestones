@@ -57,25 +57,35 @@ departs from it, is in [`docs/design-document.md`](docs/design-document.md).
 | `app/` | Android, Kotlin, Jetpack Compose, Material 3, Ktor client, WorkManager reminders |
 | `docs/design-document.md` | Decisions (ADRs), sources, requirement coverage, open questions |
 
-## Running the server
+## Setting up your own
 
-On the home server, next to the other apps:
+You need a computer that's always on (a PC, NAS or Raspberry Pi 4 or later) with Docker, and Android phones.
 
 ```
-cp .env.example .env    # set POSTGRES_PASSWORD, SETUP_CODE, MCP_PUBLIC_URL and, for the optional in-app assistant, ANTHROPIC_API_KEY
+git clone https://github.com/lemonjelly76/Baby-milestones.git && cd Baby-milestones
+cp .env.example .env    # set POSTGRES_PASSWORD and SETUP_CODE (openssl rand -hex 8 for each)
 docker compose up -d --build
 ```
 
-The server listens on port 8083. Publish it to the tailnet over HTTPS for the app, and publish only `/mcp` to the
-internet with Tailscale Funnel so claude.ai can reach it, as for music-player and garmin-ai:
+The server listens on port 8083 (`APP_PORT` changes it). Then choose how the phones reach it:
 
-```
-tailscale serve --bg --https=8445 http://127.0.0.1:8083
-tailscale funnel --bg --set-path=/baby-mcp http://127.0.0.1:8083/mcp
-```
+- **Home WiFi only:** use the computer's address, for example `http://192.168.1.20:8083` (find it with `ip addr` or
+  in your router; give the computer a fixed address there so it doesn't change). Phones must be on the same WiFi;
+  away from home the app shows what it last loaded. Plain `http://` is only accepted for home network addresses, and
+  traffic on your WiFi isn't encrypted. If phones can't connect, allow port 8083 in the computer's firewall. The
+  Claude connector can't work this way because claude.ai calls it from the internet.
+- **Tailscale (recommended):** HTTPS, works away from home, and lets claude.ai reach the connector. Install Tailscale
+  on the computer and each phone, then:
 
-The app then uses `https://<pc>.<tailnet>.ts.net:8445`, and the claude.ai connector
-`https://<pc>.<tailnet>.ts.net/baby-mcp` with a token from Settings → **Create connector token**.
+  ```
+  tailscale serve --bg --https=8445 http://127.0.0.1:8083
+  tailscale funnel --bg --set-path=/baby-mcp http://127.0.0.1:8083/mcp   # only /mcp is public, for claude.ai
+  ```
+
+  The app then uses `https://<pc>.<tailnet>.ts.net:8445`. Set `MCP_PUBLIC_URL=https://<pc>.<tailnet>.ts.net/baby-mcp`
+  in `.env` so Settings shows the connector address, and run `docker compose up -d` again.
+
+For the optional in-app assistant (charged per message), set `ANTHROPIC_API_KEY` in `.env`.
 
 ## Building and testing
 
@@ -87,8 +97,8 @@ export JAVA_HOME=~/.sdkman/candidates/java/21.0.12+1.1-tem
 ./gradlew :app:assembleRelease
 ```
 
-Install `app/build/outputs/apk/release/app-release.apk` on each phone (private APK, signed with the debug key).
-Debug builds may use a plain-HTTP server address; release builds need HTTPS.
+Install `app/build/outputs/apk/release/app-release.apk` on each phone (private APK, signed with the debug key; allow
+installing from unknown sources). The APK isn't tied to a server: the address is entered on the first screen.
 
 ## First use
 

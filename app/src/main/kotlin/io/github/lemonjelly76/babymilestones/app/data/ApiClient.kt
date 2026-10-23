@@ -84,7 +84,11 @@ class ApiClient(
     },
 ) {
     private suspend fun send(method: HttpMethod, path: String, configure: HttpRequestBuilder.() -> Unit = {}): HttpResponse {
-        val response = http.request(baseUrl().trimEnd('/') + path) {
+        val server = when (val address = ServerAddress.check(baseUrl())) {
+            is ServerAddress.Valid -> address.url
+            is ServerAddress.Invalid -> throw ApiException(0, address.message)
+        }
+        val response = http.request(server + path) {
             this.method = method
             token()?.let { header("Authorization", "Bearer $it") }
             configure()

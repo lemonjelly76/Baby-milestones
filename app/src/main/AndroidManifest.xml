@@ -9,9 +9,12 @@
         <package android:name="com.anthropic.claude" />
     </queries>
 
-    <!-- Health data stays on the phone and the family's server: no Android cloud backup. -->
+    <!-- Health data stays on the phone and the family's server: no Android cloud backup.
+         Cleartext is allowed so a family can run the server on home WiFi alone; ServerAddress only lets plain HTTP
+         go to home-network addresses. -->
     <application
         android:allowBackup="false"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
