@@ -137,7 +137,7 @@ private fun FoodsSummaryCard(view: BabyView, onOpenFoods: () -> Unit) {
 
 /** A guide in a list: title, one line of summary, and checklist progress. */
 @Composable
-private fun GuideRow(guide: Guide, view: BabyView, onClick: () -> Unit, from: Boolean = false) {
+fun GuideRow(guide: Guide, view: BabyView, onClick: () -> Unit, from: Boolean = false) {
     val progress = Guides.progress(guide, view.data.checklist)
     Row(Modifier.fillMaxWidth().clickable(onClick = onClick).padding(vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {

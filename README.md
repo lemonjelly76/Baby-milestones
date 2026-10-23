@@ -12,8 +12,12 @@ departs from it, is in [`docs/design-document.md`](docs/design-document.md).
 
 - **Ages:** chronological and corrected age (born 3+ weeks early), with milestones on corrected age until 2 and
   appointments and vaccinations always on chronological age. Shown as weeks, then months and weeks, then years.
-- **Today:** the current period, things around now (tick in one tap), gentle "Seen this yet?" prompts, what to
-  watch for, the next appointment and one idea to try.
+- **Today:** this week at a glance, the current period, things around now (tick in one tap), gentle "Seen this yet?"
+  prompts, what to watch for and the next appointment.
+- **Week by week:** a page for every week from birth to 5, swiped through or stepped with arrows: notes for that week
+  (the cord, weight, registering the birth, when crying peaks, readiness for solids, vitamins, first teeth and more,
+  each checked against the NHS or another source), the checks and vaccinations in it, milestones for that age, play
+  ideas, the week's food plan, guides that start that week, and the stage. Everything opens its full detail.
 - **Milestones:** 160 milestones from the CDC/AAP 2022 checklists (2 months to 5 years) in four areas, by age or by
   area, filtered by status. Each has what it looks like, things to try, a measured age range where one exists
   (WHO), safety notes, what to do if it isn't seen, and its sources. Log with a date, note and photo; mark
@@ -37,10 +41,11 @@ departs from it, is in [`docs/design-document.md`](docs/design-document.md).
 - **Claude:** use Claude mobile or claude.ai with the MCP connector; what Claude saves (check-ins, answers, meal ideas)
   appears in the app. An in-app assistant (charged per message through the Claude API) is off unless switched on in
   Settings; urgent symptoms and distress are caught on the phone before anything is sent.
-- **Words and play:** a list of the words your child says, and four play ideas a week from what they're working on.
+- **Words and play:** a list of the words your child says, and four play ideas a week (on the week page) from what
+  they're working on.
 - **Family:** several carers per family (invite code or link, with edit or view-only access), several babies, offline reading, weekly digest and
   other reminders, export and delete everything.
-- **MCP:** 35 tools, resources and 5 prompts at `/mcp` for Claude Desktop, claude.ai and the Claude app.
+- **MCP:** 36 tools (including `get_week`), resources and 5 prompts at `/mcp` for Claude Desktop, claude.ai and the Claude app.
 
 ## How it's built
 

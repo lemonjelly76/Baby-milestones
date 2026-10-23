@@ -1,0 +1,142 @@
+[
+  {
+    "id": "week.weight",
+    "title": "Weight in the first weeks",
+    "text": "It's normal for babies to lose some weight in the first few days. Your baby will be weighed in their first 2 weeks, and most are back to their birth weight by 3 weeks.",
+    "from_week": 0,
+    "to_week": 2,
+    "sources": ["nhs-baby-weight"]
+  },
+  {
+    "id": "week.cord",
+    "title": "The cord stump",
+    "text": "It takes about a week to dry out and drop off. Keep it clean and dry until it does, and tell your midwife, health visitor or GP if you notice any bleeding or discharge.",
+    "from_week": 0,
+    "to_week": 1,
+    "sources": ["nhs-newborn-first-days"]
+  },
+  {
+    "id": "week.vitamin_d",
+    "title": "Vitamin D from birth",
+    "text": "Breastfed babies need a daily vitamin D supplement from birth. Babies having more than 500ml of formula a day don't, because formula already contains it.",
+    "from_week": 0,
+    "to_week": 1,
+    "guide": "guide.vitamins",
+    "sources": ["nhs-vitamins-children"]
+  },
+  {
+    "id": "week.feeding_help",
+    "title": "Help with feeding",
+    "text": "Your midwife and health visitor can help between appointments: their numbers are in your baby's red book. The National Breastfeeding Helpline is on 0300 100 0212, open 24 hours a day.",
+    "from_week": 0,
+    "to_week": 5,
+    "sources": ["nhs-breastfeeding-help"]
+  },
+  {
+    "id": "week.register_birth",
+    "title": "Register the birth",
+    "text": "In England and Wales a birth must be registered within 42 days. Book an appointment with your local register office.",
+    "from_week": 0,
+    "to_week": 5,
+    "regions": ["england", "wales"],
+    "sources": ["gov-register-birth"]
+  },
+  {
+    "id": "week.young_baby_temperature",
+    "title": "A high temperature under 3 months",
+    "text": "A temperature of 38°C or higher in a baby under 3 months needs urgent help: call 999 or go to A&E.",
+    "from_week": 0,
+    "to_week": 12,
+    "guide": "guide.urgent_help",
+    "sources": ["nhs-seriously-ill"]
+  },
+  {
+    "id": "week.how_are_you",
+    "title": "How are you?",
+    "text": "Feeling low or tearful in the first days is common and usually passes within 2 weeks of the birth. If it carries on, gets worse or you're struggling to cope, tell your midwife, health visitor or GP: they support parents too.",
+    "from_week": 1,
+    "to_week": 8,
+    "sources": ["nhs-postnatal-depression"]
+  },
+  {
+    "id": "week.crying",
+    "title": "Crying",
+    "text": "Babies start to cry more from about 2 weeks. It's usually at its worst at about 6 to 8 weeks, often in the afternoon and evening, then eases. It's normal and it will stop. If it gets too much, put your baby down somewhere safe and take a few minutes. Never shake a baby.",
+    "from_week": 2,
+    "to_week": 10,
+    "clock": "development",
+    "sources": ["icon-crying", "nhs-crying"]
+  },
+  {
+    "id": "week.postnatal_check",
+    "title": "Your own 6-week check",
+    "text": "Your GP surgery should offer you a check 6 to 8 weeks after the birth, about your own health and recovery. It's often just before or after your baby's 6 to 8 week check.",
+    "from_week": 6,
+    "to_week": 8,
+    "sources": ["nhs-postnatal-check"]
+  },
+  {
+    "id": "week.solids_signs",
+    "title": "Getting ready for solid food",
+    "text": "The NHS advises starting at around 6 months. Look for all three signs together: sitting up holding their head steady, picking food up and bringing it to their mouth, and swallowing it rather than pushing it back out.",
+    "from_week": 21,
+    "to_week": 25,
+    "guide": "guide.ready_for_solids",
+    "sources": ["nhs-weaning-start"]
+  },
+  {
+    "id": "week.solids_start",
+    "title": "Starting solid food",
+    "text": "Around now is the time to start, once your baby shows all three signs. Offer a cup of water with meals from now too.",
+    "from_week": 26,
+    "to_week": 28,
+    "guide": "guide.baby_led_weaning",
+    "sources": ["nhs-weaning-start", "nhs-drinks-cups"]
+  },
+  {
+    "id": "week.vitamins_6m",
+    "title": "Vitamins from 6 months",
+    "text": "The government recommends a daily supplement of vitamins A, C and D from 6 months to 5 years, unless your baby has more than 500ml of formula a day.",
+    "from_week": 26,
+    "to_week": 27,
+    "guide": "guide.vitamins",
+    "sources": ["nhs-vitamins-children"]
+  },
+  {
+    "id": "week.room_sharing",
+    "title": "Sleeping in your room",
+    "text": "The Lullaby Trust advises having your baby sleep in the same room as you, day and night, for at least the first 6 months.",
+    "from_week": 20,
+    "to_week": 25,
+    "guide": "guide.safer_sleep",
+    "sources": ["lullaby-safer-sleep"]
+  },
+  {
+    "id": "week.teething",
+    "title": "First teeth",
+    "text": "Most babies start teething at around 6 months, though some start before 4 months and some after their first birthday. Start brushing twice a day, with a smear of fluoride toothpaste, as soon as the first tooth comes through.",
+    "from_week": 22,
+    "to_week": 30,
+    "guide": "guide.teeth",
+    "sources": ["nhs-teething", "nhs-teeth"]
+  },
+  {
+    "id": "week.sun_under_6_months",
+    "title": "Keep out of strong sun",
+    "text": "Babies under 6 months should be kept out of direct strong sunlight.",
+    "from_week": 0,
+    "to_week": 25,
+    "in_months": [3, 4, 5, 6, 7, 8, 9, 10],
+    "guide": "guide.sun_safety",
+    "sources": ["nhs-sun-safety"]
+  },
+  {
+    "id": "week.milk_and_bottles",
+    "title": "Milk and bottles at 1",
+    "text": "From 12 months, whole cows' milk can be their main drink, and the NHS advises moving away from bottles once they're 1. An open or free-flow cup is better for their teeth.",
+    "from_week": 52,
+    "to_week": 55,
+    "guide": "guide.drinks_and_cups",
+    "sources": ["nhs-drinks-cups"]
+  }
+]

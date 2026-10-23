@@ -18,6 +18,8 @@ import io.github.lemonjelly76.babymilestones.core.timeline.Moment
 import io.github.lemonjelly76.babymilestones.core.timeline.TimelineEntry
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneLog
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
+import io.github.lemonjelly76.babymilestones.core.weeks.WeekByWeek
+import io.github.lemonjelly76.babymilestones.core.weeks.WeekPage
 import io.github.lemonjelly76.babymilestones.server.service.BabyService
 import io.github.lemonjelly76.babymilestones.server.service.LogChanges
 import io.github.lemonjelly76.babymilestones.server.service.LogInput
@@ -168,6 +170,25 @@ class MilestoneTools(
             JsonObject(next.jsonObject + ("play_this_week" to BabyJson.encodeToJsonElement(
                 ListSerializer(PlayIdea.serializer()), WeeklyPlay.ideas(ctx.snapshot),
             )))
+        },
+
+        BabyTool(
+            "get_week", "Week by week",
+            "One week of the baby's life, as the app's week-by-week pages show it: notes for that week (checked against NHS " +
+                "and other sources: pass them on in their words), appointments and vaccinations in it, milestones around " +
+                "that age with today's status (or the next checklist), guides that start that week, the stage, play ideas " +
+                "and planned foods. Week 0 is the first seven days. Leave out week for this week.",
+            schema {
+                string("baby_id", "Id from list_babies", required = true)
+                integer("week", "Weeks since birth, 0 to ${WeekByWeek.LAST_WEEK}; default this week")
+            }, write = false,
+        ) { caller, args ->
+            val ctx = ctx(caller, args)
+            val weeks = WeekByWeek(content)
+            val thisWeek = weeks.currentWeek(ctx.baby, ctx.today)
+            val week = args.optInt("week") ?: thisWeek
+            if (week !in 0..WeekByWeek.LAST_WEEK) throw ToolInputException("week must be 0 to ${WeekByWeek.LAST_WEEK}")
+            json(WeekPage.serializer(), weeks.page(ctx.weekInputs, week, ctx.today), mapOf("this_week" to JsonPrimitive(thisWeek)))
         },
 
         BabyTool(

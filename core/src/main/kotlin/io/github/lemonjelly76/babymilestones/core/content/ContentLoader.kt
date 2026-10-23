@@ -8,6 +8,8 @@ import io.github.lemonjelly76.babymilestones.core.growth.Measure
 import io.github.lemonjelly76.babymilestones.core.guides.Guide
 import io.github.lemonjelly76.babymilestones.core.records.Tooth
 import io.github.lemonjelly76.babymilestones.core.json.BabyJson
+import io.github.lemonjelly76.babymilestones.core.weeks.WeekNote
+import io.github.lemonjelly76.babymilestones.core.weeks.WeekByWeek
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
@@ -40,6 +42,7 @@ object ContentLoader {
             guides = json.decodeFromString(ListSerializer(Guide.serializer()), read("guides.json")),
             growth = json.decodeFromString(GrowthReference.serializer(), read("growth.json")),
             teeth = json.decodeFromString(ListSerializer(Tooth.serializer()), read("teeth.json")),
+            weeks = json.decodeFromString(ListSerializer(WeekNote.serializer()), read("weeks.json")),
         ).also { bundle ->
             val problems = ContentValidator.problems(bundle)
             require(problems.isEmpty()) { "Content bundle ${bundle.version} is invalid:\n" + problems.joinToString("\n") }
@@ -98,6 +101,7 @@ object ContentValidator {
         }
         if (bundle.teeth.map { it.id }.toSet().size != bundle.teeth.size) add("Duplicate tooth id")
         bundle.teeth.forEach { checkSources("tooth ${it.id}", it.sources) }
+        checkWeeks(bundle, ::checkSources)
         bundle.schedules.forEach { s ->
             val appointmentIds = s.appointments.map { it.id }.toSet()
             s.appointments.forEach { checkSources("${s.region}/${it.id}", it.sources) }
@@ -106,6 +110,17 @@ object ContentValidator {
                 if (d.appointment !in appointmentIds) add("${d.code} names unknown appointment ${d.appointment}")
             }
         }
+    }
+}
+
+private fun MutableList<String>.checkWeeks(bundle: ContentBundle, checkSources: (String, List<String>) -> Unit) {
+    bundle.weeks.map { it.id }.groupingBy { it }.eachCount().filterValues { it > 1 }.keys.forEach { add("Duplicate week note $it") }
+    bundle.weeks.forEach { n ->
+        if (!n.id.startsWith("week.")) add("${n.id} should start with week.")
+        if (n.fromWeek < 0 || n.toWeek < n.fromWeek || n.toWeek > WeekByWeek.LAST_WEEK) add("${n.id} has weeks out of order or range")
+        if (n.inMonths.any { it !in 1..12 }) add("${n.id} names a month that doesn't exist")
+        n.guide?.let { if (bundle.guide(it) == null) add("${n.id} links to unknown guide $it") }
+        checkSources(n.id, n.sources)
     }
 }
 

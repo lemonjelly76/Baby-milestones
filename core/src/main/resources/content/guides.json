@@ -1236,19 +1236,22 @@
         "heading": "Call 999 or go to A&E if your child",
         "bullets": [
           "Has swollen lips, tongue or throat with difficulty swallowing or talking.",
-          "Has skin, lips or tongue that look blue, grey, pale or mottled.",
+          "Is breathing very fast or finding it hard to breathe: they may grunt or suck their tummy in as they breathe.",
+          "Has blue, grey, pale or blotchy (mottled) skin, lips or tongue. On black or brown skin this may be easier to see on the palms of the hands or soles of the feet.",
+          "Has skin that feels cold or damp (clammy) to touch.",
           "Has a rash that does not fade when you press it.",
-          "Is very cold (a temperature below 36°C), has fainted, is hard to wake or can't be woken.",
-          "Has had no pee for 12 hours or more, or is having a seizure (fit)."
+          "Has a very high temperature: 38°C or higher under 3 months, or 39°C or higher at 3 to 6 months.",
+          "Has a very low temperature (below 36°C), or feels cold to touch or is shivery.",
+          "Has a weak, high-pitched or continuous cry.",
+          "Has fainted, is difficult to wake or can't be woken.",
+          "Has not had a pee in the past 12 hours, or is having a seizure (fit)."
         ]
       },
       {
-        "heading": "Get urgent advice from NHS 111 if",
+        "heading": "Call NHS 111 if",
         "bullets": [
-          "They're under 3 months old with a temperature of 38°C or higher.",
-          "They're 3 to 6 months old with a temperature of 39°C or higher (and haven't had a vaccine in the past 2 days).",
-          "A temperature of 38°C or higher has lasted more than 5 days.",
-          "You're worried about any of their symptoms or don't know what to do."
+          "You're worried about any of their symptoms or don't know what to do.",
+          "They're 3 months to 5 years old and a temperature of 38°C or higher has lasted more than 5 days."
         ]
       },
       {
@@ -1259,7 +1262,7 @@
     ],
     "card": {
       "title": "In an emergency",
-      "body": "Call 999 if your child has stopped breathing, is struggling to breathe, can't be woken, has a fit, or has a rash that doesn't fade when you press a glass on it.",
+      "body": "Call 999 if your child has stopped breathing, is struggling to breathe, can't be woken, has a fit, has a rash that doesn't fade when you press a glass on it, or is under 3 months with a temperature of 38°C or higher.",
       "signpost": "999 in an emergency · NHS 111 for urgent advice",
       "urgency": "urgent"
     },
@@ -1267,8 +1270,8 @@
       "nhs-seriously-ill"
     ],
     "key_points": [
-      "999 for breathing problems, blue or grey skin, a fit, can't be woken, or a rash that doesn't fade.",
-      "NHS 111 for a high temperature in a young baby, or whenever you're worried.",
+      "999 or A&E for breathing difficulty, blue or grey skin, a fit, can't be woken, a rash that doesn't fade, or 38°C or higher under 3 months (39°C at 3 to 6 months).",
+      "NHS 111 whenever you're worried or don't know what to do.",
       "Trust your instincts."
     ],
     "links": [
@@ -1285,6 +1288,6 @@
       "guide.allergens",
       "guide.safer_sleep"
     ],
-    "checked_on": "2026-10-22"
+    "checked_on": "2026-10-23"
   }
 ]

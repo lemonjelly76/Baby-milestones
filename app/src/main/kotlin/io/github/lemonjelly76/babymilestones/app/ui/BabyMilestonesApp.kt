@@ -57,6 +57,7 @@ enum class Tab(val label: String, val icon: ImageVector) {
 /** Screens opened on top of the tabs. */
 sealed interface Overlay {
     data class PeriodGuide(val periodId: String) : Overlay
+    data class Week(val week: Int? = null) : Overlay
     data object AddBaby : Overlay
     data class EditBaby(val babyId: String) : Overlay
     data class Backfill(val babyId: String) : Overlay
@@ -112,6 +113,12 @@ private fun MainScreens(state: AppState, viewModel: AppViewModel, snackbar: Snac
 
     when (val overlay = overlays.lastOrNull()) {
         is Overlay.PeriodGuide -> PeriodGuideScreen(state, baby.id, overlay.periodId, viewModel, onBack = ::close)
+        is Overlay.Week -> WeekScreen(state, baby.id, overlay.week, viewModel, WeekLinks(
+            guide = { open(Overlay.Guide(it)) },
+            period = { open(Overlay.PeriodGuide(it)) },
+            health = { overlays = emptyList(); tab = Tab.HEALTH },
+            foods = { open(Overlay.Foods) },
+        ), onBack = ::close)
         Overlay.AddBaby -> Scaffold(snackbarHost = { SnackbarHost(snackbar) }) { padding ->
             OnboardingFlow(state, viewModel, Modifier.padding(padding), onDone = ::close, onCancel = ::close)
         }
@@ -160,6 +167,7 @@ private fun MainScreens(state: AppState, viewModel: AppViewModel, snackbar: Snac
                 } else when (tab) {
                     Tab.TODAY -> TodayScreen(view, content, viewModel, state.assistantEnabled,
                         onOpenPeriod = { open(Overlay.PeriodGuide(it)) },
+                        onOpenWeek = { open(Overlay.Week()) },
                         onOpenGuide = { open(Overlay.Guide(it)) },
                         onBackfill = { open(Overlay.Backfill(baby.id)) },
                         onFoods = { open(Overlay.Foods) },

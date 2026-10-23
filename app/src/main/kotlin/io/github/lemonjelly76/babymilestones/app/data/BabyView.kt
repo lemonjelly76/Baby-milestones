@@ -32,13 +32,17 @@ import io.github.lemonjelly76.babymilestones.core.tracking.BabySnapshot
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
 import io.github.lemonjelly76.babymilestones.core.tracking.TrackedMilestone
 import io.github.lemonjelly76.babymilestones.core.tracking.Tracker
+import io.github.lemonjelly76.babymilestones.core.weeks.WeekByWeek
+import io.github.lemonjelly76.babymilestones.core.weeks.WeekInputs
+import io.github.lemonjelly76.babymilestones.core.weeks.WeekPage
 import java.time.LocalDate
 
 /**
  * Everything the screens show for one baby, computed on the phone by the same core library the server uses,
- * so the Today screen and the assistant always agree, online or off.
+ * so the Today screen and the assistant always agree, online or off. [canEdit] is false for view-only carers, and
+ * every screen hides its log, tick and edit controls from them.
  */
-class BabyView(val data: BabyData, val content: ContentBundle, val today: LocalDate) {
+class BabyView(val data: BabyData, val content: ContentBundle, val today: LocalDate, val canEdit: Boolean = true) {
     val baby get() = data.baby
     val snapshot: BabySnapshot = Tracker(content).snapshot(data.baby, data.logs, today)
     val schedule: BabySchedule = ScheduleEngine.forBaby(
@@ -79,6 +83,16 @@ class BabyView(val data: BabyData, val content: ContentBundle, val today: LocalD
         ?: snapshot.period.play.firstOrNull()
 
     fun periodStart(period: PeriodGuide): LocalDate = Guidance.periodStart(snapshot, period)
+
+    private val weeks = WeekByWeek(content)
+    private val weekInputs by lazy { WeekInputs(baby, data.region, data.logs, schedule, planDays) }
+    private val weekPages = mutableMapOf<Int, WeekPage>()
+    val currentWeek: Int get() = weeks.currentWeek(baby, today)
+    val thisWeek: WeekPage get() = week(currentWeek)
+    fun weekOf(date: LocalDate): WeekPage = week(weeks.currentWeek(baby, date))
+
+    /** One week's page (week 0 is the first seven days), worked out once per view. */
+    fun week(week: Int): WeekPage = weekPages.getOrPut(week) { weeks.page(weekInputs, week, today) }
 
     /** Milestones that typically follow the baby's recent achievements, for the period guide's "what happens next". */
     fun followOn(): List<TrackedMilestone> = whatsNext.followOn.mapNotNull { snapshot.tracked(it.id) }

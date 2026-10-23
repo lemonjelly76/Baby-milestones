@@ -60,10 +60,12 @@ object ReminderPlanner {
         }
         val digestDue = today.dayOfWeek == DayOfWeek.SUNDAY && digestSentOn != today
         if (settings.weeklyDigest && digestDue) {
+            // Sent on Sunday, so it looks at the week Monday falls in, newest notes first.
+            val ahead = view.weekOf(today.plusDays(1)).notes.sortedByDescending { it.fromWeek }.take(2).joinToString("; ") { it.title }
             val watch = (view.aroundNow + view.watchFor).take(3).joinToString("; ") { it.milestone.title.lowercase() }
             out += Reminder("digest:${view.baby.id}", "This week with $name",
-                if (watch.isEmpty()) "${view.snapshot.period.name}: open the guide for this week's play ideas."
-                else "Watch for: $watch.")
+                listOfNotNull(ahead.ifEmpty { null }?.let { "This week: $it." }, watch.ifEmpty { null }?.let { "Watch for: $it." })
+                    .joinToString(" ").ifEmpty { "${view.snapshot.period.name}: open this week for play ideas." })
         }
         val lastLog = view.snapshot.lastLogDate()
         val quiet = lastLog == null || lastLog.isBefore(today.minusDays(QUIET_DAYS))

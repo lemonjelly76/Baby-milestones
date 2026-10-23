@@ -8,6 +8,7 @@ import io.github.lemonjelly76.babymilestones.core.guides.ChecklistItem
 import io.github.lemonjelly76.babymilestones.core.records.Tooth
 import io.github.lemonjelly76.babymilestones.core.guides.Guide
 import io.github.lemonjelly76.babymilestones.core.json.Date
+import io.github.lemonjelly76.babymilestones.core.weeks.WeekNote
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -179,6 +180,7 @@ data class ContentBundle(
     val guides: List<Guide> = emptyList(),
     val growth: GrowthReference? = null,
     val teeth: List<Tooth> = emptyList(),
+    val weeks: List<WeekNote> = emptyList(),
 ) {
     private val milestonesById by lazy { milestones.associateBy { it.id } }
     private val referencesById by lazy { references.associateBy { it.id } }

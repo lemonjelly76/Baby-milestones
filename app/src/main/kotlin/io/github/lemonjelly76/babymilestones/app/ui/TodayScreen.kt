@@ -25,6 +25,8 @@ import io.github.lemonjelly76.babymilestones.app.data.BabyView
 import io.github.lemonjelly76.babymilestones.core.api.TastingRequest
 import io.github.lemonjelly76.babymilestones.core.api.LogRequest
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
+import io.github.lemonjelly76.babymilestones.core.schedule.AppointmentStatus
+import io.github.lemonjelly76.babymilestones.core.schedule.DoseStatus
 import io.github.lemonjelly76.babymilestones.core.tracking.MilestoneStatus
 import io.github.lemonjelly76.babymilestones.core.tracking.TrackedMilestone
 
@@ -36,6 +38,7 @@ fun TodayScreen(
     viewModel: AppViewModel,
     assistantEnabled: Boolean,
     onOpenPeriod: (String) -> Unit,
+    onOpenWeek: () -> Unit,
     onOpenGuide: (String) -> Unit,
     onBackfill: () -> Unit,
     onFoods: () -> Unit,
@@ -48,13 +51,14 @@ fun TodayScreen(
     val period = view.snapshot.period
 
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).then(ScreenPadding).padding(top = 8.dp)) {
-        InfoCard(color = MaterialTheme.colorScheme.primaryContainer) {
+        InfoCard(color = MaterialTheme.colorScheme.primaryContainer, onClick = onOpenWeek) {
             Text("$name is ${ages.chronological.display()}", style = MaterialTheme.typography.titleLarge)
             ages.corrected?.let {
                 Text("Corrected age ${it.display()} (born ${ages.weeksEarly} weeks early). Milestones use corrected age until 2.",
                     style = MaterialTheme.typography.bodySmall)
             }
             if (view.baby.dobEstimated) Text("Date of birth is estimated: confirm it in Settings.", style = MaterialTheme.typography.bodySmall)
+            ThisWeekHighlights(view)
         }
 
         InfoCard(onClick = { onOpenPeriod(period.id) }) {
@@ -78,27 +82,17 @@ fun TodayScreen(
         if (aroundNow.isEmpty()) Text("Nothing due in the next few weeks. Have a look at what to watch for below.",
             style = MaterialTheme.typography.bodyMedium)
         aroundNow.forEach { t ->
-            MilestoneRow(t, onOpen = { open = t.id }, onTick = { viewModel.logMilestone(view.baby.id, LogRequest(t.id)) })
+            MilestoneRow(t, onOpen = { open = t.id }, onTick = if (view.canEdit) ({ viewModel.logMilestone(view.baby.id, LogRequest(t.id)) }) else null)
         }
 
         val seenYet = view.seenYet.sortedByDescending { it.expectedBy }
         if (seenYet.isNotEmpty()) {
             SectionTitle("Seen this yet?")
-            seenYet.take(3).forEach { SeenYetCard(it, viewModel, view.baby.id, onOpen = { open = it.id }) }
+            seenYet.take(3).forEach { SeenYetCard(it, viewModel, view, onOpen = { open = it.id }) }
             if (seenYet.size > 3) TextButton(onClick = onBackfill) { Text("${seenYet.size - 3} more from earlier ages: catch up") }
         }
 
         if (view.showFoods) FoodsCard(view, viewModel, onFoods)
-
-        if (view.playIdeas.isNotEmpty()) {
-            SectionTitle("Play ideas this week")
-            InfoCard(color = MaterialTheme.colorScheme.tertiaryContainer) {
-                view.playIdeas.forEach { idea ->
-                    Text("• ${idea.text}", modifier = Modifier.padding(vertical = 2.dp))
-                    idea.milestoneTitle?.let { Text("   For: $it", style = MaterialTheme.typography.bodySmall) }
-                }
-            }
-        }
 
         val watch = view.watchFor.take(5)
         if (watch.isNotEmpty()) {
@@ -144,7 +138,8 @@ fun TodayScreen(
 }
 
 @Composable
-private fun SeenYetCard(t: TrackedMilestone, viewModel: AppViewModel, babyId: String, onOpen: () -> Unit) {
+private fun SeenYetCard(t: TrackedMilestone, viewModel: AppViewModel, view: BabyView, onOpen: () -> Unit) {
+    val babyId = view.baby.id
     InfoCard(onClick = onOpen) {
         Text(t.milestone.title, fontWeight = FontWeight.Medium)
         Text(
@@ -152,7 +147,7 @@ private fun SeenYetCard(t: TrackedMilestone, viewModel: AppViewModel, babyId: St
             else "Most children do this by ${monthsLabel(t.milestone.expectedBy)}, but many get there a little later. Tap for things to try.",
             style = MaterialTheme.typography.bodySmall,
         )
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically,
+        if (view.canEdit) Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth().padding(top = 4.dp)) {
             TextButton(onClick = { viewModel.logMilestone(babyId, LogRequest(t.id)) }) { Text("Yes") }
             TextButton(onClick = { viewModel.notSure(babyId, t.id) }) { Text("Not sure") }
@@ -184,7 +179,7 @@ private fun FoodsCard(view: BabyView, viewModel: AppViewModel, onFoods: () -> Un
                         viewModel.logFood(view.baby.id, TastingRequest(
                             foodId = p.item.foodId, name = if (p.item.foodId == null) p.item.name else null,
                         ), "Logged ${p.item.name}")
-                    })
+                    }, enabled = view.canEdit)
                     FoodThumb(p.item.foodId?.let(view.content::food), 36.dp, Modifier.padding(end = 8.dp))
                     Text(p.item.name)
                 }
@@ -195,4 +190,23 @@ private fun FoodsCard(view: BabyView, viewModel: AppViewModel, onFoods: () -> Un
         Text("Log a food ›", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(top = 8.dp))
     }
+}
+
+/** What's particular to this week, from the week-by-week page the card opens. */
+@Composable
+private fun ThisWeekHighlights(view: BabyView) {
+    val week = view.thisWeek
+    val vaccines = week.doses.filter { it.status != DoseStatus.GIVEN }.map { it.rule.vaccine }.distinct()
+    val highlights = week.notes.map { it.title } +
+        week.appointments.filter { it.status != AppointmentStatus.DONE }.map { it.rule.title } +
+        listOfNotNull(vaccines.takeIf { it.isNotEmpty() }?.let { "Vaccinations: ${it.joinToString()}" }) +
+        week.newGuides.mapNotNull(view.content::guide).map { "New guide: ${it.title}" }
+    Text("This week · ${week.title}", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
+    highlights.take(3).forEach { Text("• $it", style = MaterialTheme.typography.bodyMedium) }
+    if (highlights.size > 3) Text("and ${highlights.size - 3} more", style = MaterialTheme.typography.bodySmall)
+    Text(
+        if (highlights.isEmpty()) "Milestones around now, play ideas and what's typical: see this week ›" else "See this week ›",
+        style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.onPrimaryContainer, modifier = Modifier.padding(top = 6.dp),
+    )
 }

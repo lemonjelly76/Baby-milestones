@@ -73,7 +73,7 @@ data class AppState(
 
     fun view(babyId: String? = selectedBaby?.id): BabyView? {
         val data = babyId?.let { babyData[it] } ?: return null
-        return BabyView(data, content ?: return null, today)
+        return BabyView(data, content ?: return null, today, canEdit)
     }
 
     fun chat(babyId: String): ChatState = chats[babyId] ?: ChatState()

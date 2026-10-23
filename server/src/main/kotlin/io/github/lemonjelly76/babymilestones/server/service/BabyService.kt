@@ -4,6 +4,7 @@ import io.github.lemonjelly76.babymilestones.core.concerns.Concern
 import io.github.lemonjelly76.babymilestones.core.concerns.ConcernEngine
 import io.github.lemonjelly76.babymilestones.core.api.BabyData
 import io.github.lemonjelly76.babymilestones.core.content.ContentBundle
+import io.github.lemonjelly76.babymilestones.core.food.FoodPlanner
 import io.github.lemonjelly76.babymilestones.core.food.FoodReport
 import io.github.lemonjelly76.babymilestones.core.food.FoodTasting
 import io.github.lemonjelly76.babymilestones.core.food.FoodTracker
@@ -24,6 +25,7 @@ import io.github.lemonjelly76.babymilestones.core.timeline.Moment
 import io.github.lemonjelly76.babymilestones.core.tracking.Baby
 import io.github.lemonjelly76.babymilestones.core.tracking.BabySnapshot
 import io.github.lemonjelly76.babymilestones.core.tracking.Tracker
+import io.github.lemonjelly76.babymilestones.core.weeks.WeekInputs
 import io.github.lemonjelly76.babymilestones.server.store.BabyStore
 import io.github.lemonjelly76.babymilestones.server.store.ChildRecordStore
 import io.github.lemonjelly76.babymilestones.server.store.FoodStore
@@ -61,6 +63,9 @@ class BabyContext(
     val ticks: List<ChecklistTick> by lazy(loadTicks)
     val notes: List<AssistantNote> by lazy(loadNotes)
     val today: LocalDate get() = snapshot.today
+    val weekInputs: WeekInputs get() = WeekInputs(
+        baby, region, snapshot.milestones.mapNotNull { it.log }, schedule, FoodPlanner.days(content, foodPlan, tastings, baby.dateOfBirth),
+    )
     val concerns: List<Concern> by lazy { ConcernEngine.concerns(snapshot, content.concerns) }
     val foods: FoodReport by lazy { FoodTracker(content).report(tastings, today, snapshot.ages.chronological.months) }
     val growth: GrowthReport by lazy { GrowthEngine(content.growth!!).report(baby, growthMeasurements, today) }

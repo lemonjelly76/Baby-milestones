@@ -280,8 +280,8 @@ A review for maintainability found code that had grown as features were added. C
 
 ### ADR-023 UX review — Accepted
 
-- **Today** puts daily actions first: what's around now, catch-up questions, food (with today's plan) and this week's
-  play, then what to watch for, appointments and Claude.
+- **Today** opens with this week (ADR-026), then daily actions: what's around now, catch-up questions and food (with
+  today's plan), then what to watch for, appointments and Claude.
 - **Health** shows what's due, booked or next; later and earlier checks and vaccinations are folded, with a count of
   past checks still to mark.
 - **Foods:** opens on "Try next" (plan, then ideas); any past entry opens an editor (date, how it went, reaction, note,
@@ -322,6 +322,31 @@ parsnip, soya yoghurt (no clear, openly licensed picture found).
 Foods without a photo, and the family's own foods, get a plain tile the same size, so lists stay aligned. With a photo
 on every plan row, only missed foods, today and tomorrow show the full detail (why, had before, how to serve); later
 days are one line each, and only the next five days show until asked.
+
+### ADR-026 Week by week — Accepted
+
+Parents think in weeks for the first year, and much of what matters then is tied to a week: the heel prick, the cord,
+regaining birth weight, registering the birth, the crying peak, the 8, 12 and 16 week vaccinations.
+
+- **One page per week, birth to 5 (`core.weeks.WeekByWeek`):** week 0 is the first seven days. Each page gathers what
+  falls in that week from data the app already has: checks and vaccinations whose window or due date is in it (earlier
+  doses not marked as given are counted on this week, not listed), milestones whose due-now window overlaps it with
+  today's status (or the next checklist when none do), guides whose starting age falls in it, the stage, play ideas
+  worked out for that week and the food plan's days. App (`WeekScreen`, a pager with arrows and "Back to this week")
+  and MCP (`get_week`) use the same engine.
+- **Week notes are content** (`weeks.json`, 16 notes, each citing NHS, GOV.UK, Lullaby Trust or ICON pages checked on
+  23 October 2026). Notes count weeks from birth, or from the due date while milestones are corrected (crying peaks
+  about 6 to 8 weeks after the due date for a baby born early); they can be limited to UK nations (registering a birth)
+  or calendar months (strong sun, March to October). Weekly development content is deliberately not invented: child
+  development is measured in months, so between notes a page leans on the milestone checklists and the stage.
+- **Today** opens with a "This week" card listing what's particular to the week; play ideas moved to the week page. The
+  Sunday digest names the week's newest notes.
+- **View-only carers** get the same pages with every log, tick and edit control hidden: `BabyView.canEdit` carries
+  the carer's access to every screen, including Today, Milestones and the milestone card, which used to show them.
+- **Urgent help corrected:** checking sources for the notes found the NHS now lists 38°C or more under 3 months (39°C
+  at 3 to 6 months), very fast or difficult breathing, clammy skin and a weak, high-pitched or continuous cry under
+  "call 999 or go to A&E". The urgent-help guide and the app's emergency card said NHS 111 for the temperatures; both
+  now match the NHS page.
 
 ### ADR-013 Out of this build — Deferred
 

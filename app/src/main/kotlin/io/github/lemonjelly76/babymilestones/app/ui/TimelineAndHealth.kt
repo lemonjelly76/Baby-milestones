@@ -229,12 +229,13 @@ fun HealthScreen(
         SectionTitle("Questions for your health visitor")
         view.data.reviewNotes.forEach { n ->
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(n.resolved, { viewModel.resolveReviewNote(babyId, n.id, it) })
+                Checkbox(n.resolved, { viewModel.resolveReviewNote(babyId, n.id, it) }, enabled = state.canEdit)
                 Text(n.text, modifier = Modifier.weight(1f))
-                IconButton(onClick = { viewModel.deleteReviewNote(babyId, n.id) }) { Icon(Icons.Outlined.Delete, "Delete") }
+                if (state.canEdit) IconButton(onClick = { viewModel.deleteReviewNote(babyId, n.id) }) { Icon(Icons.Outlined.Delete, "Delete") }
             }
         }
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        if (view.data.reviewNotes.isEmpty() && !state.canEdit) Text("No questions yet.", style = MaterialTheme.typography.bodyMedium)
+        if (state.canEdit) Row(verticalAlignment = Alignment.CenterVertically) {
             OutlinedTextField(question, { question = it }, label = { Text("Add a question") }, modifier = Modifier.weight(1f))
             IconButton(enabled = question.isNotBlank(), onClick = { viewModel.addReviewNote(babyId, question); question = "" }) {
                 Icon(Icons.Outlined.Add, "Add")

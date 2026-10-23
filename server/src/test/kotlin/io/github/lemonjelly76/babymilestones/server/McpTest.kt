@@ -60,8 +60,12 @@ class McpTest : IntegrationTest() {
             "update_milestone_log", "remove_milestone_log", "mark_not_sure", "add_moment", "update_appointment",
             "record_vaccination", "add_review_note", "get_foods", "get_food", "get_guides", "list_notes", "log_food",
             "remove_food_tasting", "update_checklist", "save_note", "get_growth", "log_growth", "get_firsts", "log_word",
-            "log_tooth", "get_contacts", "get_food_plan", "save_food_plan",
+            "log_tooth", "get_contacts", "get_food_plan", "save_food_plan", "get_week",
         )), tools.toString())
+
+        val week = BabyJson.parseToJsonElement(text(callTool(token, session, "get_week", """{"baby_id":"$babyId","week":8}"""))).jsonObject
+        assertEquals("8 weeks old", week.getValue("title").jsonPrimitive.content)
+        assertTrue(week.getValue("doses").jsonArray.isNotEmpty(), week.toString())
 
         val pending = callTool(token, session, "get_pending_updates", """{"baby_id":"$babyId"}""")
         val text = pending.getValue("content").jsonArray.first().jsonObject.getValue("text").jsonPrimitive.content

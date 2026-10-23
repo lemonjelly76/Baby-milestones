@@ -25,7 +25,7 @@
   ],
   "urgent_card": {
     "title": "Get help now if you're worried",
-    "body": "Call 999 if your child has stopped breathing, is struggling to breathe, turns blue or grey, cannot be woken, has a fit, or has a rash that doesn't fade when you press a glass on it. For urgent advice, for example a high temperature in a baby under 3 months (38°C or more), call NHS 111 or use 111 online. Trust your instincts: you know your child best.",
+    "body": "Call 999 or go to A&E if your child has stopped breathing or is struggling to breathe, turns blue or grey, cannot be woken, has a fit, has a rash that doesn't fade when you press a glass on it, or is under 3 months with a temperature of 38°C or more (39°C or more at 3 to 6 months). If you're worried about anything else or don't know what to do, call NHS 111 or use 111 online. Trust your instincts: you know your child best.",
     "signpost": "999 for emergencies · NHS 111 for urgent advice",
     "urgency": "urgent"
   },

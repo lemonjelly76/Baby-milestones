@@ -95,7 +95,9 @@ private fun PeriodPage(view: BabyView, content: ContentBundle, period: PeriodGui
             if (followOn.isNotEmpty()) {
                 Text("Because of what ${view.baby.name} has done recently, watch for:", style = MaterialTheme.typography.labelLarge,
                     modifier = Modifier.padding(top = 8.dp))
-                followOn.forEach { t -> MilestoneRow(t, onOpen = { onOpen(t.id) }, onTick = { viewModel.logMilestone(view.baby.id, LogRequest(t.id)) }) }
+                followOn.forEach { t ->
+                    MilestoneRow(t, onOpen = { onOpen(t.id) }, onTick = if (view.canEdit) ({ viewModel.logMilestone(view.baby.id, LogRequest(t.id)) }) else null)
+                }
             }
         }
         SectionTitle("On the ${monthsLabel(period.checklistMonths)} checklist")
@@ -148,7 +150,7 @@ fun MilestonesScreen(view: BabyView, content: ContentBundle, viewModel: AppViewM
                     }
                 }
                 items(items, key = { "${title}_${it.id}" }) { t ->
-                    MilestoneRow(t, onOpen = { open = t.id }, onTick = if (t.status == MilestoneStatus.LATER) null else {
+                    MilestoneRow(t, onOpen = { open = t.id }, onTick = if (!view.canEdit || t.status == MilestoneStatus.LATER) null else {
                         { viewModel.logMilestone(view.baby.id, LogRequest(t.id)) }
                     })
                 }

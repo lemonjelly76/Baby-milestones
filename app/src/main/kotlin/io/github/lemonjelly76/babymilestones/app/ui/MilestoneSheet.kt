@@ -139,47 +139,53 @@ fun MilestoneSheet(view: BabyView, content: ContentBundle, milestoneId: String, 
             }
 
             HorizontalDivider(Modifier.padding(vertical = 8.dp))
-            Text(if (log?.state == LogState.ACHIEVED) "Logged" else "Log it",
-                style = MaterialTheme.typography.titleSmall)
-            DateField("When did you first see it?", date, { it?.let { d -> date = d } })
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Not sure of the exact date", modifier = Modifier.weight(1f))
-                Switch(approximate, { approximate = it })
-            }
-            OutlinedTextField(note, { note = it }, label = { Text("Note (optional)") }, modifier = Modifier.fillMaxWidth())
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Gap) {
-                photoRef?.let { PhotoImage(it, viewModel::photo, size = 72.dp) }
-                TextButton(onClick = { pickPhoto.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }) {
-                    Icon(Icons.Outlined.AddAPhoto, null)
-                    Text(if (photoRef == null) " Add a photo" else " Change photo")
+            if (!view.canEdit) {
+                Text(log?.achievedOn?.let { "Seen ${loggedDate(false, log.approximate, it)}" } ?: "Not logged yet",
+                    style = MaterialTheme.typography.titleSmall)
+                log?.note?.let { Text(it) }
+            } else {
+                Text(if (log?.state == LogState.ACHIEVED) "Logged" else "Log it",
+                    style = MaterialTheme.typography.titleSmall)
+                DateField("When did you first see it?", date, { it?.let { d -> date = d } })
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Not sure of the exact date", modifier = Modifier.weight(1f))
+                    Switch(approximate, { approximate = it })
                 }
-            }
-
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                if (log?.state == LogState.ACHIEVED) {
-                    Button(onClick = {
-                        viewModel.updateLog(babyId, log.id, LogUpdateRequest(date, approximate, note, photoRef))
-                        onDismiss()
-                    }) { Text("Save changes") }
-                } else {
-                    Button(onClick = {
-                        viewModel.logMilestone(babyId, LogRequest(m.id, date, approximate, note.ifBlank { null }, photoRef))
-                        onDismiss()
-                    }) { Text("Seen it") }
-                    OutlinedButton(onClick = { viewModel.notSure(babyId, m.id); onDismiss() }) { Text("Not sure") }
-                }
-            }
-            if (log != null) {
-                if (log.state == LogState.ACHIEVED) {
-                    if (log.lostOn == null) {
-                        TextButton(onClick = { confirmLost = true }) { Text("${view.baby.name} no longer does this") }
-                    } else {
-                        TextButton(onClick = {
-                            viewModel.updateLog(babyId, log.id, LogUpdateRequest(clearLost = true)); onDismiss()
-                        }) { Text("Doing it again") }
+                OutlinedTextField(note, { note = it }, label = { Text("Note (optional)") }, modifier = Modifier.fillMaxWidth())
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Gap) {
+                    photoRef?.let { PhotoImage(it, viewModel::photo, size = 72.dp) }
+                    TextButton(onClick = { pickPhoto.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }) {
+                        Icon(Icons.Outlined.AddAPhoto, null)
+                        Text(if (photoRef == null) " Add a photo" else " Change photo")
                     }
                 }
-                TextButton(onClick = { confirmRemove = true }) { Text("Remove this entry", color = MaterialTheme.colorScheme.error) }
+
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                    if (log?.state == LogState.ACHIEVED) {
+                        Button(onClick = {
+                            viewModel.updateLog(babyId, log.id, LogUpdateRequest(date, approximate, note, photoRef))
+                            onDismiss()
+                        }) { Text("Save changes") }
+                    } else {
+                        Button(onClick = {
+                            viewModel.logMilestone(babyId, LogRequest(m.id, date, approximate, note.ifBlank { null }, photoRef))
+                            onDismiss()
+                        }) { Text("Seen it") }
+                        OutlinedButton(onClick = { viewModel.notSure(babyId, m.id); onDismiss() }) { Text("Not sure") }
+                    }
+                }
+                if (log != null) {
+                    if (log.state == LogState.ACHIEVED) {
+                        if (log.lostOn == null) {
+                            TextButton(onClick = { confirmLost = true }) { Text("${view.baby.name} no longer does this") }
+                        } else {
+                            TextButton(onClick = {
+                                viewModel.updateLog(babyId, log.id, LogUpdateRequest(clearLost = true)); onDismiss()
+                            }) { Text("Doing it again") }
+                        }
+                    }
+                    TextButton(onClick = { confirmRemove = true }) { Text("Remove this entry", color = MaterialTheme.colorScheme.error) }
+                }
             }
             Sources(content, m.sources)
             Disclaimer(content)

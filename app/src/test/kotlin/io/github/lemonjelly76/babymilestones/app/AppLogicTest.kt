@@ -61,6 +61,23 @@ class AppLogicTest {
     }
 
     @Test
+    fun `the weekly digest names what's particular to the week ahead`() {
+        // Sunday 25 October, for a baby born on 4 October: weeks 2 to 3, when crying often builds up.
+        val digest = ReminderPlanner.plan(view("2026-10-25", dob = "2026-10-04"), NotificationSettings(), emptySet(), null)
+            .single { it.key.startsWith("digest") }
+        assertTrue("crying" in digest.text.lowercase(), digest.text)
+    }
+
+    @Test
+    fun `view-only carers get a view that says so`() {
+        val data = BabyData(Baby("b_1", "Ava", LocalDate.parse("2026-04-21")), "england", emptyList(), emptyList(), emptyList(),
+            emptyList(), emptyList(), content.version)
+        assertEquals(false, BabyView(data, content, LocalDate.parse("2026-10-21"), canEdit = false).canEdit)
+        assertEquals(26, view("2026-10-23").currentWeek)
+        assertEquals("26 weeks old", view("2026-10-23").thisWeek.title)
+    }
+
+    @Test
     fun `today's view answers what's typical, what's next and what's not logged`() {
         val v = view("2026-10-21")
         assertEquals("mover_6_9m", v.snapshot.period.id)

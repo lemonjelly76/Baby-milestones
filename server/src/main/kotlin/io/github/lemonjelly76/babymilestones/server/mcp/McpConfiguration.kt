@@ -134,8 +134,8 @@ class McpConfiguration {
                 "(after I confirm); 'not sure' becomes mark_not_sure. Then ask about any Not sure re-checks and appointments " +
                 "to mark. If they're eating solid food, ask what new foods they tried this week and log each with log_food, then " +
                 "mention anything get_foods says is due again. Ask about new words, teeth and any recent weigh-in, and log them " +
-                "with log_word, log_tooth and log_growth. Finish with get_whats_next: two or three things to watch for " +
-                "and one activity. Then save a short summary of the check-in with save_note (kind check_in) so it's in the app."
+                "with log_word, log_tooth and log_growth. Finish with get_week (this week's notes and appointments) and " +
+                "get_whats_next: two or three things to watch for and one activity. Then save a short summary of the check-in with save_note (kind check_in) so it's in the app."
         },
         prompt(
             "prepare_for_review", "Build the health visitor summary before a review",

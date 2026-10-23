@@ -515,5 +515,68 @@
     "year": 2025,
     "url": "https://www.nhs.uk/baby/weaning-and-feeding/what-to-feed-young-children/",
     "kind": "public_health"
+  },
+  {
+    "id": "nhs-baby-weight",
+    "title": "Your baby's weight and height",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/babys-development/height-weight-and-reviews/baby-height-and-weight/",
+    "kind": "public_health",
+    "note": "Some weight loss in the first few days is normal; most babies are at or above their birthweight by 3 weeks."
+  },
+  {
+    "id": "nhs-newborn-first-days",
+    "title": "Getting to know your newborn",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/pregnancy/labour-and-birth/getting-to-know-your-newborn/",
+    "kind": "public_health",
+    "note": "The cord takes about a week to dry out and drop off."
+  },
+  {
+    "id": "nhs-breastfeeding-help",
+    "title": "Breastfeeding help and support",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/breastfeeding-and-bottle-feeding/breastfeeding/help-and-support/",
+    "kind": "public_health",
+    "note": "National Breastfeeding Helpline 0300 100 0212, open 24 hours a day."
+  },
+  {
+    "id": "gov-register-birth",
+    "title": "Register a birth",
+    "publisher": "GOV.UK",
+    "year": 2025,
+    "url": "https://www.gov.uk/register-birth",
+    "kind": "public_health",
+    "note": "Births in England, Wales and Northern Ireland must be registered within 42 days; Scotland has its own rules."
+  },
+  {
+    "id": "nhs-crying",
+    "title": "Soothing a crying baby",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/caring-for-a-newborn/soothing-a-crying-baby/",
+    "kind": "public_health",
+    "note": "Crying often increases from about 2 weeks, most often in the afternoon and evening; never shake a baby."
+  },
+  {
+    "id": "icon-crying",
+    "title": "ICON: Infant crying is normal",
+    "publisher": "ICON (Babies cry, you can cope)",
+    "year": 2024,
+    "url": "https://iconcope.org/advice-for/parents/infant-crying-is-normal/",
+    "kind": "public_health",
+    "note": "The normal crying curve: more crying from about 2 weeks, a peak at about 6 to 8 weeks, then less each week. Used across NHS maternity and health visiting services to prevent abusive head trauma."
+  },
+  {
+    "id": "nhs-postnatal-check",
+    "title": "Your 6-week postnatal check",
+    "publisher": "NHS",
+    "year": 2025,
+    "url": "https://www.nhs.uk/baby/support-and-services/your-6-week-postnatal-check/",
+    "kind": "public_health",
+    "note": "Offered by your GP surgery 6 to 8 weeks after the birth."
   }
 ]
